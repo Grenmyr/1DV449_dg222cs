@@ -8,17 +8,22 @@ var cheerio = require('cheerio');
 
 /* GET users listing. */
 router.get('/', function(req, res) {
+
     var url='http://coursepress.lnu.se/kurser';
+
 
     scrape(url);
 
     res.send();
 });
-
+var Json = {};
 function scrape (url){
+
+
     request(url, function (error, response, html) {
+
         if (!error) {
-            var $ = cheerio.load(html);
+            var $= cheerio.load(html);
 
             $('.item-title a').filter(function () {
                 var data = $(this);
@@ -30,8 +35,29 @@ function scrape (url){
                 request(url, function (error, response, html) {
                     if (!error) {
                         $ = cheerio.load(html);
-                        var courseNames = data.html();
-                        console.log(courseNames);
+
+                        var courseName = $('#header-wrapper h1 a').text();
+                        if (courseName === '') {
+                            courseName = 'no information'
+                        }
+
+                        Json[courseName] = {};
+                        Json[courseName].courseName = courseName;
+
+                        var courseCode = $('#header-wrapper ul li ').last().text();
+                        Json[courseName].courseCode = courseCode;
+
+                        Json[courseName].url = url;
+
+                        var node = $('#navigation .sub-menu li a').filter(function(){
+                            var data = $(this);
+                            if(data.text().match('Kursplan')){
+                                var crupelumelink = data.attr('href');
+                                console.log(crupelumelink);
+                            }
+
+                        });
+
                     }
                 });
             }
@@ -45,15 +71,16 @@ function scrape (url){
 }
 
 function scrapeOn (url){
-    console.log(url);
+    //console.log(url);
     var homeURL = 'http://coursepress.lnu.se';
 
     if (url !== undefined) {
         url = homeURL + url;
-        console.log(url);
+        //console.log(url);
         scrape(url);
     }
 }
+
 
 
 module.exports = router;
