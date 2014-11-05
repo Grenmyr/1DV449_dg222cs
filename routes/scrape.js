@@ -10,7 +10,7 @@ var cheerio = require('cheerio');
 router.get('/', function(req, res) {
     var url='http://coursepress.lnu.se/kurser';
 
-          scrape(url);
+    scrape(url);
 
     res.send();
 });
@@ -22,16 +22,26 @@ function scrape (url){
 
             $('.item-title a').filter(function () {
                 var data = $(this);
-                var courseNames = data.html();
+
                 var courseLinks = data.attr('href');
-                console.log(courseLinks);
+                scrapeCourseLink(courseLinks);
+
+                function scrapeCourseLink(url) {
+                request(url, function (error, response, html) {
+                    if (!error) {
+                        $ = cheerio.load(html);
+                        var courseNames = data.html();
+                        console.log(courseNames);
+                    }
+                });
+            }
             });
 
-            var newUrl = $('#pag-top .next');
-            newUrl = newUrl.attr('href');
-            scrapeOn(newUrl)
-        }
-    });
+        var newUrl = $('#pag-top .next');
+        newUrl = newUrl.attr('href');
+        scrapeOn(newUrl)
+    }
+});
 }
 
 function scrapeOn (url){
