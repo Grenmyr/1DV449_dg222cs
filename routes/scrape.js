@@ -10,43 +10,40 @@ var cheerio = require('cheerio');
 router.get('/', function(req, res) {
     var url='http://coursepress.lnu.se/kurser/?bpage=1';
 
-            request(url, function (error, response, html) {
-                if (!error) {
-                    var $ = cheerio.load(html);
-
-                    var breakUrl = url.split("?");
-                    url = breakUrl[0];
-
-                    var newUrl = $('#pag-top .next');
-
-                    newUrl = newUrl.attr('href');
-
-
-                    if (newUrl !== undefined) {
-                        newUrl = newUrl.replace('/kurser/', '');
-                        url = url + newUrl;
-                        console.log(url);
-                    }
-
-                    $('.item-title a').filter(function () {
-                        var data = $(this);
-                        var courseNames = data.html();
-                        var courseLinks = data.attr('href');
-
-                    });
-
-                    if (newUrl !== undefined) {
-                        console.log("Anropa metoden för läsa.");
-                    }
-                }
-            });
-
+          scrape(url);
 
     res.send();
 });
 
+function scrape (url){
+    request(url, function (error, response, html) {
+        if (!error) {
+            var $ = cheerio.load(html);
 
+            $('.item-title a').filter(function () {
+                var data = $(this);
+                var courseNames = data.html();
+                var courseLinks = data.attr('href');
+                console.log(courseLinks);
+            });
 
+            var newUrl = $('#pag-top .next');
+            newUrl = newUrl.attr('href');
+            scrapeOn(newUrl)
+        }
+    });
+}
+
+function scrapeOn (url){
+    console.log(url);
+    var homeURL = 'http://coursepress.lnu.se';
+
+    if (url !== undefined) {
+        var newUrl = homeURL + url;
+        console.log(newUrl);
+        scrape(newUrl);
+    }
+}
 
 
 module.exports = router;
