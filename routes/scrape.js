@@ -8,7 +8,7 @@ var cheerio = require('cheerio');
 
 /* GET users listing. */
 router.get('/', function(req, res) {
-    var url='http://coursepress.lnu.se/kurser/?bpage=1';
+    var url='http://coursepress.lnu.se/kurser';
 
           scrape(url);
 
@@ -39,9 +39,9 @@ function scrapeOn (url){
     var homeURL = 'http://coursepress.lnu.se';
 
     if (url !== undefined) {
-        var newUrl = homeURL + url;
-        console.log(newUrl);
-        scrape(newUrl);
+        url = homeURL + url;
+        console.log(url);
+        scrape(url);
     }
 }
 
