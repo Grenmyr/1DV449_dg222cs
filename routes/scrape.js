@@ -52,12 +52,20 @@ function scrape (url){
                         var node = $('#navigation .sub-menu li a').filter(function(){
                             var data = $(this);
                             if(data.text().match('Kursplan')){
-                                var crupelumelink = data.attr('href');
-                                console.log(crupelumelink);
+                                var coursePlan = data.attr('href');
+                                Json[courseName].coursePlan = coursePlan;
                             }
 
                         });
 
+                        var courseDescription = $('.entry-content p').text();
+                        if (courseDescription === '') {
+                            courseDescription = 'no information'
+                        }
+                        Json[courseName].courseDescription = courseDescription;
+                        console.log(Json)
+
+                        //TODO härefter föööta inlägget med ttel föfattare och klockslag.
                     }
                 });
             }
