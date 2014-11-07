@@ -37,9 +37,7 @@ function scrape (url){
                         $ = cheerio.load(html);
 
                         var courseName = $('#header-wrapper h1 a').text();
-                        if (courseName === '') {
-                            courseName = 'no information'
-                        }
+                        courseName = checkInformation(courseName);
 
                         Json[courseName] = {};
                         Json[courseName].courseName = courseName;
@@ -49,7 +47,7 @@ function scrape (url){
 
                         Json[courseName].url = url;
 
-                        var node = $('#navigation .sub-menu li a').filter(function(){
+                        $('#navigation .sub-menu li a').filter(function(){
                             var data = $(this);
                             if(data.text().match('Kursplan')){
                                 var coursePlan = data.attr('href');
@@ -57,15 +55,28 @@ function scrape (url){
                             }
 
                         });
+                        var courseDescription = $('.entry-content').text();
+                         courseDescription = checkInformation(courseDescription);
 
-                        var courseDescription = $('.entry-content p').text();
-                        if (courseDescription === '') {
-                            courseDescription = 'no information'
-                        }
                         Json[courseName].courseDescription = courseDescription;
-                        console.log(Json)
 
-                        //TODO härefter föööta inlägget med ttel föfattare och klockslag.
+
+                        var lastPostHeader = $('.entry-header .entry-title').first().text();
+                        Json[courseName].latestPost={};
+                        lastPostHeader = checkInformation(lastPostHeader);
+                        Json[courseName].latestPost = {headerTitle : lastPostHeader};
+
+                        var author = $('.entry-header .entry-byline strong').first().text();
+                        author = checkInformation(author);
+                        Json[courseName].latestPost = {author : author };
+
+                        var date = $('.entry-header .entry-byline').first().text();
+
+                        var match = date.match(/(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2})/);
+                        if(match !== null) {
+                            Json[courseName].latestPost = {date : match[0] };
+                        }
+                  
                     }
                 });
             }
@@ -87,6 +98,11 @@ function scrapeOn (url){
         //console.log(url);
         scrape(url);
     }
+}
+
+function checkInformation (string){
+    if (string === '') { return string = 'no information'; }
+    return string;
 }
 
 
