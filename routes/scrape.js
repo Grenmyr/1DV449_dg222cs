@@ -13,9 +13,6 @@ router.get('/', function(req, res) {
     var url = 'http://coursepress.lnu.se/kurser';
     var date = new Date().getTime();
 
-
-
-
     fs.readFile('scrapeResult.json',function(err,data){
         if(data === undefined) { scrape(url); return }
       var parse = JSON.parse(data);
@@ -27,13 +24,8 @@ router.get('/', function(req, res) {
 
     });
 
-
-
-
 });
 var Json = {};
-
-
 
 function scrape (url){
 
