@@ -11,16 +11,23 @@ var fs = require('fs');
 /* GET users listing. */
 router.get('/', function(req, res) {
     var url = 'http://coursepress.lnu.se/kurser';
-
     fs.readFile('scrapeResult.json',function(err,data){
-        console.log(data);
-        if(data === undefined) { scrape(url);  return }
+        var callback = function(JsonString){
+            console.log(JsonString);
+
+            res.write(JsonString);
+        };
+
+
+        if(data === undefined) { scrape(url,callback);  return }
         var parse = JSON.parse(data);
-        res.send(parse);
         var date = new Date().getTime();
         if(date -parse.lastScrapeTime > 30000){
             console.log("scrapade om");
-            scrape(url);
+            scrape(url,callback);
+        }
+        else{
+            console.log("skrapar inte om");
         }
     });
 
@@ -28,7 +35,7 @@ router.get('/', function(req, res) {
 var Json = {};
 Json.courses = [];
 var hrefCount = 0;
-function scrape (url){
+function scrape (url,callback){
 
     request(url, function (error, response, html) {
 
@@ -98,19 +105,19 @@ function scrape (url){
 
         var newUrl = $('#pag-top .next');
         newUrl = newUrl.attr('href');
-        scrapeOn(newUrl)
+        scrapeOn(newUrl,callback)
 
     }
 });
 }
 
-function scrapeOn (url){
+function scrapeOn (url,callback){
 
     var homeURL = 'http://coursepress.lnu.se';
 
     if (url !== undefined) {
         url = homeURL + url;
-        scrape(url);
+        scrape(url, callback);
     }
     else{
 
@@ -124,8 +131,9 @@ function scrapeOn (url){
                 if (err) {
                     console.log("whoops fel vid sparande av Json fil.");
                 }
-                console.log(Json);
+                callback(JSON.stringify(Json, null, 4));
                 console.log('Success save file to disc');
+
 
             });
             clearInterval(myIntervall);
