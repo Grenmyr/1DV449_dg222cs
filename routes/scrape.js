@@ -48,7 +48,7 @@ function scrape (url,callback){
 
                 function scrapeCourseLink(url) {
                     hrefCount +=1;
-                request(url, {headers: { 'User-Agent': 'David Grenmyr' }},
+                request(url, {headers: { 'User-Agent': 'David Grenmyr','email':'dg222cs@student.lnu.se' }},
                     function (error, response, html) {
                     if (!error) {
                         $ = cheerio.load(html);
