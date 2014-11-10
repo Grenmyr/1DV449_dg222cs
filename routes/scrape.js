@@ -13,8 +13,6 @@ router.get('/', function(req, res) {
     var url = 'http://coursepress.lnu.se/kurser';
     fs.readFile('scrapeResult.json',function(err,data){
         var callback = function(JsonString){
-            console.log(JsonString);
-
             res.write(JsonString);
         };
 
@@ -127,14 +125,14 @@ function scrapeOn (url,callback){
             if(hrefCount !== Json.courses.length) { return }
             Json.scrapedCourses = Json.courses.length;
             Json.lastScrapeTime = new Date().getTime();
-            fs.writeFile('scrapeResult.json', JSON.stringify(Json, null, 4), function (err) {
+            var string = JSON.stringify(Json, null, 4);
+
+            fs.writeFile('scrapeResult.json', string, function (err) {
                 if (err) {
                     console.log("whoops fel vid sparande av Json fil.");
                 }
-                callback(JSON.stringify(Json, null, 4));
+                callback(string);
                 console.log('Success save file to disc');
-
-
             });
             clearInterval(myIntervall);
         }
