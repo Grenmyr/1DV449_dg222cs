@@ -11,24 +11,24 @@ var fs = require('fs');
 /* GET users listing. */
 router.get('/', function(req, res) {
     var url = 'http://coursepress.lnu.se/kurser';
-    var date = new Date().getTime();
 
     fs.readFile('scrapeResult.json',function(err,data){
-        if(data === undefined) { scrape(url); return }
-      var parse = JSON.parse(data);
-        if(parse.lastScrapeTime < date - 20000){
+        console.log(data);
+        if(data === undefined) { scrape(url);  return }
+        var parse = JSON.parse(data);
+        res.send(parse);
+        var date = new Date().getTime();
+        if(date -parse.lastScrapeTime > 30000){
             console.log("scrapade om");
             scrape(url);
-            res.send(parse);
         }
-
     });
 
 });
 var Json = {};
-
+Json.courses = [];
+var hrefCount = 0;
 function scrape (url){
-
 
     request(url, function (error, response, html) {
 
@@ -39,17 +39,19 @@ function scrape (url){
                 var data = $(this);
 
                 var courseLinks = data.attr('href');
-                scrapeCourseLink(courseLinks);
+                if(courseLinks.match(/\/kurs/)) { scrapeCourseLink(courseLinks);}
 
                 function scrapeCourseLink(url) {
-                request(url, function (error, response, html) {
+                    hrefCount +=1;
+                request(url, {headers: { 'User-Agent': 'David Grenmyr' }},
+                    function (error, response, html) {
                     if (!error) {
                         $ = cheerio.load(html);
-
                         var courseName = $('#header-wrapper h1 a').text();
                         courseName = checkInformation(courseName);
 
                         Json[courseName] = {};
+                        Json.courses.push(Json[courseName]);
                         Json[courseName].courseName = courseName;
 
                         var courseCode = $('#header-wrapper ul li ').last().text();
@@ -63,7 +65,6 @@ function scrape (url){
                                 var coursePlan = data.attr('href');
                                 Json[courseName].coursePlan = coursePlan;
                             }
-
                         });
 
                         var courseDescription = $('.entry-content').text();
@@ -90,7 +91,6 @@ function scrape (url){
                             headerTitle : lastPostHeader,
                             author : author
                         };
-                        //console.log(Json.lastScrapeTime);
                     }
                 });
             }
@@ -113,13 +113,25 @@ function scrapeOn (url){
         scrape(url);
     }
     else{
-        Json.lastScrapeTime = new Date().getTime();
-        fs.writeFile('scrapeResult.json', JSON.stringify(Json, null,4),function(err){
-            if(err){
-                console.log("whoops fel vid sparande av Json fil.");
-            }
-            console.log('Success save file to disc');
-        })
+
+        var myIntervall = setInterval(writeFile,1000);
+
+        function writeFile() {
+            if(hrefCount !== Json.courses.length) { return }
+            Json.scrapedCourses = Json.courses.length;
+            Json.lastScrapeTime = new Date().getTime();
+            fs.writeFile('scrapeResult.json', JSON.stringify(Json, null, 4), function (err) {
+                if (err) {
+                    console.log("whoops fel vid sparande av Json fil.");
+                }
+                console.log(Json);
+                console.log('Success save file to disc');
+
+            });
+            clearInterval(myIntervall);
+        }
+
+
     }
 }
 
