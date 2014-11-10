@@ -12,24 +12,24 @@ var fs = require('fs');
 router.get('/', function(req, res) {
     var url = 'http://coursepress.lnu.se/kurser';
     var date = new Date().getTime();
+
+
+
+
     fs.readFile('scrapeResult.json',function(err,data){
+        if(data === undefined) { scrape(url); return }
       var parse = JSON.parse(data);
         if(parse.lastScrapeTime < date - 20000){
             console.log("scrapade om");
             scrape(url);
+            res.send(parse);
         }
-        else{
-            console.log("scrapade INT om");
-        }
+
     });
-        //300000
-        //kolla om fil finns och dess datum är mindre än 5 minuter sedan
 
 
 
-    //scrape(url);
 
-    res.send();
 });
 var Json = {};
 
@@ -107,6 +107,7 @@ function scrape (url){
         var newUrl = $('#pag-top .next');
         newUrl = newUrl.attr('href');
         scrapeOn(newUrl)
+
     }
 });
 }
