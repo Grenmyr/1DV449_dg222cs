@@ -24,7 +24,7 @@ JSON format är endast ett objekt, och är enkelt för alla objektorientrade spr
 
 ###### Tänk dig att du skulle skrapa en sida gjord i ASP.NET WebForms. Vad för extra problem skulle man kunna få då?
  
- <asp:Page EnableViewState ="true"/>
+ <asp:Page EnableViewState ="true"
 
 ###### Välj ut två punkter kring din kod du tycker är värd att diskutera vid redovisningen. Det kan röra val du gjort, tekniska lösningar eller lösningar du inte är riktigt nöjd med.
  
