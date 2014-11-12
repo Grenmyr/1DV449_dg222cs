@@ -54,26 +54,26 @@ function scrape (url,callback){
                         var courseName = $('#header-wrapper h1 a').text();
                         courseName = checkInformation(courseName);
 
-                        Json[courseName] = {};
-                        Json.courses.push(Json[courseName]);
-                        Json[courseName].courseName = courseName;
+                        var course = {};
+
+                        course.courseName = courseName;
 
                         var courseCode = $('#header-wrapper ul li ').last().text();
-                        Json[courseName].courseCode = courseCode;
+                        course.courseCode = courseCode;
 
-                        Json[courseName].url = url;
+                        course.url = url;
 
                         $('#navigation .sub-menu li a').filter(function(){
                             var data = $(this);
                             if(data.text().match('Kursplan')){
                                 var coursePlan = data.attr('href');
-                                Json[courseName].coursePlan = coursePlan;
+                                course.coursePlan = coursePlan;
                             }
                         });
 
                         var courseDescription = $('.entry-content').text();
                          courseDescription = checkInformation(courseDescription);
-                        Json[courseName].courseDescription = courseDescription;
+                        course.courseDescription = courseDescription;
 
                         // lastPost header
                         var lastPostHeader = $('.entry-header .entry-title').first().text();
@@ -90,11 +90,12 @@ function scrape (url,callback){
                             match = checkInformation(match);
                         }
                         // Populate my Coursname object with 3 lastPost data above.
-                        Json[courseName].latestPost = {
+                        course.latestPost = {
                             date : match[0],
                             headerTitle : lastPostHeader,
                             author : author
                         };
+                        Json.courses.push(course);
                     }
                 });
             }
