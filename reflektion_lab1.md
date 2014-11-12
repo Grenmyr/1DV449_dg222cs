@@ -37,4 +37,5 @@ JSON format är endast ett objekt, och är enkelt för alla objektorientrade spr
 
 ###### Känner du att du lärt dig något av denna uppgift?
  
- japp, första gången Node med express och Cheerio. Men använde mest Cheerio.
+ japp, första gången Node med express och Cheerio. Men använde mest Cheerio. Sen var det intressant att istället
+ för bygga dom/kod struktur vända på det och läsa in data istället.
