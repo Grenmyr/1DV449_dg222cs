@@ -1,6 +1,7 @@
 Repo för kurs webbteknik II
 
 ###### Vad tror Du vi har för skäl till att spara det skrapade datat i JSON-format?
+
 JSON format är endast ett objekt, och är enkelt för alla objektorientrade språk att använda.
 
  ###### Olika jämförelse siter är flitiga användare av webbskrapor. Kan du komma på fler typer av tillämplingar där webbskrapor förekommer?
