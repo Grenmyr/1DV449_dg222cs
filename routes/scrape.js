@@ -71,8 +71,9 @@ function scrape (url,callback){
                             }
                         });
 
-                        var courseDescription = $('.entry-content').text();
+                        var courseDescription = $('.entry-content p' ).text();
                          courseDescription = checkInformation(courseDescription);
+
                         course.courseDescription = courseDescription;
 
                         // lastPost header
