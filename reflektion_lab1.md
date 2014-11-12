@@ -5,6 +5,7 @@ Repo för kurs webbteknik II
 JSON format är endast ett objekt, och är enkelt för alla objektorientrade språk att använda.
 
  ###### Olika jämförelse siter är flitiga användare av webbskrapor. Kan du komma på fler typer av tillämplingar där webbskrapor förekommer?
+ 
  För undersökningar/forskning eventuellt undersöka en webbsida användare, intressen relationer eller vad man är
  intresserad av.
 
