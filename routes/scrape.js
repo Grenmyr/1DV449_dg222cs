@@ -16,7 +16,6 @@ router.get('/', function(req, res) {
             res.write(JsonString);
         };
 
-
         if(data === undefined) { scrape(url,callback);  return }
         var parse = JSON.parse(data);
         var date = new Date().getTime();
@@ -136,8 +135,6 @@ function scrapeOn (url,callback){
             });
             clearInterval(myIntervall);
         }
-
-
     }
 }
 
@@ -145,8 +142,5 @@ function checkInformation (string){
     if (string === '' | string === null) { return string = 'no information'; }
     return string;
 }
-
-
-
 module.exports = router;
 
