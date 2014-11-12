@@ -6,7 +6,7 @@ JSON format är endast ett objekt, och är enkelt för alla objektorientrade spr
 
 ###### Olika jämförelse siter är flitiga användare av webbskrapor. Kan du komma på fler typer av tillämplingar där webbskrapor förekommer?
  
- För undersökningar/forskning eventuellt undersöka en webbsida användare, intressen relationer eller vad man är
+ För undersökningar/forskning eventuellt undersöka en webbsidas användare, intressen relationer eller vad man är
  intresserad av.
 
 ###### Hur har du i din skrapning underlättat för serverägaren?
@@ -15,8 +15,7 @@ JSON format är endast ett objekt, och är enkelt för alla objektorientrade spr
  
 ###### Vilka etiska aspekter bör man fundera kring vid webbskrapning?
  
- Var försiktig med insamlad data, tänk på eventuella konsekvenser om de används fel. Exempelvis känslig data
- eller data som jag ej har rättigheter till.
+ Var försiktig med insamlad data, tänk på eventuella konsekvenser om de används fel. Exempelvis känslig data kanske ej ska publiseras eller kan jag bli stämd för skrapat denna data.
 
 ###### Vad finns det för risker med applikationer som innefattar automatisk skrapning av webbsidor? Nämn minst ett par stycken!
  
