@@ -13,7 +13,7 @@
  Logincontroller får nu association till index.php som döps om till LoginView.php.
 
 ###### Header Location döljer fel och försvårar avslutning av session.
-* **Problem : check.php ** header("Location: mess.php"); Gillar inte relocation ifrån vy. 
+* **Problem : check.php** header("Location: mess.php"); Gillar inte relocation ifrån vy. 
 *  **Risk :** En risk att ha Header relocations överhuvudtaget i php. använd ej.
 * **Fix :**  Gör om funktion så den returnerar true om användare loggar in så får kontroller sköta det istället vid rendering av vyer.
 
@@ -26,19 +26,19 @@
  jag har även skapat en tabell där jag lagrar userID, username och det **crypterade** lösenordet.
 
 ###### Ej fungerande kod.
-* **Problem : sec.php ** logout i sec.php i funktionen logout fungerar ej.  
+* **Problem : sec.php** logout i sec.php i funktionen logout fungerar ej.  
 * **Risk :** Är ju bra att kunna avsluta inloggningssessioner.
 * **Fix :** skrev en egen i validate.php.
 
 ###### Javascript gör redirect och förstör utloggning.
-* **Problem : messageBoard.js ** Skadlig kod document.getElementById("buttonLogout").onclick gör redirect så unset session ej funkar.
+* **Problem : messageBoard.js** Skadlig kod document.getElementById("buttonLogout").onclick gör redirect så unset session ej funkar.
 *  **Risk :** Dels ska ej utloggning skötas i vy med javascript. Dessutom ska man bara loggas ut om man har skript på?
 *  **Fix :** kommentera bort skiten.
 
 ###### MessageBoard.js och Message.js
- * **Problem : message.js ** Skrivit om så att message,user,time fått getter och setters. Tagit bort onödiga funktioner på prototypen.
+ * **Problem : message.js** Skrivit om så att message,user,time fått getter och setters. Tagit bort onödiga funktioner på prototypen.
  * **Risk :** Igentligen ingen risk förutom död kod är inte bra. Men genom skriva om scriptet kan jag validera typ på klienten. 
- * **Problem : MessageBoard.js **
+ * **Problem : MessageBoard.js**
  *  **Risk :** Använda **.InnherHtml** på dom är inte bra, då körs eventuella farliga skript när de genereras.
  **Fix :** Har modifierat MessageBoard.js så den ej använder **.innhtml utan istället .textcontent** som endast skriver ut text. Även om den skulle innehålla taggar så körs aldrig innehållet.
 
@@ -48,7 +48,7 @@
  *  **Fix :** Parametisera sql anrop i Validate.php och LongPoll.php dessutom är password i databasen nu hasat med password_hash($password,PASSWORD_DEFAULT)
 
 ###### Eka ut databasinformation
-  * **Problem : sec.php & get.php ** De ekar ut exception message om ett sql anrop failar. 
+  * **Problem : sec.php & get.php** De ekar ut exception message om ett sql anrop failar. 
   * **Risk :** Elaka användare får Information.
   * **Fix :** Om undantag kastas, skriver jag endast ut en generell "databse error" sträng.
 
@@ -65,35 +65,44 @@
     inloggad i longpoll.php init() funktionen. Om ej inloggad retunera.
 
 ###### Gamla databasen är tillgänglig för nedladdning.
-  * **Problem : db.db ** Den ligger i rot och är fil, så kan laddas ner.
+  * **Problem : db.db** Den ligger i rot och är fil, så kan laddas ner.
   *  **Risk :** Dumma användare kan skriva /db.db och ladda ner.
   *  **Fix :** Skapat egen databas i mysql på webbhotell. Obs ej nedladdningsbar :-)
 
 
 ### Del 2 - Optimering
+####### Dålig rapportdel här ber om ursäkt, hamnade lite i ofas.
 
-* index.php & message.php **Problem :** Delar flera meta taggar.
-  ** Fix :** Skapa en commonHtml som sätter default som båda använder och läs sedan in resten via index.php och message.php.
+*  **Problem : index.php & message.php** Delar flera meta taggar.
+*  ** Fix :** Skapa en commonHtml som sätter default som båda använder och läs sedan in resten via index.php och message.php.
 
- * mess.php **Problem :**  html {background:url(pic/b.jpg);} **Fix :** Tog bort nod då den inte syntes ändå.
+ *  **Problem : mess.php**  html {background:url(pic/b.jpg);} 
+ *  **Fix :** Tog bort nod då den inte syntes ändå.
 
- * mess.php **Problem :** jquery.js laddas två gånger. **Fix :** ta bort <script type='text/javascript' src='js/jquery.js'></script>
+ *  **Problem : mess.php** jquery.js laddas två gånger. 
+ *  **Fix :** ta bort <script type='text/javascript' src='js/jquery.js'></script>
 
- * mess.php & index.php **Problem :** script.js och bootstrap.js är samma fil och läses båda in.  **Fix :** Läs endast in bootstrap.js.
+ *  **Problem : mess.php & index.php** script.js och bootstrap.js är samma fil och läses båda in.  
+ *  **Fix :** Läs endast in bootstrap.js.
 
- * mess.php & index.php **Problem :** värdelösa båda två behövs ej för läsa bootstrap.css **Fix :** ta bort bootstrap.js
+ *  **Problem : mess.php & index.php** värdelösa båda två behövs ej för läsa bootstrap.css 
+ *  **Fix :** ta bort bootstrap.js
 
- * mess.php **Problem :** jquery.js är inte minifierad.  **Fix :** Ladda in jquery-1.10.2.min.js som är minifierad.
+ *  **Problem : mess.php** jquery.js är inte minifierad.  
+ *  **Fix :** Ladda in jquery-1.10.2.min.js som är minifierad.
 
- * bootstrap.css **Problem :** onödigt stor bootstrap fil. **Fix :**
-  skapa en bootstrap.min.css istället. Storlek gick ner från 123,5 till 20,6 kb.
+ *  **Problem : bootstrap.css** onödigt stor bootstrap fil. 
+ *  **Fix :** skapa en bootstrap.min.css istället. Storlek gick ner från 123,5 till 20,6 kb.
+
+ * **Problem : mess.php** dubbelkod.
+ * **Fix :** Ta bort document.onload det har jag redan in min MessageBoard.js som kör init när dokumentet har laddat.
 
 
-####### TOTAL Storlek på get vid inloggad vy Innan optimeringar 984,7 kb
-####### TOTAL Storlek på webbhotell vid inloggad vy 83,0 kb
+#### TOTAL Storlek på get vid inloggad vy Innan optimeringar 984,7 kb
+#### TOTAL Storlek på webbhotell vid inloggad vy 83,0 kb
 
-####### TOTAL Storlek vid inloggninsskärm Innan optimeringar 191,0 kb
-####### TOTAL Storlek webbhotell vid inloggninsskärm Innan optimeringar 5,2 kb
+#### TOTAL Storlek vid inloggninsskärm Innan optimeringar 191,0 kb
+#### TOTAL Storlek webbhotell vid inloggninsskärm Innan optimeringar 5,2 kb
 
 
 ### Del 3 - Long-polling
