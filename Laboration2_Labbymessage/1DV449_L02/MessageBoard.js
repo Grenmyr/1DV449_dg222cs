@@ -159,8 +159,8 @@ var MessageBoard = {
 
         div.appendChild(spanClear);        
 
-        //$(MessageBoard.messageArea).prepend(div);
-        MessageBoard.messageArea.appendChild(div);
+        $(MessageBoard.messageArea).prepend(div);
+        //MessageBoard.messageArea.appendChild(div);
     },
     removeMessage: function(message){
 		if(window.confirm("Vill du verkligen radera meddelandet?")){

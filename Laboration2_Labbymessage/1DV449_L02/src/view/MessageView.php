@@ -53,16 +53,17 @@ class MessageView {
               <form method='POST'>
                 <input class='btn btn-danger' type='submit' name='".self::$logoutButton."' id='buttonLogout1' value='Logout' style='margin-bottom: 20px;' />
              </form>
-                <div id='messagearea'></div>
-
-                <p id='numberOfMess'>Antal meddelanden: <span id='nrOfMessages'>0</span></p>
-                Name:<br /> <input id='inputName' type='text' name='name' /><br />
+              Name:<br /> <input id='inputName' type='text' name='name' /><br />
                 Message: <br />
                 <textarea name='mess' id='inputText' cols='55' rows='6'></textarea>
 
                 <input type='hidden'  id='tokenfield' value='".self::$token."' >
 
                 <input class='btn btn-primary' type='button' id='buttonSend' value='Write your message' />
+                <div id='messagearea'></div>
+
+                <p id='numberOfMess'>Antal meddelanden: <span id='nrOfMessages'>0</span></p>
+
 
                 <span class='clear'>&nbsp;</span>
 
