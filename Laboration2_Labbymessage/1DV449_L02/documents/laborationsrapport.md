@@ -114,3 +114,15 @@ meddelande knappen. Sedan fick man göra en get genom ladda om sidan för läsa 
 
  **Fix :** LONGPOLL 20 sec delay implementerat i LongPoll.php. klassen som initierar flödet är MessageBoard.js som initierar Longpoll.js. LongPoll.js fungerar som en router och kallar på min LongPoll.php via ajaxanrop. LongPoll.php implementerar longpoll på server genom använda en while loop som jämför timestamp på inlägg hos vy, mot timestamp på senaste inlägg i tabell. LongPoll.php har all funktionalitet för hämta eller posta nya meddelanden mot server.
 Det finns skydd för CRSF vid postning, och för använda LongPoll.php krävs inloggat läge.
+
+**Fördelar med min longpolling:** 
+*Genom anväda longpolling så blir antalet requests mycket mindre än shortpollsom kanske
+skulle göra en request i sekunden eller så.
+
+**nackdelar med min longpolling:** 
+* Jag har ej implementerat någon timeout strategi, lite synd då det i min tanke i allafall är lättimplementerat, men jag hade inte tid.
+* Databasen får fortfarande slita likahårt som innan pga while loopen på server konstant gör sqls.
+* Väldigt komplex kod.
+
+###### David Grenmyr 2014-11-26 19:22
+
