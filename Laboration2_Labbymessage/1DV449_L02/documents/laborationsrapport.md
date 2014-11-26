@@ -73,29 +73,29 @@
 ### Del 2 - Optimering
 ####### Dålig rapportdel här ber om ursäkt, hamnade lite i ofas.
 
-*  **Problem : index.php & message.php** Delar flera meta taggar.
-*  ** Fix :** Skapa en commonHtml som sätter default som båda använder och läs sedan in resten via index.php och message.php.
+*  **Problem : index.php & message.php** Delar flera meta taggar.  
+*  **Fix :** Skapa en commonHtml som sätter default som båda använder och läs sedan in resten via index.php och message.php.
 
- *  **Problem : mess.php**  html {background:url(pic/b.jpg);} 
- *  **Fix :** Tog bort nod då den inte syntes ändå.
+ *  **Problem : mess.php**  html {background:url(pic/b.jpg);}     
+   **Fix :** Tog bort nod då den inte syntes ändå.
 
- *  **Problem : mess.php** jquery.js laddas två gånger. 
- *  **Fix :** ta bort <script type='text/javascript' src='js/jquery.js'></script>
+ *  **Problem : mess.php** jquery.js laddas två gånger.   
+   **Fix :** ta bort <script type='text/javascript' src='js/jquery.js'></script>
 
- *  **Problem : mess.php & index.php** script.js och bootstrap.js är samma fil och läses båda in.  
- *  **Fix :** Läs endast in bootstrap.js.
+ *  **Problem : mess.php & index.php** script.js och bootstrap.js är samma fil och läses båda in.    
+   **Fix :** Läs endast in bootstrap.js.
 
- *  **Problem : mess.php & index.php** värdelösa båda två behövs ej för läsa bootstrap.css 
- *  **Fix :** ta bort bootstrap.js
+ *  **Problem : mess.php & index.php** värdelösa båda två behövs ej för läsa bootstrap.css   
+   **Fix :** ta bort bootstrap.js
 
- *  **Problem : mess.php** jquery.js är inte minifierad.  
- *  **Fix :** Ladda in jquery-1.10.2.min.js som är minifierad.
+ *  **Problem : mess.php** jquery.js är inte minifierad.    
+   **Fix :** Ladda in jquery-1.10.2.min.js som är minifierad.
 
- *  **Problem : bootstrap.css** onödigt stor bootstrap fil. 
- *  **Fix :** skapa en bootstrap.min.css istället. Storlek gick ner från 123,5 till 20,6 kb.
+ *  **Problem : bootstrap.css** onödigt stor bootstrap fil.   
+   **Fix :** skapa en bootstrap.min.css istället. Storlek gick ner från 123,5 till 20,6 kb.
 
- * **Problem : mess.php** dubbelkod.
- * **Fix :** Ta bort document.onload det har jag redan in min MessageBoard.js som kör init när dokumentet har laddat.
+ * **Problem : mess.php** dubbelkod.  
+  **Fix :** Ta bort document.onload det har jag redan in min MessageBoard.js som kör init när dokumentet har laddat.
 
 
 #### TOTAL Storlek på get vid inloggad vy Innan optimeringar 984,7 kb
