@@ -71,10 +71,11 @@
 
 
 ### Del 2 - Optimering
+
 ####### Dålig rapportdel här ber om ursäkt, hamnade lite i ofas.
 
-*  **Problem : index.php & message.php** Delar flera meta taggar.  
-*  **Fix :** Skapa en commonHtml som sätter default som båda använder och läs sedan in resten via index.php och message.php.
+*  **Problem : index.php & message.php** Delar flera meta taggar.      
+    **Fix :** Skapa en commonHtml som sätter default som båda använder och läs sedan in resten via index.php och message.php.
 
  *  **Problem : mess.php**  html {background:url(pic/b.jpg);}     
    **Fix :** Tog bort nod då den inte syntes ändå.
@@ -116,13 +117,13 @@ meddelande knappen. Sedan fick man göra en get genom ladda om sidan för läsa 
 Det finns skydd för CRSF vid postning, och för använda LongPoll.php krävs inloggat läge.
 
 **Fördelar med min longpolling:** 
-*Genom anväda longpolling så blir antalet requests mycket mindre än shortpollsom kanske
+* Genom anväda longpolling så blir antalet requests mycket mindre än shortpollsom kanske
 skulle göra en request i sekunden eller så.
 
-**nackdelar med min longpolling:** 
+**Nackdelar med min longpolling:** 
 * Jag har ej implementerat någon timeout strategi, lite synd då det i min tanke i allafall är lättimplementerat, men jag hade inte tid.
 * Databasen får fortfarande slita likahårt som innan pga while loopen på server konstant gör sqls.
 * Väldigt komplex kod.
 
-###### David Grenmyr 2014-11-26 19:22
+###### David Grenmyr 2014-11-26 19:26
 
