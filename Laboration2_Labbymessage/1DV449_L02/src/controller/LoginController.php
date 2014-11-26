@@ -40,7 +40,7 @@ class LoginController {
     }
     public function checkLogin(){
         $this->login();
-        //substr(hash('sha512',uniqid(rand(), true)), 0, 15);
+
         $hasSession = $this->sessionModel->checkSession();
         if($hasSession ){
             $this->sessionModel->setToken();

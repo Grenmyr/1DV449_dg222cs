@@ -34,7 +34,7 @@ true om användare loggar in så får kontroller sköta det istället.
   **Fix :** Om undantag kastas, skriver jag endast ut en generell "databse error" sträng.
 
  * Allmän säkerhetsrisk **Problem :** Inget skydd mot cross site request factory.  **Fix :** Skapa hidden input field i
-    MessageView.php och generera random string som dess value. och matcha sen vid post i longpoll.php.
+    MessageView.php och generera random string med formeln "substr(hash('sha512',uniqid(rand(), true)), 0, 15);" som dess value. och matcha sen vid post i LongPoll.php när meddelanden ska postas.
 
  * Allmän säkerhetsrisk **Problem :** Ingen validering vid request av longpoll.php **Fix :** Kolla om användare är
     inloggad i longpoll.php init() funktionen. Om ej inloggad retunera.

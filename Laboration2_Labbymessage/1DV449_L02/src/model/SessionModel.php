@@ -16,7 +16,7 @@ class SessionModel {
 
     public function setToken()
     {
-        $_SESSION['csrf'] = uniqid();
+        $_SESSION['csrf'] = substr(hash('sha512',uniqid(rand(), true)), 0, 15);
     }
     public function getToken()
     {
