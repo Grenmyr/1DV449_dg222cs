@@ -1,4 +1,4 @@
-###### Del 1 - Säkerhetsproblem
+### Del 1 - Säkerhetsproblem
 
 * check.php **Problem :** Den loggar alltid in om fälten ej är tomma.
   **Fix :** lyfter in check.php som funtion i en modell klass som jag kallar Validate.php.
@@ -42,7 +42,7 @@ true om användare loggar in så får kontroller sköta det istället.
   * db.db **Problem :** Det är bara att skriva in db.db på webbhotell o ladda ner **Fix :** Skapat egen databas mysql på webbhotell.
 
 
-###### Del 2 - Optimering
+### Del 2 - Optimering
 
 
 * index.php & message.php **Problem :** Delar flera meta taggar.
@@ -69,7 +69,7 @@ true om användare loggar in så får kontroller sköta det istället.
 ####### TOTAL Storlek webbhotell vid inloggninsskärm Innan optimeringar 5,2 kb
 
 
-###### Del 3 - Long-polling
+### Del 3 - Long-polling
 
 ###### Tagit stor inspiration från [Denna](http://portal.bluejack.binus.ac.id/tutorials/webchatapplicationusinglong-pollingtechnologywithphpandajax) guide
 
