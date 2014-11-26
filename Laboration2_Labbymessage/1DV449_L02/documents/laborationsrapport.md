@@ -71,10 +71,10 @@ true om användare loggar in så får kontroller sköta det istället.
 
 ###### Del 3 - Long-polling
 
-######## Tagit stor inspiration från [Denna](http://portal.bluejack.binus.ac.id/tutorials/webchatapplicationusinglong-pollingtechnologywithphpandajax) guide
+###### Tagit stor inspiration från [Denna](http://portal.bluejack.binus.ac.id/tutorials/webchatapplicationusinglong-pollingtechnologywithphpandajax) guide
 
-* ** Problem: **  Applikationen vi hade implementerade ej longpoll alls. Den hade en insert (via get) till db.db om en användare tryckte på skicka
+ **Problem:**  Applikationen vi hade implementerade ej longpoll alls. Den hade en insert (via get) till db.db om en användare tryckte på skicka
 meddelande knappen. Sedan fick man göra en get genom ladda om sidan för läsa nya meddelanden.
 
-* **Fix :** LONGPOLL 20 sec delay implementerat i LongPoll.php. klassen som initierar flödet är MessageBoard.js som initierar Longpoll.js. LongPoll.js fungerar som en router och kallar på min LongPoll.php via ajaxanrop. LongPoll.php implementerar longpoll på server genom använda en while loop som jämför timestamp på inlägg hos vy, mot timestamp på senaste inlägg i tabell. LongPoll.php har all funktionalitet för hämta eller posta nya meddelanden mot server.
+ **Fix :** LONGPOLL 20 sec delay implementerat i LongPoll.php. klassen som initierar flödet är MessageBoard.js som initierar Longpoll.js. LongPoll.js fungerar som en router och kallar på min LongPoll.php via ajaxanrop. LongPoll.php implementerar longpoll på server genom använda en while loop som jämför timestamp på inlägg hos vy, mot timestamp på senaste inlägg i tabell. LongPoll.php har all funktionalitet för hämta eller posta nya meddelanden mot server.
 Det finns skydd för CRSF vid postning, och för använda LongPoll.php krävs inloggat läge.
