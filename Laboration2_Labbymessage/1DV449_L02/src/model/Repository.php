@@ -45,7 +45,7 @@ class Repository {
 
 
         //pub
-      /* if(self::$connection == null){
+     /* if(self::$connection == null){
             self::$connection = new \PDO(self::$dbConnstring,self::$PUBLISHEDDB_USERNAME,self::$PUBLISHEDDB_PASSWORD);
             self::$connection->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION);
 
