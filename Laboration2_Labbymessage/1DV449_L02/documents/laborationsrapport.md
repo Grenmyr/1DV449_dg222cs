@@ -103,7 +103,7 @@
 #### TOTAL Storlek på webbhotell vid inloggad vy 83,0 kb
 
 #### TOTAL Storlek vid inloggninsskärm Innan optimeringar 191,0 kb
-#### TOTAL Storlek webbhotell vid inloggninsskärm Innan optimeringar 5,2 kb
+#### TOTAL Storlek webbhotell vid inloggninsskärm efter optimeringar 5,2 kb
 
 
 ### Del 3 - Long-polling
