@@ -1,49 +1,76 @@
 ### Del 1 - Säkerhetsproblem
 
-* check.php **Problem :** Den loggar alltid in om fälten ej är tomma.
-  **Fix :** lyfter in check.php som funtion i en modell klass som jag kallar Validate.php.
+###### Bristfällig inloggninsvalidering.
+*  **Problem : check.php** Den loggar alltid in om fälten ej är tomma.
+*  **Risk :**  Alla kan logga in.
+*  **Fix :** lyfter in check.php som funtion i en modell klass som jag kallar Validate.php.
    se sen till att de endast ger inloggning mot admin:admin och user:user.
 
-* index.php **Problem :** action='../../check.php' Jag vill ej att ett formulär ska ha tillgång till min modell.
- **Fix :** ta bort action="../../check.php" från formulär och låt LoginController.php lyssna om en post har skett.
+###### Placering av inloggningslogik.
+*  **Problem : index.php** action='../../check.php' Jag vill ej att ett formulär ska ha direkt tillgång till min modell.
+* **Risk :** Användare kan göra get på sidan och "dra" igång modell klasser med viktig logik.
+* **Fix :** ta bort action="../../check.php" från formulär och låt LoginController.php lyssna om en post har skett.
  Logincontroller får nu association till index.php som döps om till LoginView.php.
 
-* check.php **Problem :** header("Location: mess.php"); Gillar inte relocation ifrån vy. gör om funktion så den returnerar
-true om användare loggar in så får kontroller sköta det istället.
+###### Header Location döljer fel och försvårar avslutning av session.
+* **Problem : check.php ** header("Location: mess.php"); Gillar inte relocation ifrån vy. 
+*  **Risk :** En risk att ha Header relocations överhuvudtaget i php. använd ej.
+* **Fix :**  Gör om funktion så den returnerar true om användare loggar in så får kontroller sköta det istället vid rendering av vyer.
 
-* check.php **Problem :**   $_SESSION['login_string'] = hash('sha512', "123456" +$username);
- **Fix :** vill hellre använda säkrare alternativ med bättre saltning så kör med.
+###### Gammal metod för hashning, + dåligt salt.
+*  **Problem : check.php**   $_SESSION['login_string'] = hash('sha512', "123456" +$username);
+* **Risk :** Lätt att dekrypterakryptera.
+* **Fix :** vill hellre använda säkrare alternativ med bättre saltning så kör med.
  password_hash($password,PASSWORD_DEFAULT); för kryptering.
  Och dekryptering password_verify($password, $dbPassword);
- jag har även skapat en tabell där jag lagrar userID, username och det crypterade lösenordet.
+ jag har även skapat en tabell där jag lagrar userID, username och det **crypterade** lösenordet.
 
-* sec.php **Problem :** logout i sec.php i funktionen logout fungerar ej.  **Fix :** skrev en egen i validate.php.
+###### Ej fungerande kod.
+* **Problem : sec.php ** logout i sec.php i funktionen logout fungerar ej.  
+* **Risk :** Är ju bra att kunna avsluta inloggningssessioner.
+* **Fix :** skrev en egen i validate.php.
 
-* messageBoard.js **Problem :** Skadlig kod document.getElementById("buttonLogout").onclick gör redirect så unset session ej funkar.
-    **Fix :** kommentera bort skiten.
+###### Javascript gör redirect och förstör utloggning.
+* **Problem : messageBoard.js ** Skadlig kod document.getElementById("buttonLogout").onclick gör redirect så unset session ej funkar.
+*  **Risk :** Dels ska ej utloggning skötas i vy med javascript. Dessutom ska man bara loggas ut om man har skript på?
+*  **Fix :** kommentera bort skiten.
 
- * message.js **Problem :** Skrivit om så att message,user,time fått getter och setters. Tagit bort all funktioner på prototypen
-    förutom.
-     **Fix :** Har modifierat MessageBoard.js så den ej använder .innhtml utan istället textcontent som endast skriver ut text
-     Även om den skulle innehålla taggar så körs aldrig innehållet.
+###### MessageBoard.js och Message.js
+ * **Problem : message.js ** Skrivit om så att message,user,time fått getter och setters. Tagit bort onödiga funktioner på prototypen.
+ * **Risk :** Igentligen ingen risk förutom död kod är inte bra. Men genom skriva om scriptet kan jag validera typ på klienten. 
+ * **Problem : MessageBoard.js **
+ *  **Risk :** Använda **.InnherHtml** på dom är inte bra, då körs eventuella farliga skript när de genereras.
+ **Fix :** Har modifierat MessageBoard.js så den ej använder **.innhtml utan istället .textcontent** som endast skriver ut text. Även om den skulle innehålla taggar så körs aldrig innehållet.
 
- * sec.php & get.php **Problem :** Sql är ej parametiserad, dessutom sparas lösenord i klartext. **Fix :** Parametisera sql anrop i
-   Validate->getPasswordByUserName() dessutom är password i databasen hasat med password_hash($password,PASSWORD_DEFAULT)
+###### Ingen parametisering på server.
+ *  **Problem : sec.php & get.php** Sql är ej parametiserad, dessutom sparas lösenord i klartext. 
+ *  **Risk :** Skadlig kod kan köras i databasen.
+ *  **Fix :** Parametisera sql anrop i Validate.php och LongPoll.php dessutom är password i databasen nu hasat med password_hash($password,PASSWORD_DEFAULT)
 
-  * sec.php & get.php **Problem :** De ekar ut exception message om ett sql anrop failar. Risk, onödig info.
-  **Fix :** Om undantag kastas, skriver jag endast ut en generell "databse error" sträng.
+###### Eka ut databasinformation
+  * **Problem : sec.php & get.php ** De ekar ut exception message om ett sql anrop failar. 
+  * **Risk :** Elaka användare får Information.
+  * **Fix :** Om undantag kastas, skriver jag endast ut en generell "databse error" sträng.
 
- * Allmän säkerhetsrisk **Problem :** Inget skydd mot cross site request factory.  **Fix :** Skapa hidden input field i
+###### CSRF Skydd saknas
+ *  **Problem :** Inget skydd mot cross site request factory.  
+ *  **Risk :** Alltså för min chat är det väl ingen större skada om någon kan posta några meddelanden utifrån. Men labben handlar ju om säkerhet så det är väl inte bra.
+ *  **Fix :** Skapa hidden input field i
     MessageView.php och generera random string med formeln "substr(hash('sha512',uniqid(rand(), true)), 0, 15);" som dess value. och matcha sen vid post i LongPoll.php när meddelanden ska postas.
 
- * Allmän säkerhetsrisk **Problem :** Ingen validering vid request av longpoll.php **Fix :** Kolla om användare är
+###### Validering vid Get av LongPoll.Php
+ * **Problem :** Ingen validering vid request av longpoll.php 
+ * **Risk :** Ej inloggade kan komma åt innehåll.
+ * **Fix :** Kolla om användare är
     inloggad i longpoll.php init() funktionen. Om ej inloggad retunera.
 
-  * db.db **Problem :** Det är bara att skriva in db.db på webbhotell o ladda ner **Fix :** Skapat egen databas mysql på webbhotell.
+###### Gamla databasen är tillgänglig för nedladdning.
+  * **Problem : db.db ** Den ligger i rot och är fil, så kan laddas ner.
+  *  **Risk :** Dumma användare kan skriva /db.db och ladda ner.
+  *  **Fix :** Skapat egen databas i mysql på webbhotell. Obs ej nedladdningsbar :-)
 
 
 ### Del 2 - Optimering
-
 
 * index.php & message.php **Problem :** Delar flera meta taggar.
   ** Fix :** Skapa en commonHtml som sätter default som båda använder och läs sedan in resten via index.php och message.php.
