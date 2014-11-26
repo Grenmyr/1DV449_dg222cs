@@ -15,7 +15,7 @@ class Repository {
     private  static $DB_PASSWORD = '';
     //pub
     private  static $PUBLISHEDDB_USERNAME = "dgrenmyr_nu";
-    private  static $PUBLISHEDDB_PASSWORD = 'EPDL8Vdx';
+    private  static $PUBLISHEDDB_PASSWORD = 'bytt lösen nu';
 
     //local
     private  static $DB_HOST = '127.0.0.1';
