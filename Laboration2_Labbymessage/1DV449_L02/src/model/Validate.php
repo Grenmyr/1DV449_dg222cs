@@ -27,11 +27,11 @@ class Validate {
     }
 
     public function check($username, $password){
+
         $dbPassword = $this->getPasswordByUserName($username);
 
         if( password_verify($password, $dbPassword)){
-
-            return $username;
+            return true;
         }
             return false;
     }

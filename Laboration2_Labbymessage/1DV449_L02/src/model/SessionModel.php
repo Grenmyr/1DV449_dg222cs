@@ -25,9 +25,9 @@ class SessionModel {
         }
         return false;
     }
-    public function setLogin($username){
-        $_SESSION['username'] = $username;
-        $_SESSION['login'] = true;
+    public function setLogin($isLoggedin){
+        //$_SESSION['username'] = $username;
+        $_SESSION['login'] = $isLoggedin;
     }
 
     public function isLoggedIn()

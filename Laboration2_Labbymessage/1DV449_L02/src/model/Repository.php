@@ -15,7 +15,7 @@ class Repository {
     private  static $DB_PASSWORD = '';
     //pub
     private  static $PUBLISHEDDB_USERNAME = "dgrenmyr_nu";
-    private  static $PUBLISHEDDB_PASSWORD = 'bytt lösen nu';
+    private  static $PUBLISHEDDB_PASSWORD = 'bytt lösen';
 
     //local
     private  static $DB_HOST = '127.0.0.1';
@@ -36,19 +36,19 @@ class Repository {
     }
 
     public function connect(){
-       if(self::$connection == null){
+      if(self::$connection == null){
             self::$connection = new \PDO(self::$dbConnstring,self::$DB_USERNAME,self::$DB_PASSWORD);
             self::$connection->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION);
        }
-            return self::$connection;
+
 
         //pub
-      /*  if(self::$connection == null){
+      /* if(self::$connection == null){
             self::$connection = new \PDO(self::$dbConnstring,self::$PUBLISHEDDB_USERNAME,self::$PUBLISHEDDB_PASSWORD);
             self::$connection->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION);
-            return self::$connection;
-        }*/
 
+        }*/
+        return self::$connection;
     }
 
 

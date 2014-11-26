@@ -23,7 +23,10 @@ class LoginController {
 
     public function login(){
         // if both are set this statement is true.
+
         if($this->loginView->GetUsername() &&  $password = $this->loginView->GetPassword() ){
+            //var_dump($this->loginView->GetUsername());
+            //var_dump($password);
             $userName = $this->loginView->GetUsername();
             $validate= New Validate();
             $isLoggedIn = $validate->check($userName,$password);
