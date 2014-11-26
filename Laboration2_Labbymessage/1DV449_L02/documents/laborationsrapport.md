@@ -72,7 +72,7 @@
 
 ### Del 2 - Optimering
 
-####### Dålig rapportdel här ber om ursäkt, hamnade lite i ofas.
+###### Dålig rapportdel här ber om ursäkt, hamnade lite i ofas.
 
 *  **Problem : index.php & message.php** Delar flera meta taggar.      
     **Fix :** Skapa en commonHtml som sätter default som båda använder och läs sedan in resten via index.php och message.php.
