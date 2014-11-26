@@ -39,7 +39,7 @@ class Validate {
 
     public function getPasswordByUserName($userName){
 
-       /* try{*/
+       try{
             $db = $this->repository->connect();
             $sql = "SELECT *  FROM " . self::$dbUserTable . " WHERE " . self::$userName . " = ?";
             $params = array($userName);
@@ -52,10 +52,11 @@ class Validate {
             else{
                 return null;
             }
-//        }
-      /*  catch(\PDOException $e) {
+        }
+        catch(\PDOException $e) {
+            die("database error");
             throw new \Exception();
-        }*/
+        }
 
     }
 

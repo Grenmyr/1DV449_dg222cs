@@ -27,8 +27,11 @@ true om användare loggar in så får kontroller sköta det istället.
      **Fix :** Har modifierat MessageBoard.js så den ej använder .innhtml utan istället textcontent som endast skriver ut text
      Även om den skulle innehålla taggar så körs aldrig innehållet.
 
- * sec.php **Problem :** Sql är ej parametiserad, dessutom sparas lösenord i klartext. **Fix :** Parametisera sql anrop i
+ * sec.php & get.php **Problem :** Sql är ej parametiserad, dessutom sparas lösenord i klartext. **Fix :** Parametisera sql anrop i
    Validate->getPasswordByUserName() dessutom är password i databasen hasat med password_hash($password,PASSWORD_DEFAULT)
+
+  * sec.php & get.php **Problem :** De ekar ut exception message om ett sql anrop failar. Risk, onödig info.
+  **Fix :** Om undantag kastas, skriver jag endast ut en generell "databse error" sträng.
 
  * Allmän säkerhetsrisk **Problem :** Inget skydd mot cross site request factory.  **Fix :** Skapa hidden input field i
     MessageView.php och generera random string som dess value. och matcha sen vid post i longpoll.php.
@@ -37,6 +40,7 @@ true om användare loggar in så får kontroller sköta det istället.
     inloggad i longpoll.php init() funktionen. Om ej inloggad retunera.
 
   * db.db **Problem :** Det är bara att skriva in db.db på webbhotell o ladda ner **Fix :** Skapat egen databas mysql på webbhotell.
+
 
 ###### Del 2 - Optimering
 
@@ -59,7 +63,7 @@ true om användare loggar in så får kontroller sköta det istället.
 
 
 ####### TOTAL Storlek på get vid inloggad vy Innan optimeringar 984,7 kb
-####### TOTAL Storlek på webbhotell vid inloggad vy 78,3 kb
+####### TOTAL Storlek på webbhotell vid inloggad vy 83,0 kb
 
 ####### TOTAL Storlek vid inloggninsskärm Innan optimeringar 191,0 kb
 ####### TOTAL Storlek webbhotell vid inloggninsskärm Innan optimeringar 5,2 kb
@@ -67,3 +71,11 @@ true om användare loggar in så får kontroller sköta det istället.
 
 ###### Del 3 - Long-polling
 
+######## Tagit stor inspiration från [Denna](http://portal.bluejack.binus.ac.id/tutorials/webchatapplicationusinglong-pollingtechnologywithphpandajax) guide
+
+* ** Problem: **  Applikationen vi hade implementerade ej longpoll alls. Den hade en insert (via get) till db.db om en användare tryckte på skicka
+meddelande knappen. Sedan fick man göra en get genom ladda om sidan för läsa nya meddelanden.
+
+* **Fix :** Implementerat Longpopolling med delay 20 sekunder. klasser som använder den är MessageBoard.js som initierar. Longpoll.js
+fungerar som en router och kallar på min LongPoll.php som implementerar funktioner för hämta eller posta meddelanden via LongPoll.php.
+Båda två skickas via Post och ej Get längre.

@@ -71,7 +71,7 @@ class LongPoll {
         $curtime = null;
 
         while(time() <= $endTime){
-            //try{
+            try{
                 $db = $this->repository->connect();
                 $sql = "SELECT * FROM  " . self::$dbMessageTable." ORDER BY ". self::$timestamp ." DESC " ;
                 $query = $db -> prepare($sql);
@@ -89,9 +89,10 @@ class LongPoll {
                 else{
                     sleep(1);
                 }
-           /* } catch (\PDOException $e) {
+            } catch (\PDOException $e) {
+                die("database error");
                 throw new \Exception();
-            }*/
+            }
         }
 
     }
@@ -105,7 +106,7 @@ class LongPoll {
 
         if($sessionToken !== $token) {return;}
 
-        //try{
+        try{
             $db = $this->repository->connect();
             $sql = "INSERT INTO  " . self::$dbMessageTable . "  (" . self::$message . ", " . self::$userName . ") VALUES (?, ?)";
             $params = array($message, $username);
@@ -114,14 +115,14 @@ class LongPoll {
             if($result){
 
             }
-       /* } catch (\PDOException $e) {
+       } catch (\PDOException $e) {
+            die("database error");
             throw new \Exception();
-        }*/
+        }
     }
 
     private function removeMessage()
     {
-        // TODO fix here.
         $sessionModel = new SessionModel();
         $sessionToken = $sessionModel->getToken();
 
@@ -144,6 +145,7 @@ class LongPoll {
 
             }
         } catch (\PDOException $e) {
+          die("database error");
             //throw new \Exception();
       }
     }
