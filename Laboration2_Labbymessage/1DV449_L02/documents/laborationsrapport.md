@@ -31,14 +31,14 @@
 * **Fix :** skrev en egen i validate.php.
 
 ###### Javascript gör redirect och förstör utloggning.
-* **Problem : messageBoard.js** Skadlig kod document.getElementById("buttonLogout").onclick gör redirect så unset session ej funkar.
+* **Problem : [messageBoard.js](https://github.com/Grenmyr/1DV449_dg222cs/blob/master/Laboration2_Labbymessage/1DV449_L02/MessageBoard.js)** Skadlig kod document.getElementById("buttonLogout").onclick gör redirect så unset session ej funkar.
 *  **Risk :** Dels ska ej utloggning skötas i vy med javascript. Dessutom ska man bara loggas ut om man har skript på?
 *  **Fix :** kommentera bort skiten.
 
 ###### MessageBoard.js och Message.js
  * **Problem : message.js** Skrivit om så att message,user,time fått getter och setters. Tagit bort onödiga funktioner på prototypen.
  * **Risk :** Igentligen ingen risk förutom död kod är inte bra. Men genom skriva om scriptet kan jag validera typ på klienten. 
- * **Problem : MessageBoard.js**
+ * **Problem : [messageBoard.js](https://github.com/Grenmyr/1DV449_dg222cs/blob/master/Laboration2_Labbymessage/1DV449_L02/MessageBoard.js)**
  *  **Risk :** Använda **.InnherHtml** på dom är inte bra, då körs eventuella farliga skript när de genereras.
  **Fix :** Har modifierat MessageBoard.js så den ej använder **.innhtml utan istället .textcontent** som endast skriver ut text. Även om den skulle innehålla taggar så körs aldrig innehållet.
 
@@ -113,7 +113,7 @@
  **Problem:**  Applikationen vi hade implementerade ej longpoll alls. Den hade en insert (via get) till db.db om en användare tryckte på skicka
 meddelande knappen. Sedan fick man göra en get genom ladda om sidan för läsa nya meddelanden.
 
- **Fix :** LONGPOLL 20 sec delay implementerat i LongPoll.php. klassen som initierar flödet är MessageBoard.js som initierar Longpoll.js. LongPoll.js fungerar som en router och kallar på min LongPoll.php via ajaxanrop. LongPoll.php implementerar longpoll på server genom använda en while loop som jämför timestamp på inlägg hos vy, mot timestamp på senaste inlägg i tabell. LongPoll.php har all funktionalitet för hämta eller posta nya meddelanden mot server.
+ **Fix :** LONGPOLL 20 sec delay implementerat i LongPoll.php. klassen som initierar flödet är [messageBoard.js](https://github.com/Grenmyr/1DV449_dg222cs/blob/master/Laboration2_Labbymessage/1DV449_L02/MessageBoard.js) som initierar Longpoll.js. LongPoll.js fungerar som en router och kallar på min LongPoll.php via ajaxanrop. LongPoll.php implementerar longpoll på server genom använda en while loop som jämför timestamp på inlägg hos vy, mot timestamp på senaste inlägg i tabell. LongPoll.php har all funktionalitet för hämta eller posta nya meddelanden mot server.
 Det finns skydd för CRSF vid postning, och för använda LongPoll.php krävs inloggat läge.
 
 **Fördelar med min longpolling:** 
