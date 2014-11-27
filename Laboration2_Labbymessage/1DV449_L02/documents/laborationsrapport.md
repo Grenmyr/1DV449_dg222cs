@@ -36,7 +36,7 @@
 *  **Fix :** kommentera bort skiten.
 
 ###### MessageBoard.js och Message.js
- * **Problem : message.js** Skrivit om så att message,user,time fått getter och setters. Tagit bort onödiga funktioner på prototypen.
+ * **Problem : [message.js](https://github.com/Grenmyr/1DV449_dg222cs/blob/master/Laboration2_Labbymessage/1DV449_L02/Message.js)** Skrivit om så att message,user,time fått getter och setters. Tagit bort onödiga funktioner på prototypen.
  * **Risk :** Igentligen ingen risk förutom död kod är inte bra. Men genom skriva om scriptet kan jag validera typ på klienten. 
  * **Problem : [messageBoard.js](https://github.com/Grenmyr/1DV449_dg222cs/blob/master/Laboration2_Labbymessage/1DV449_L02/MessageBoard.js)**
  *  **Risk :** Använda **.InnherHtml** på dom är inte bra, då körs eventuella farliga skript när de genereras.
@@ -74,7 +74,7 @@
 
 ###### Dålig rapportdel här ber om ursäkt, hamnade lite i ofas.
 
-*  **Problem : index.php & message.php** Delar flera meta taggar.      
+*  **Problem : index.php & [message.js](https://github.com/Grenmyr/1DV449_dg222cs/blob/master/Laboration2_Labbymessage/1DV449_L02/Message.js)** Delar flera meta taggar.      
     **Fix :** Skapa en commonHtml som sätter default som båda använder och läs sedan in resten via index.php och message.php.
 
  *  **Problem : mess.php**  html {background:url(pic/b.jpg);}     
