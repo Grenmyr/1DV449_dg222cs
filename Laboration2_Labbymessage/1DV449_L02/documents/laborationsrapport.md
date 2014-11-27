@@ -117,7 +117,7 @@ meddelande knappen. Sedan fick man göra en get genom ladda om sidan för läsa 
 Det finns skydd för CRSF vid postning, och för använda LongPoll.php krävs inloggat läge.
 
 **Fördelar med min longpolling:** 
-* Genom anväda longpolling så blir antalet requests mycket mindre än shortpollsom kanske
+* Genom anväda longpolling så blir antalet requests mycket mindre än shortpoll som kanske
 skulle göra en request i sekunden eller så.
 
 **Nackdelar med min longpolling:** 
@@ -125,5 +125,5 @@ skulle göra en request i sekunden eller så.
 * Databasen får fortfarande slita likahårt som innan pga while loopen på server konstant gör sqls.
 * Väldigt komplex kod.
 
-###### David Grenmyr 2014-11-26 19:26
+###### David Grenmyr 2014-11-27 08:37
 
