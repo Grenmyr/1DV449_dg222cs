@@ -63,8 +63,8 @@ var MessageBoard = {
 
     },
     sendMessage:function(){
-        if(MessageBoard.textField.value == "") return;
-
+        if(MessageBoard.textField.value == "" || MessageBoard.nameField.value == "" ) return;
+        console.log(MessageBoard.nameField.value);
         var user = MessageBoard.nameField.value;
         var message = MessageBoard.textField.value;
         var token = MessageBoard.tokenField.value;
