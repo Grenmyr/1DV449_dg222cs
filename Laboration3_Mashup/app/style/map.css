@@ -1,1 +1,8 @@
-html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
+html, body, #map-canvas { width:50%; height: 100%; margin: 0; padding: 0; }
+html, body, #dropdown-list { width:50%; height: 100%; margin: 0; padding: 0; }
+
+body, html {
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+}

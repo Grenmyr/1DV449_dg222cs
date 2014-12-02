@@ -3,7 +3,7 @@
  */
 
 
-var __dirname ='';
+
 // require section
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -32,7 +32,7 @@ if('developement' == env){
     app.use(errorHandler({dumpExceptions:true,showStack:true}));
 
     app.use(cookieParser());
-    app.use(express.static(path.join(__dirname, 'sr')));
+    //app.use(express.static(path.join(__dirname, 'sr')));
 }
 
 
@@ -55,18 +55,26 @@ var server = app.listen(port,ip,function(){
 });*/
 
 app.get('/sr', function (req, res) {
-    var uri = "http://api.sr.se/api/v2/traffic/messages?format=json&indent=true";
-    request(uri,function(err,resp,result){
+
+   //res.send(JSON.parse(fs.readFileSync(__dirname+'/sr.json')));
+    var uri = "http://api.sr.se/api/v2/traffic/messages?format=json&indent=true&size=10000";
+
+    request(uri,function(err,resp,data){
 
         if(err !== true && resp.statusCode == 200) {
 
 
-            fs.writeFile('sr.json', result, function (err) {
-                if (err) return console.log(err);
-                console.log('working');
+            fs.writeFile('sr.json', data, function (err) {
+                //if (err) return console.log(err);
+                if (err) throw err;
+
+
+                res.send(JSON.parse(data));
+
             });
         }
     });
+
 
 });
 
