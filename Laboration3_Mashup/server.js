@@ -15,6 +15,8 @@ var path = require('path');
 var request = require('request');
 var socketIo = require('socket.io');
 
+var fs = require('fs');
+
 var app = express();
 
 
@@ -30,7 +32,7 @@ if('developement' == env){
     app.use(errorHandler({dumpExceptions:true,showStack:true}));
 
     app.use(cookieParser());
-    app.use(express.static(path.join(__dirname, 'test')));
+    app.use(express.static(path.join(__dirname, 'sr')));
 }
 
 
@@ -52,9 +54,20 @@ var server = app.listen(port,ip,function(){
     res.sendfile('/app/index.html');
 });*/
 
-app.get('/test', function (req, res) {
+app.get('/sr', function (req, res) {
+    var uri = "http://api.sr.se/api/v2/traffic/messages?format=json&indent=true";
+    request(uri,function(err,resp,result){
 
-    res.send('Hello World!!!!!');
+        if(err !== true && resp.statusCode == 200) {
+
+
+            fs.writeFile('sr.json', result, function (err) {
+                if (err) return console.log(err);
+                console.log('working');
+            });
+        }
+    });
+
 });
 
 /*socketIo.sockets.on('connection',function(client){

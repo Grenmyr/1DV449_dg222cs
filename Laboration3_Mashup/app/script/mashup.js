@@ -21,11 +21,9 @@ function init () {
         }
         google.maps.event.addDomListener(window, 'load', initialize);
 
-    console.log(mashup.map);
-
     var response = jQuery.get("/test", function (data, textStatus, jqXHR) {
 
-        console.dir(data);
+        console.log(data);
         //console.log(testStatus);
         //console.log(jqXHR);
     });
