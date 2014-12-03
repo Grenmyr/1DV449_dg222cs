@@ -11,6 +11,7 @@ var mashup = {
         },
         event: []
     },
+    selectedMarkers: [],
     markersDefault:[],
     markersValue0: [],
     markersValue1:[],
@@ -25,6 +26,7 @@ function init () {
         var cleanJson = cleanJsonObj(data);
         cleanJson.forEach(function(message){
             mashup.markersDefault.push(message);
+
             switch (message['category']){
                 case 0 :
                     mashup.markersValue0.push(message);
@@ -40,8 +42,31 @@ function init () {
                     break;
             }
         });
+        var select = document.querySelector('#dropdown-select');
+        select.addEventListener('change',function(e){
+            console.log(e.target.options.selectedIndex);
+            switch (e.target.options.selectedIndex){
+                case 0 :
+                    generateMarkers(mashup.markersValue0);
+                    break;
+                case 1 :
+                    generateMarkers(mashup.markersValue1);
+                    break;
+                case 2 :
+                    generateMarkers(mashup.markersValue2);
+                    break;
+                case 3 :
+                    generateMarkers(mashup.markersValue3);
+                    break;
+                default :
+                    generateMarkers(mashup.markersDefault);
+                    break;
+            }
 
-        generateMarkers(mashup.markersValue3);
+        });
+
+
+        //generateMarkers(mashup.markersValue3);
         socket.emit('my other event', { my: 'data' });
     });
 
@@ -74,7 +99,19 @@ function cleanJsonObj(data){
     return purifiedMarkers;
 }
 function generateMarkers(data) {
-   //var purifiedMarkers = cleanJsonObj(data);
+
+
+
+            mashup.selectedMarkers.forEach(function (marker) {
+                console.log(marker);
+                marker.setMap(null);
+            });
+            mashup.selectedMarkers = [];
+
+
+
+
+    //var purifiedMarkers = cleanJsonObj(data);
     data.reverse();
     var slicedMarkers = data.slice(0,100);
 
@@ -87,13 +124,14 @@ function generateMarkers(data) {
             title: marker.title
         });
 
-        mashup.markersDefault.push(marker);
+        mashup.selectedMarkers.push(addMarker);
+        //console.log(mashup.selectedMarkers);
         google.maps.event.addListener(addMarker,'click',function(){
             mashup.map.setZoom(10);
             mashup.map.setCenter(markerPosition);
         });
 
     });
-    console.log(mashup.markersValue3);
+    //console.log(mashup.markersValue3);
 }
 window.onload = init();
