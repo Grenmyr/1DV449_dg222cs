@@ -1,8 +1,10 @@
-html, body, #map-canvas { width:50%; height: 100%; margin: 0; padding: 0; }
-html, body, #dropdown-list { width:50%; height: 100%; margin: 0; padding: 0; }
+html, body,  #map-canvas { width:50%; height: 100%; margin: 0; padding: 0; }
+html, body,  #dropdown-list { float: right; margin: 0; padding: 0; }
+html, body, .container { }
 
-body, html {
+body, html, .container {
     height: 100%;
     width: 100%;
-    overflow: auto;
+
+
 }

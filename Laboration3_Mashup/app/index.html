@@ -3,6 +3,10 @@
 <head>
     <link rel="stylesheet" type="text/css" href="style/map.css"></link>
     <script src="script/jquery-2.1.1.min.js"></script>
+   <script src="/socket.io/socket.io.js"></script>
+
+
+
     <script type="text/javascript"
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAP26S2BhyRH2Z8q2JLwYrUTofaDP18Qpc">
     </script>
@@ -11,14 +15,19 @@
 
 </head>
 <body>
+<div class="container">
+    <div id="dropdown-list">
+        <select>
+
+            <option value="0">Vägtrafik</option>
+            <option value="1">Kollektivtrafik</option>
+            <option value="2">Planerad störning</option>
+            <option value="3">Övrigt</option>
+            <option value="default" selected>Alla</option>
+        </select>
+    </div>
 <div id="map-canvas"></div>
-<div id="dropdown-list">
-    <select>
-        <option value="0">Vägtrafik</option>
-        <option value="1">Kollektivtrafik</option>
-        <option value="2">Planerad störning</option>
-        <option value="3">Övrigt</option>
-    </select>
+
 </div>
 </body>
 </html>

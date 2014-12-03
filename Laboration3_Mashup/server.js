@@ -13,7 +13,9 @@ var express = require('express');
 var logger = require('morgan');
 var path = require('path');
 var request = require('request');
-var socketIo = require('socket.io');
+
+
+
 
 var fs = require('fs');
 
@@ -48,6 +50,9 @@ var server = app.listen(port,ip,function(){
     console.log("express listening on port:" +port,app.settings.env);
 
 });
+var socketIo = require('socket.io').listen(server);
+
+
 
 /*app.get('/test', function (req, res) {
 
@@ -56,8 +61,8 @@ var server = app.listen(port,ip,function(){
 
 app.get('/sr', function (req, res) {
 
-   //res.send(JSON.parse(fs.readFileSync(__dirname+'/sr.json')));
-    var uri = "http://api.sr.se/api/v2/traffic/messages?format=json&indent=true&size=10000";
+   res.send(JSON.parse(fs.readFileSync(__dirname+'/sr.json')));
+    /*var uri = "http://api.sr.se/api/v2/traffic/messages?format=json&indent=true&size=10000";
 
     request(uri,function(err,resp,data){
 
@@ -73,13 +78,17 @@ app.get('/sr', function (req, res) {
 
             });
         }
-    });
+    });*/
 
 
 });
 
-/*socketIo.sockets.on('connection',function(client){
+socketIo.sockets.on('connection',function(client){
 
-});*/
+    client.emit('load', JSON.parse(fs.readFileSync(__dirname+'/sr.json')));
+    client.on('my other event', function (data) {
+        console.log(data);
+    });
+});
 
 
