@@ -3,7 +3,7 @@
 <head>
     <link rel="stylesheet" type="text/css" href="style/map.css"></link>
     <script src="script/jquery-2.1.1.min.js"></script>
-   <script src="/socket.io/socket.io.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"
           rel="stylesheet">
 
@@ -20,23 +20,23 @@
     <div class="row">
         <div id="map-canvas" class="col-md-8"></div>
 
-            <div class="row">
-                <select id="dropdown-select" class="col-md-4" >
-                    <option value="0">Vägtrafik</option>
-                    <option value="1">Kollektivtrafik</option>
-                    <option value="2">Planerad störning</option>
-                    <option value="3">Övrigt</option>
-                    <option value="default" selected>Alla</option>
-                </select>
+        <div class="row" id="center">
+            <select id="dropdown-select" class="col-md-4">
+                <option value="0">Vägtrafik</option>
+                <option value="1">Kollektivtrafik</option>
+                <option value="2">Planerad störning</option>
+                <option value="3">Övrigt</option>
+                <option value="default" selected>Alla</option>
+            </select>
 
-                <div id="dropdown-list" class="col-md-4" >
-                    <ul id="ul">
-                        <li>
-                            test
-                        </li>
-                    </ul>
-                </div>
+            <div id="dropdown-list" class="col-md-4">
+                <ul id="ul" class=" ">
+                    <li>
+                        test
+                    </li>
+                </ul>
             </div>
+        </div>
 
     </div>
 

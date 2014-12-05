@@ -25,6 +25,7 @@ function init() {
 
     var socket = io.connect('http://localhost');
     socket.on('load', function (data) {
+        console.log(data);
         var cleanJson = cleanJsonObj(data);
         cleanJson.forEach(function (message) {
             mashup.markersDefault.push(message);
@@ -68,13 +69,12 @@ function init() {
             }
         });
         generateMarkers(mashup.markersDefault);
-        socket.emit('my other event', {my: 'data'});
+
     });
 
     function initialize() {
         mashup.map = new google.maps.Map(document.getElementById('map-canvas'), mashup.map.mapOptions);
     }
-
 
 
     google.maps.event.addDomListener(window, 'load', initialize);
@@ -96,7 +96,7 @@ function cleanJsonObj(data) {
             description: message.description,
             createddate: message.createddate,
             category: message.category,
-            subcategory : message.subcategory
+            subcategory: message.subcategory
         };
 
     });
@@ -149,16 +149,13 @@ function generateMarkers(data) {
 
         var list = document.createElement('li');
         list.textContent = addMarker.title;
-        google.maps.event.addDomListener(list, "click", function(){
+        google.maps.event.addDomListener(list, "click", function () {
             google.maps.event.trigger(addMarker, "click");
         });
         div.appendChild(list);
 
         mashup.selectedMarkers.push(addMarker);
     });
-
-
-
 
 
     //console.log(mashup.markersValue3);
