@@ -1,0 +1,13 @@
+#dropdown-select  {
+
+    margin: auto auto;
+    text-align: left;
+    font-size: 5em;
+    padding-left: 12%;
+
+
+
+}
+#dropdown-select[onselect]  {
+    text-decoration-color: gold;
+}
