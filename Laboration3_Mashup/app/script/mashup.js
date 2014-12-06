@@ -11,21 +11,24 @@ var mashup = {
         },
         previousMarker: {}
 
-
     },
-    selectedMarkers: [],
-    markersDefault: [],
-    markersValue0: [],
-    markersValue1: [],
-    markersValue2: [],
-    markersValue3: []
-
+    firstLoad : true,
+    selectedMarkers : []
 };
+
 function init() {
 
     var socket = io.connect('http://localhost');
     socket.on('load', function (data) {
-        console.log(data);
+        console.log("server push");
+
+        //mashup['selectedMarkers'] = [];
+        mashup['markersDefault'] = [];
+        mashup['markersValue0'] = [];
+        mashup['markersValue1'] = [];
+        mashup['markersValue2'] = [];
+        mashup['markersValue3'] = [];
+
         var cleanJson = cleanJsonObj(data);
         cleanJson.forEach(function (message) {
             mashup.markersDefault.push(message);
@@ -48,6 +51,8 @@ function init() {
                     break;
             }
         });
+
+
         var select = document.querySelector('#dropdown-select');
         select.addEventListener('change', function (e) {
             switch (e.target.options.selectedIndex) {
@@ -68,7 +73,14 @@ function init() {
                     break;
             }
         });
-        generateMarkers(mashup.markersDefault);
+
+        if(mashup.firstLoad){
+            generateMarkers(mashup.markersDefault);
+            mashup.firstLoad = false;
+
+        }
+
+
 
     });
 
@@ -108,14 +120,12 @@ function generateMarkers(data) {
 
     div.textContent = "";
 
-
+    console.log(mashup.selectedMarkers.length);
     mashup.selectedMarkers.forEach(function (marker) {
         marker.setMap(null);
     });
     mashup.selectedMarkers = [];
 
-
-    //var purifiedMarkers = cleanJsonObj(data);
 
     var slicedMarkers = data.slice(0, 100);
 
@@ -149,7 +159,8 @@ function generateMarkers(data) {
 
         var list = document.createElement('li');
         list.textContent = addMarker.title;
-        google.maps.event.addDomListener(list, "click", function () {
+        google.maps.event.addDomListener(list, "click", function (e) {
+            e.preventDefault();
             google.maps.event.trigger(addMarker, "click");
         });
         div.appendChild(list);

@@ -91,7 +91,7 @@ var update = function () {
     });
 };
 update();
-setInterval(update, 100000);
+setInterval(update, 20000);
 
 
 socketIo.sockets.on('connection', function (client) {
