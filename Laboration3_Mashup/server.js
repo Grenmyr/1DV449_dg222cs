@@ -73,8 +73,11 @@ var update = function () {
     request(uri, function (err, resp, data) {
 
         if (err !== true && resp.statusCode == 200) {
+            var jsonData =JSON.parse(data);
+            if(JSON.stringify(parse) !== JSON.stringify(jsonData)) {
+
             try{
-               var jsonData =JSON.parse(data);
+                console.log("saved new data");
                 parse = jsonData;
                 socketIo.sockets.emit('load', jsonData);
                 fs.writeFile('sr.json', data, function (err) {
@@ -86,6 +89,10 @@ var update = function () {
                 fs.writeFile('sr.json', "{}");
             }
 
+            }
+            else{
+                console.log("no new data")
+            }
 
         }
     });

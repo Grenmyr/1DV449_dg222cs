@@ -6,11 +6,10 @@ var mashup = {
     map: {
         object: {},
         mapOptions: {
-            center: {lat: 56.697, lng: 16.354},
-            zoom: 3
+            center: {lat: 62.697, lng: 14.354},
+            zoom: 4
         },
         previousMarker: {}
-
     },
     firstLoad : true,
     selectedMarkers : []
@@ -22,7 +21,6 @@ function init() {
     socket.on('load', function (data) {
         console.log("server push");
 
-        //mashup['selectedMarkers'] = [];
         mashup['markersDefault'] = [];
         mashup['markersValue0'] = [];
         mashup['markersValue1'] = [];
@@ -55,6 +53,8 @@ function init() {
 
         var select = document.querySelector('#dropdown-select');
         select.addEventListener('change', function (e) {
+            mashup.map.setZoom(4);
+            mashup.map.setCenter({lat: 62.697, lng: 14.354});
             switch (e.target.options.selectedIndex) {
                 case 0 :
                     generateMarkers(mashup.markersValue0);
@@ -79,9 +79,6 @@ function init() {
             mashup.firstLoad = false;
 
         }
-
-
-
     });
 
     function initialize() {
@@ -116,6 +113,9 @@ function cleanJsonObj(data) {
     return purifiedMarkers;
 }
 function generateMarkers(data) {
+    var start = new Date().getMilliseconds();
+
+    console.log("generated markers");
     var div = document.querySelector('ul');
 
     div.textContent = "";
@@ -134,7 +134,7 @@ function generateMarkers(data) {
         var markerPosition = new google.maps.LatLng(marker.latitude, marker.longitude);
         var infoWindow = new InfoWindow(marker);
 
-        var addMarker = new google.maps.Marker({
+       var addMarker = new google.maps.Marker({
             position: markerPosition,
             map: mashup.map,
             title: marker.title,
@@ -152,7 +152,7 @@ function generateMarkers(data) {
             }
 
             mashup.map.setZoom(10);
-            mashup.map.setCenter(markerPosition);
+            mashup.map.setCenter( markerPosition);
             this.infoWindow.open(mashup.map, this);
             mashup.map.previousMarker = this;
         });
@@ -168,8 +168,8 @@ function generateMarkers(data) {
         mashup.selectedMarkers.push(addMarker);
     });
 
-
-    //console.log(mashup.markersValue3);
+    var done = new Date().getMilliseconds();
+    console.log(done - start);
 }
 
 window.onload = init();
