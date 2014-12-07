@@ -78,6 +78,7 @@ var update = function () {
 
             try{
                 console.log("saved new data");
+                console.log(data.length+ " var längden på inserten server.js");
                 parse = jsonData;
                 socketIo.sockets.emit('load', jsonData);
                 fs.writeFile('sr.json', data, function (err) {

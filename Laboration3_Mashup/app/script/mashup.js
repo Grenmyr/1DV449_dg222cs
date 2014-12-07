@@ -1,7 +1,13 @@
 /**
  * Created by dav on 2014-12-01.
  */
-
+var icons = [
+    "../files/blue.png",
+    "../files/orange.png",
+    "../files/yellow.png",
+    "../files/green.png",
+    "../files/blue.png"
+];
 var mashup = {
     map: {
         object: {},
@@ -15,20 +21,22 @@ var mashup = {
     selectedMarkers : []
 };
 
-function init() {
 
+function fetchSrData() {
     var socket = io.connect('http://localhost');
-    socket.on('load', function (data) {
-        console.log("server push");
 
+    socket.on('load', function (srJson) {
+
+        console.log("server push");
         mashup['markersDefault'] = [];
+        mashup['newMarkers'] = [];
         mashup['markersValue0'] = [];
         mashup['markersValue1'] = [];
         mashup['markersValue2'] = [];
         mashup['markersValue3'] = [];
 
-        var cleanJson = cleanJsonObj(data);
-        cleanJson.forEach(function (message) {
+        var cleanedFullJson = cleanJsonObj(srJson);
+        cleanedFullJson.forEach(function (message) {
             mashup.markersDefault.push(message);
 
             switch (message['category']) {
@@ -49,8 +57,16 @@ function init() {
                     break;
             }
         });
+        if(mashup.firstLoad) {
+            console.log("pushed new data from server");
+            generateMarkers(mashup.markersDefault);
+            mashup.firstLoad = false;
+        }
 
+    });
 
+    function initializeMap() {
+        console.log("initializeMap körs");
         var select = document.querySelector('#dropdown-select');
         select.addEventListener('change', function (e) {
             mashup.map.setZoom(4);
@@ -74,28 +90,15 @@ function init() {
             }
         });
 
-        if(mashup.firstLoad){
-            generateMarkers(mashup.markersDefault);
-            mashup.firstLoad = false;
-
-        }
-    });
-
-    function initialize() {
-        mashup.map = new google.maps.Map(document.getElementById('map-canvas'), mashup.map.mapOptions);
+        mashup.map = new google.maps.Map(document.getElementById('map-canvas'), mashup.map.mapOptions );
     }
+    google.maps.event.addDomListener(window, 'load', initializeMap);
 
-
-    google.maps.event.addDomListener(window, 'load', initialize);
-
-
-    /* jQuery.get('/sr', function (data, textStatus, jqXHR) {
-     generateMarkers(data);
-     });*/
 
 }
-function cleanJsonObj(data) {
 
+
+function cleanJsonObj(data) {
     var purifiedMarkers = data['messages'].map(function (message) {
 
         return {
@@ -105,31 +108,33 @@ function cleanJsonObj(data) {
             description: message.description,
             createddate: message.createddate,
             category: message.category,
-            subcategory: message.subcategory
+            subcategory: message.subcategory,
+            priority : message.priority
         };
 
     });
     purifiedMarkers.reverse();
-    return purifiedMarkers;
+    return purifiedMarkers.slice(0, 100);
 }
-function generateMarkers(data) {
+
+function generateMarkers(categoryArray) {
     var start = new Date().getMilliseconds();
 
-    console.log("generated markers");
+
     var div = document.querySelector('ul');
 
     div.textContent = "";
-
-    console.log(mashup.selectedMarkers.length);
+    console.log("nya kategorilängd " +categoryArray.length);
+    console.log("föregående markers längd"+mashup.selectedMarkers.length);
     mashup.selectedMarkers.forEach(function (marker) {
         marker.setMap(null);
     });
     mashup.selectedMarkers = [];
 
 
-    var slicedMarkers = data.slice(0, 100);
 
-    slicedMarkers.forEach(function (marker) {
+
+    categoryArray.forEach(function (marker) {
 
         var markerPosition = new google.maps.LatLng(marker.latitude, marker.longitude);
         var infoWindow = new InfoWindow(marker);
@@ -138,13 +143,13 @@ function generateMarkers(data) {
             position: markerPosition,
             map: mashup.map,
             title: marker.title,
+            icon : icons[marker.priority-1],
             infoWindow: new google.maps.InfoWindow({
                 content: infoWindow.getDomString()
             })
         });
 
 
-        //console.log(mashup.selectedMarkers);
         google.maps.event.addListener(addMarker, 'click', function () {
 
             if (mashup.map.previousMarker) {
@@ -172,4 +177,4 @@ function generateMarkers(data) {
     console.log(done - start);
 }
 
-window.onload = init();
+window.onload = fetchSrData();
