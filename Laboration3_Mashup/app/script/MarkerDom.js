@@ -4,7 +4,7 @@
  */
 function InfoWindow(marker) {
     var title = marker.title;
-    var date = new Date(parseInt(marker.createddate.replace("/Date(", "").replace(")/", ""), 10));
+    var date = new Date(marker.createddate);
     var description = marker.description;
     var subcategory = marker.subcategory;
     if (marker.description == '') {

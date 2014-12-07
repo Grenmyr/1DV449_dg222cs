@@ -99,6 +99,12 @@ function fetchSrData() {
 
 
 function cleanJsonObj(data) {
+
+    data['messages'].forEach(function(message) {
+        message.createddate = parseInt(message.createddate.replace("/Date(", "").replace(")/", ""), 10);
+    });
+        data['messages'].sort(function(a, b){return b.createddate- a.createddate});
+
     var purifiedMarkers = data['messages'].map(function (message) {
 
         return {
@@ -113,7 +119,7 @@ function cleanJsonObj(data) {
         };
 
     });
-    purifiedMarkers.reverse();
+    //purifiedMarkers.reverse();
     return purifiedMarkers.slice(0, 100);
 }
 
@@ -142,7 +148,7 @@ function generateMarkers(categoryArray) {
        var addMarker = new google.maps.Marker({
             position: markerPosition,
             map: mashup.map,
-            title: marker.title,
+            title: marker.title + marker.createddate,
             icon : icons[marker.priority-1],
             infoWindow: new google.maps.InfoWindow({
                 content: infoWindow.getDomString()
