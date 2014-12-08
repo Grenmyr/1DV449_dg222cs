@@ -1,13 +1,16 @@
 #dropdown-select  {
 
     margin: auto auto;
-    text-align: left;
+    text-align: center;
     font-size: 5em;
-    padding-left: 12%;
+
+    max-width: 100vw;
 
 
 
 }
-#dropdown-select[onselect]  {
-    text-decoration-color: gold;
+#dropdown-select option  {
+    color: gold;
+    max-width: 100x§vw;
+    display: flex;
 }

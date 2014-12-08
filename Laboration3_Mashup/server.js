@@ -54,13 +54,11 @@ var socketIo = require('socket.io').listen(server);
  });*/
 
 
-
-
 var parse = JSON.parse("{}");
-try{
+try {
     parse = JSON.parse(fs.readFileSync(__dirname + '/sr.json'));
 }
-catch (e){
+catch (e) {
     console.log("error när initiering");
 }
 
@@ -73,25 +71,25 @@ var update = function () {
     request(uri, function (err, resp, data) {
 
         if (err !== true && resp.statusCode == 200) {
-            var jsonData =JSON.parse(data);
-            if(JSON.stringify(parse) !== JSON.stringify(jsonData)) {
+            var jsonData = JSON.parse(data);
+            if (JSON.stringify(parse) !== JSON.stringify(jsonData)) {
 
-            try{
-                console.log("saved new data");
-                console.log(data.length+ " var längden på inserten server.js");
-                parse = jsonData;
-                socketIo.sockets.emit('load', jsonData);
-                fs.writeFile('sr.json', data, function (err) {
-                    //if (err) return console.log(err);
-                    if (err) throw err;
-                });
-            }
-            catch (e) {
-                fs.writeFile('sr.json', "{}");
-            }
+                try {
+                    console.log("saved new data");
+                    console.log(data.length + " var längden på inserten server.js");
+                    parse = jsonData;
+                    socketIo.sockets.emit('load', jsonData);
+                    fs.writeFile('sr.json', data, function (err) {
+                        //if (err) return console.log(err);
+                        if (err) throw err;
+                    });
+                }
+                catch (e) {
+                    fs.writeFile('sr.json', "{}");
+                }
 
             }
-            else{
+            else {
                 console.log("no new data")
             }
 

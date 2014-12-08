@@ -135,21 +135,16 @@ function cleanJsonObj(data) {
 function generateMarkers(categoryArray) {
     var start = new Date().getMilliseconds();
 
-
     var ul = document.querySelector('ul');
-
     ul.textContent = "";
     console.log("nya kategorilängd " +categoryArray.length);
     console.log("föregående markers längd"+mashup.selectedMarkers.length);
+
     mashup.selectedMarkers.forEach(function (marker) {
         marker.setMap(null);
     });
     mashup.selectedMarkers = [];
-
-
-
-
-    categoryArray.forEach(function (marker) {
+    categoryArray.forEach(function (marker,i) {
 
         var markerPosition = new google.maps.LatLng(marker.latitude, marker.longitude);
         var infoWindow = new InfoWindow(marker);
@@ -170,7 +165,6 @@ function generateMarkers(categoryArray) {
             if (mashup.map.previousMarker) {
                 mashup.map.previousMarker.infoWindow.close();
             }
-
             mashup.map.setZoom(10);
             mashup.map.setCenter( markerPosition);
             this.infoWindow.open(mashup.map, this);
@@ -178,18 +172,26 @@ function generateMarkers(categoryArray) {
         });
 
         var list = document.createElement('li');
+        list.setAttribute('id',i);
         list.textContent = addMarker.title;
-        google.maps.event.addDomListener(list, "click", function (e) {
-            e.preventDefault();
-            google.maps.event.trigger(addMarker, "click");
-        });
+
         ul.appendChild(list);
 
         mashup.selectedMarkers.push(addMarker);
     });
 
+    createUlEvent(ul);
+
     var done = new Date().getMilliseconds();
     console.log(done - start);
+}
+function createUlEvent (ul){
+    google.maps.event.addDomListener(ul, "click", function (e) {
+        e.preventDefault();
+        if (e.target.nodeName === 'LI') {
+        google.maps.event.trigger(mashup.selectedMarkers[e.target.id ], "click");
+        }
+    });
 }
 
 window.onload = fetchSrData();
