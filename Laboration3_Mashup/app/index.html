@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="style/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style/map.css"></link>
-    <link rel="stylesheet" media="(max-width: 800px)" href="style/mobile.css" />
+    <link rel="stylesheet" media="(max-width: 1000px)" href="style/mobile.css"/>
     <script src="script/jquery-2.1.1.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"
-          rel="stylesheet">
 
 
     <script type="text/javascript"
@@ -33,20 +33,23 @@
 
         </div>
 
-        <div class="row" >
-
-
+        <div class="row">
             <div id="dropdown-list" class="col-md-3">
                 <ul id="ul" class=" ">
                 </ul>
             </div>
         </div>
-
     </div>
 
 
 </div>
-
+<div id="footer" class="container">
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="navbar-inner navbar-content-center">
+            <h3 class="text-muted credit">App all credits to dg222cs</h3>
+        </div>
+    </nav>
+</div>
 
 </body>
 </html>

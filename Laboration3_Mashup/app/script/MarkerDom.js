@@ -12,7 +12,7 @@ function InfoWindow(marker) {
     }
 
     this.getDomString = function () {
-        var string = "<div>";
+        var string = "<div class='infoWindow'>";
         string += "<h4>" + title + "</h4>";
         string += "    <h6>" + date.toLocaleDateString() + " Klockan: " + date.toLocaleTimeString() + "</h6>";
         string += "  <p>" + "<h6>Beskrivning:</h6>" + description + "</p>";

@@ -3,25 +3,39 @@
     min-height: 500px;
 
 }
+ul{
 
+}
 li {
     list-style-type: none;
     padding: 5px;
+    margin: auto auto;
+
 
 }
 
 li:hover {
-
-    background-color: red;
+    cursor: crosshair;
+    font-size: 1.5em;
+    background-color: darkgrey;
+    border-radius: 5px;
 }
 
 #dropdown-select {
     margin: auto auto;
     text-align: center;
-    font-size: 3em;
-
-
+    font-size: 2em;
 }
+#footer{
+    content: inherit;
+}
+.row {
+    margin: 0;
+}
+h3{
+    text-align: center;
+}
+
 #center{
     height: 500px;
     overflow-y:scroll;
@@ -31,5 +45,10 @@ li:hover {
     overflow-y:scroll;
     text-align: center;
 
-
 }
+
+#dropdown-list #ul ul li {
+    font-style: Arial;
+}
+
+

@@ -94,6 +94,9 @@ function fetchSrData() {
         });
 
         mashup.map = new google.maps.Map(document.getElementById('map-canvas'), mashup.map.mapOptions );
+        var trafficLayer = new google.maps.TrafficLayer();
+        trafficLayer.setMap(mashup.map);
+
     }
     google.maps.event.addDomListener(window, 'load', initializeMap);
 
@@ -152,7 +155,7 @@ function generateMarkers(categoryArray) {
        var addMarker = new google.maps.Marker({
             position: markerPosition,
             map: mashup.map,
-            title: marker.title + marker.createddate,
+            title: marker.title ,
             icon : icons[marker.priority-1],
             infoWindow: new google.maps.InfoWindow({
                 content: infoWindow.getDomString()
