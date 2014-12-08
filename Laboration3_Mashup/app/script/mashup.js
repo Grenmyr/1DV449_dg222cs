@@ -18,7 +18,8 @@ var mashup = {
         previousMarker: {}
     },
     firstLoad : true,
-    selectedMarkers : []
+    selectedMarkers : [],
+    oneHundred : 100
 };
 
 
@@ -36,27 +37,29 @@ function fetchSrData() {
         mashup['markersValue3'] = [];
 
         var cleanedFullJson = cleanJsonObj(srJson);
-        cleanedFullJson.forEach(function (message) {
-            mashup.markersDefault.push(message);
+        cleanedFullJson = filterUnique(cleanedFullJson);
+        for (var i = 0; i < mashup.oneHundred; i++) {
+            mashup.markersDefault.push(cleanedFullJson[i]);
 
-            switch (message['category']) {
+            switch (cleanedFullJson[i]['category']) {
                 case 0 :
-                    mashup.markersValue0.push(message);
+                    mashup.markersValue0.push(cleanedFullJson[i]);
                     break;
                 case 1 :
-                    mashup.markersValue1.push(message);
+                    mashup.markersValue1.push(cleanedFullJson[i]);
                     break;
                 case 2 :
-                    mashup.markersValue2.push(message);
+                    mashup.markersValue2.push(cleanedFullJson[i]);
                     break;
                 case 3 :
-                    mashup.markersValue3.push(message);
+                    mashup.markersValue3.push(cleanedFullJson[i]);
                     break;
                 default :
                     console.log("pannkaka");
                     break;
             }
-        });
+        }
+
         if(mashup.firstLoad) {
             console.log("pushed new data from server");
             generateMarkers(mashup.markersDefault);
@@ -96,7 +99,12 @@ function fetchSrData() {
 
 
 }
-
+function filterUnique (messages){
+    var tempObj = {};
+    return messages.filter(function(value){
+        return tempObj.hasOwnProperty(value.id) ? false : (tempObj[value.id] = true);
+    })
+}
 
 function cleanJsonObj(data) {
 
@@ -115,21 +123,22 @@ function cleanJsonObj(data) {
             createddate: message.createddate,
             category: message.category,
             subcategory: message.subcategory,
-            priority : message.priority
+            priority : message.priority,
+            id : message.id
         };
 
     });
     //purifiedMarkers.reverse();
-    return purifiedMarkers.slice(0, 100);
+    return purifiedMarkers;
 }
 
 function generateMarkers(categoryArray) {
     var start = new Date().getMilliseconds();
 
 
-    var div = document.querySelector('ul');
+    var ul = document.querySelector('ul');
 
-    div.textContent = "";
+    ul.textContent = "";
     console.log("nya kategorilängd " +categoryArray.length);
     console.log("föregående markers längd"+mashup.selectedMarkers.length);
     mashup.selectedMarkers.forEach(function (marker) {
@@ -174,7 +183,7 @@ function generateMarkers(categoryArray) {
             e.preventDefault();
             google.maps.event.trigger(addMarker, "click");
         });
-        div.appendChild(list);
+        ul.appendChild(list);
 
         mashup.selectedMarkers.push(addMarker);
     });
