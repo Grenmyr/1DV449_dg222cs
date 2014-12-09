@@ -35,8 +35,8 @@ if ('developement' == env) {
 
 
 //connectionSetup
-var ip = process.env.OPENSHIFT_NODE_IP || "127.0.0.1";
-var port = parseInt(process.env.OPENSHIFT_NODEJS_PORT) || 8000;
+var ip = "0.0.0.0";
+var port = 8000;
 
 app.set('ip', ip);
 app.set('port', port);
