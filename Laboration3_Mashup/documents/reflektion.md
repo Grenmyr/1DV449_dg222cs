@@ -26,8 +26,9 @@
 #### Hur har du tänkt kring **optimeringen** i din applikation?
 
 *  **optimeringen :**  
+*  Använder ej Jquery alls, har minifierad bootstrap.
 *  Har en eventlistener för min Ul, sedan en för varje marker. Så har optimerat där. 
 *  Delar av koden som endast behöver köras en gång körs bara en gång. Exempelvis generering av karta och populering av alla marker arrayer sker endast en gång. Efter det genereras bara arrayer efter vilken kategori som väljs.
-*  Har tagit bort irrelavant data från Json object som ej är relevant för min mashup. Exempelvis  exactlocation som ej är relevant för min applikation.
+*  Har tagit bort irrelavant data från Json object som ej är relevant för min mashup. Exempelvis  exactlocation som ej används i min applikation.
 
 ###### dg222cs David Grenmyr
