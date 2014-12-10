@@ -1,4 +1,5 @@
 
+## Reflektion laboration 3
 #### Vad finns det för **krav** du måste anpassa dig efter i de olika API:erna?
 *  **Krav sr :** Inga krav, förutom du får ej utföra ddos attacker typ.
 *  **Krav google :** 25 000+ i snitt per dag under 90 dagar så kan jag behöva betala.  
