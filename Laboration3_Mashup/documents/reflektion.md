@@ -10,10 +10,23 @@
 
 *  **Cachning server/client drift av applikation :** Jag har här ett offline first tänk. Där server endast via websockets gör en emit mot alla uppkopplade användare då data har förändrats. Om uppkoppling mot server ej existerar så kan applikationen fortfarande användas. När anslutning till server eventuellt återstår kommer server emitta ut ny data (om ny data från sr har sparats sedan anslutning senast bröts).
 
+* Jquery och andra "vanliga" filer är hög sannorlikhet att de redan cashats från andra webbsidor.
+
+
 #### Vad finns det för **risker** med din applikation?
 
-*  **Risker :** Mina risker skulle kunna vara om jag får farlig data ifrån SR. Men jag användet .textcontent när jag spara datan. 
+*  **Risker :**En risk är förändringar i sr och googles publika apier som påverkar min applikation. 
+* **Risker :** Om applikationen skulle få hög eller stötig traffik är risken hög att den krashar då jag ej använt extern CDN för server.
 
+#### Hur har du tänkt kring **säkerheten** i din applikation?
 
-Hur har du tänkt kring säkerheten i din applikation?
-Hur har du tänkt kring optimeringen i din applikation?
+*  **säkerheten :** Allt känns säkert, traffik till sr går via min server till sr. Data från sr skrivs med .textcontent till infowindows. Sedan tar google hand om valideringen åt mig då de ej tillåter script taggar i några former. 
+
+#### Hur har du tänkt kring **optimeringen** i din applikation?
+
+*  **optimeringen :**  
+*  Har en eventlistener för min Ul, sedan en för varje marker. Så har optimerat där. 
+*  Delar av koden som endast behöver köras en gång körs bara en gång. Exempelvis generering av karta och populering av alla marker arrayer sker endast en gång. Efter det genereras bara arrayer efter vilken kategori som väljs.
+*  Har tagit bort irrelavant data från Json object som ej är relevant för min mashup. Exempelvis  exactlocation som ej är relevant för min applikation.
+
+######## dg222cs David Grenmyr
