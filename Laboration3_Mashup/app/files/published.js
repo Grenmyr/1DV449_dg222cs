@@ -24,9 +24,8 @@ var mashup = {
 
 
 function fetchSrData() {
-    var socket = io.connect('http://localhost');
+    var socket = io.connect('http://178.62.83.186');
 
-    //var socket = io.connect('http://178.62.83.186');
     socket.on('load', function (srJson) {
 
         console.log("server push");
