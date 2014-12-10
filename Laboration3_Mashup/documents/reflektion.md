@@ -29,4 +29,4 @@
 *  Delar av koden som endast behöver köras en gång körs bara en gång. Exempelvis generering av karta och populering av alla marker arrayer sker endast en gång. Efter det genereras bara arrayer efter vilken kategori som väljs.
 *  Har tagit bort irrelavant data från Json object som ej är relevant för min mashup. Exempelvis  exactlocation som ej är relevant för min applikation.
 
-######## dg222cs David Grenmyr
+###### dg222cs David Grenmyr
