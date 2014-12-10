@@ -61,7 +61,7 @@ function fetchSrData() {
         }
 
         if(mashup.firstLoad) {
-            console.log("pushed new data from server");
+            //console.log("pushed new data from server");
             generateMarkers(mashup.markersDefault);
             mashup.firstLoad = false;
         }
@@ -69,7 +69,7 @@ function fetchSrData() {
     });
 
     function initializeMap() {
-        console.log("initializeMap körs");
+        //console.log("initializeMap körs");
         var select = document.querySelector('#dropdown-select');
         select.addEventListener('change', function (e) {
             mashup.map.setZoom(4);
@@ -136,12 +136,12 @@ function cleanJsonObj(data) {
 }
 
 function generateMarkers(categoryArray) {
-    var start = new Date().getMilliseconds();
+    //var start = new Date().getMilliseconds();
 
     var ul = document.querySelector('ul');
     ul.textContent = "";
-    console.log("nya kategorilängd " +categoryArray.length);
-    console.log("föregående markers längd"+mashup.selectedMarkers.length);
+    //console.log("nya kategorilängd " +categoryArray.length);
+    //console.log("föregående markers längd"+mashup.selectedMarkers.length);
 
     mashup.selectedMarkers.forEach(function (marker) {
         marker.setMap(null);
@@ -185,8 +185,8 @@ function generateMarkers(categoryArray) {
 
     createUlEvent(ul);
 
-    var done = new Date().getMilliseconds();
-    console.log(done - start);
+    //var done = new Date().getMilliseconds();
+    //console.log(done - start);
 }
 function createUlEvent (ul){
     google.maps.event.addDomListener(ul, "click", function (e) {
