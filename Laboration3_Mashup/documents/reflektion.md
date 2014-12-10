@@ -11,8 +11,6 @@
 
 *  **Cachning server/client drift av applikation :** Jag har här ett offline first tänk. Där server endast via websockets gör en emit mot alla uppkopplade användare då data har förändrats. Om uppkoppling mot server ej existerar så kan applikationen fortfarande användas. När anslutning till server eventuellt återstår kommer server emitta ut ny data (om ny data från sr har sparats sedan anslutning senast bröts).
 
-* Jquery och andra "vanliga" filer är hög sannorlikhet att de redan cashats från andra webbsidor.
-
 
 #### Vad finns det för **risker** med din applikation?
 
