@@ -3,14 +3,20 @@
  */
 
 
+
 // require section
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var debug = require('debug');
 var errorHandler = require('errorhandler');
 var express = require('express');
+var logger = require('morgan');
 var path = require('path');
 var request = require('request');
 
 
 var fs = require('fs');
+
 var app = express();
 
 
@@ -19,14 +25,18 @@ var env = process.env.NODE_ENV || 'developement';
 
 if ('developement' == env) {
     app.use('/', express.static(path.join(__dirname, 'app')));
+    app.use(logger('dev'));
+    app.use(bodyParser());
     app.use(errorHandler({dumpExceptions: true, showStack: true}));
+
+    app.use(cookieParser());
     //app.use(express.static(path.join(__dirname, 'sr')));
 }
 
 
 //connectionSetup
 var ip = "0.0.0.0";
-var port = 8000;
+var port = 80;
 
 app.set('ip', ip);
 app.set('port', port);
@@ -36,6 +46,13 @@ var server = app.listen(port, ip, function () {
 
 });
 var socketIo = require('socket.io').listen(server);
+
+
+/*app.get('/test', function (req, res) {
+
+ res.sendfile('/app/index.html');
+ });*/
+
 
 var parse = JSON.parse("{}");
 try {
@@ -50,9 +67,10 @@ var update = function () {
     count++;
     console.log(count);
     var uri = "http://api.sr.se/api/v2/traffic/messages?format=json&indent=true&size=10000";
+    //var uri = "http://expressen.se";
     request(uri, function (err, resp, data) {
 
-        if (err !== true && resp.statusCode == 200) {
+        if (err !== true && resp  && resp.statusCode == 200) {
             var jsonData = JSON.parse(data);
             if (JSON.stringify(parse) !== JSON.stringify(jsonData)) {
 
@@ -62,6 +80,7 @@ var update = function () {
                     parse = jsonData;
                     socketIo.sockets.emit('load', jsonData);
                     fs.writeFile('sr.json', data, function (err) {
+                        //if (err) return console.log(err);
                         if (err) throw err;
                     });
                 }
@@ -71,7 +90,6 @@ var update = function () {
 
             }
             else {
-                parse = JSON.parse("{}");
                 console.log("no new data")
             }
 
@@ -80,6 +98,7 @@ var update = function () {
 };
 update();
 setInterval(update, 20000);
+
 
 socketIo.sockets.on('connection', function (client) {
     console.log("start");
