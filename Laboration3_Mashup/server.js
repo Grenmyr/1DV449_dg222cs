@@ -4,12 +4,8 @@
 
 
 // require section
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
-var debug = require('debug');
 var errorHandler = require('errorhandler');
 var express = require('express');
-var logger = require('morgan');
 var path = require('path');
 var request = require('request');
 
@@ -23,11 +19,7 @@ var env = process.env.NODE_ENV || 'developement';
 
 if ('developement' == env) {
     app.use('/', express.static(path.join(__dirname, 'app')));
-    app.use(logger('dev'));
-    app.use(bodyParser());
     app.use(errorHandler({dumpExceptions: true, showStack: true}));
-
-    app.use(cookieParser());
     //app.use(express.static(path.join(__dirname, 'sr')));
 }
 
