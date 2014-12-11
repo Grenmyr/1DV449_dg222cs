@@ -29,4 +29,7 @@
 *  Delar av koden som endast behöver köras en gång körs bara en gång. Exempelvis generering av karta och populering av alla marker arrayer sker endast en gång. Efter det genereras bara arrayer efter vilken kategori som väljs.
 *  Har tagit bort irrelavant data från Json object som ej är relevant för min mashup. Exempelvis  exactlocation som ej används i min applikation.
 
+* **Brister i applikation/utförande :**
+*  **Brister** På grund av tisbrist har jag ej gjort mina marker png till en spritemap.
+
 ###### dg222cs David Grenmyr
