@@ -5,6 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var jade = require('jade');
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
@@ -67,5 +69,6 @@ var socketIo = require('socket.io').listen(server);
 
 socketIo.sockets.on('connection', function (client) {
     console.log("connected");
+    //socketIo.set('index', { test: 'test set med socket' })
     client.emit('load', {test: "testobjekt"});
 });

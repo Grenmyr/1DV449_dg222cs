@@ -6,6 +6,10 @@
     socket.on('load', function (data) {
         console.log("connect");
         console.log(data);
+        data.render('index',data );
     });
+
 }
 window.onload = init();
+
+
