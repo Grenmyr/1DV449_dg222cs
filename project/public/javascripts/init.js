@@ -5,18 +5,12 @@ var settings = {
     socket: io.connect('http://localhost'),
     map: null,
     html : {
-        body : document.querySelector('body'),
+        start : document.querySelector('#start'),
         content : document.querySelector('.content')
     }
 };
-
-
 function init() {
-    initializeSocket();
     waitForUserClick();
-}
-function initializeSocket() {
-    //settings.socket = io.connect('http://localhost');
 }
 
 function initializeMap() {
@@ -32,8 +26,9 @@ function initializeMap() {
 }
 
 function waitForUserClick (){
-    settings.html.body.addEventListener('click', function (e) {
+    settings.html.start.addEventListener('click', function (e) {
         settings.html.content.style.visibility = "visible";
+        settings.html.start.remove();
         console.log("loaded map");
         initializeMap();
         new Mashup(settings.socket,settings.map);

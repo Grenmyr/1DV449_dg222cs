@@ -1,14 +1,17 @@
 extends layout
 
 block content
-  h1= title
-  p Välkommen #{user}
+  h1#start= title
+
   .content
+    h4 Välkommen #{user}
     #companySearch
       h4 Vad söker du?
       select#companySelect
         each parameter, i in searchParameters
           option(value=i) #{parameter}
+      button#searchButton sök
+
     #map
 
 
