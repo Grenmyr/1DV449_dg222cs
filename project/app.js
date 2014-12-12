@@ -12,6 +12,21 @@ var users = require('./routes/users');
 
 var app = express();
 
+// code assorted with fetching and storing data from eniro.
+var fs = require('fs');
+
+var request = require('request');
+
+var parse = JSON.parse("{}");
+try {
+    parse = JSON.parse(fs.readFileSync(__dirname + '/sr.json'));
+}
+catch (e) {
+    console.log("error när initiering");
+}
+
+// end
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -69,6 +84,19 @@ var socketIo = require('socket.io').listen(server);
 
 socketIo.sockets.on('connection', function (client) {
     console.log("connected");
+    //var data = requestEniro();
+
     //socketIo.set('index', { test: 'test set med socket' })
     client.emit('load', {test: "testobjekt"});
 });
+
+var requestEniro = function (){
+    var uri = "http://api.eniro.com/cs/search/basic?profile=davidg&key=5286734301137522208&country=se&version=1.1.3&search_word=flytt&geo_area=kalmar";
+    request(uri, function (err, resp, data) {
+
+        if (err !== true && resp.statusCode == 200) {
+
+            console.log("längd på request"+data.length)
+        }
+    });
+};
