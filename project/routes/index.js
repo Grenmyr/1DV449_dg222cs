@@ -6,10 +6,10 @@ router.get('/', function (req, res) {
 
     res.render('index', {
             title: 'Välkommen till flytthjälpen',
-            user: "testUser"
+            user: "testUser",
+            searchParameters :  ["Flyttfirma", "Städfirma"]
         }
     );
-
 });
 
 module.exports = router;

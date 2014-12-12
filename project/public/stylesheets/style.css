@@ -2,13 +2,18 @@
   width: 200px;
   height: 200px
 }
+#companySearch{
+
+}
 .content{
   width: 100%;
   height: 100%;
+  visibility: hidden;
 }
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+
 }
 
 a {

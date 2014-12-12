@@ -1,35 +1,44 @@
 /**
  * Created by dav on 2014-12-11.
  */
-    function init(){
-    var socket = io.connect('http://localhost');
-    socket.on('load', function (data) {
-        console.log("connect");
-        console.log(data);
+var settings = {
+    socket: io.connect('http://localhost'),
+    map: null,
+    html : {
+        body : document.querySelector('body'),
+        content : document.querySelector('.content')
+    }
+};
 
-    });
-    initializeMap()
 
+function init() {
+    initializeSocket();
+    waitForUserClick();
 }
-initializeSocket(){
-
+function initializeSocket() {
+    //settings.socket = io.connect('http://localhost');
 }
 
-function initializeMap(){
-
-    function loaded(){
+function initializeMap() {
+    function loaded() {
         var mapOptions = {
-            center: { lat: -34.397, lng: 150.644},
+            center: {lat: -34.397, lng: 150.644},
             zoom: 8
         };
-        var map = new google.maps.Map(document.getElementById('map'),
+        settings.map = new google.maps.Map(document.getElementById('map'),
             mapOptions);
     }
     google.maps.event.addDomListener(window, 'load', loaded());
-
-
 }
 
+function waitForUserClick (){
+    settings.html.body.addEventListener('click', function (e) {
+        settings.html.content.style.visibility = "visible";
+        console.log("loaded map");
+        initializeMap();
+        new Mashup(settings.socket,settings.map);
+    });
+}
 
 window.onload = init();
 
