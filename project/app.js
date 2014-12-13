@@ -111,9 +111,10 @@ var requestEniro = function (search) {
     request(uri, function (err, resp, data) {
 
         if (err !== true && resp && resp.statusCode == 200) {
-            var jsonData = JSON.parse(data);
-            if (JSON.stringify(parse) !== JSON.stringify(jsonData)) {
-
+            console.log(data);
+            var jsonData = JSON.stringify(data,null,4);
+            console.log(jsonData);
+            if (parse !== jsonData) {
                 try {
                     console.log("saved new data");
                     console.log(data.length + " var längden på inserten server.js");
