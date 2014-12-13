@@ -11,7 +11,7 @@ Sökningen kommer också gå att kombinera med sökning efter viss ort.
 Företagens position kommer presenteras via google maps api. 
 
 Jag har spikat teknikerna till 99%
-Client: Javascript
+Client: Javascript  
 Backend: node js {  
   "express": "~4.9.0",  
   "socket.io": "~1.0.0",  
