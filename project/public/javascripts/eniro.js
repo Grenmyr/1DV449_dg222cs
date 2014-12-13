@@ -2,10 +2,8 @@
  * Created by dav on 2014-12-12.
  */
 var Eniro = function () {
-    var searchParameters = {
-        movingCompany: "flyttfirma",
-        cleaningCompany: "städfirma"
-    };
+    // STRING DEPENDENCY TO INDEX.JS in Route Folder
+
 
 
     console.log("enirokonstruktor");
@@ -19,11 +17,12 @@ Eniro.prototype.waitForUserClick = function (callback) {
     var input = document.querySelector('#inputfield');
     var button = document.querySelector('#searchButton');
     button.addEventListener('click', function () {
-        callback({selectedValue : select.options.selectedIndex,input: input.value});
+        callback({search_word: select.options.selectedIndex, geo_area: input.value});
     })
 
 };
-function makeSearch(category,searchstring) {
+Eniro.prototype.searchParameters = [ "flyttfirma", "städfirma"];
+function makeSearch(category, searchstring) {
 
 
 }
