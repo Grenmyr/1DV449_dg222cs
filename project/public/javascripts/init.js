@@ -2,7 +2,7 @@
  * Created by dav on 2014-12-11.
  */
 var settings = {
-    socket: io.connect('http://localhost'),
+    socket: io.connect('http://localhost:3000'),
     map: null,
     html : {
         start : document.querySelector('#start'),

@@ -86,8 +86,11 @@ socketIo.sockets.on('connection', function (client) {
     console.log("connected");
     //var data = requestEniro();
 
-    //socketIo.set('index', { test: 'test set med socket' })
-    client.emit('load', {test: "testobjekt"});
+        //socketIo.set('index', { test: 'test set med socket' })
+    //client.emit('load', {test: "testobjekt"});
+    client.on('eniroSearch',function(message) {
+        console.log(message);
+    });
 });
 
 var requestEniro = function (){
