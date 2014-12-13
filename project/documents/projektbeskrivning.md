@@ -19,9 +19,12 @@ Backend: node js {
   "mongodb":"~2.0.0",  
 }
 
+Bland dessa är jade och mongodb helt nytt.  
+Socket.io, express och Node över huvud taget har jag endast använd i 2 laborationer innan.
+
 Det är väl mitt projektmål för G. 
 
 Vid entusiasm+tid:
 Implementera företagssökningars facebooksidor (finns i enirodata)
 
-David Grenmyr dg222cs
+###### David Grenmyr dg222cs
