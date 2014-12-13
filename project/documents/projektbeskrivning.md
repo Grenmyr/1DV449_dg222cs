@@ -10,7 +10,7 @@ Sökningen kommer också gå att kombinera med sökning efter viss ort.
 
 Företagens position kommer presenteras via google maps api. 
 
-Jag har spikat teknikerna till 99%
+Jag har spikat teknikerna till 99%   
 Client: Javascript  
 Backend: node js {  
   "express": "~4.9.0",  
