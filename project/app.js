@@ -13,11 +13,13 @@ var fs = require('fs');
 var app = express();
 
 // code assorted with fetching and storing data from eniro.
-
-
 var request = require('request');
-
 // end
+
+// CODE ASSORTED WITH MONGODB
+/*var MongoClient = require('mongodb').MongoClient
+    , assert = require('assert');*/
+//END
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -98,42 +100,46 @@ socketIo.sockets.on('connection', function (client) {
 });
 
 var requestEniro = function (search) {
-    var geo_area = '&geo_area='+ search.geo_area;
+    var geo_area = '&geo_area=' + search.geo_area;
 
-    var search_word = '&search_word='+ search.search_word;
-    console.log("area "+search.geo_area);
-    console.log("firmatyp "+search.search_word);
-    var searchProperties ="http://api.eniro.com/cs/search/basic?profile=davidg&key=5286734301137522208&country=se&version=1.1.3";
-    var uri = searchProperties+search_word+geo_area;
+    var search_word = '&search_word=' + search.search_word;
+    console.log("area " + search.geo_area);
+    console.log("firmatyp " + search.search_word);
+    var searchProperties = "http://api.eniro.com/cs/search/basic?profile=davidg&key=5286734301137522208&country=se&version=1.1.3";
+    var uri = searchProperties + search_word + geo_area;
     console.log(uri);
     //var uri = "http://api.eniro.com/cs/search/basic?profile=davidg&key=5286734301137522208&country=se&version=1.1.3&search_word="+search_word+"&geo_area=kalmar";
     //console.log(search);
-    request(uri, function (err, resp, data) {
+    testmongo();
+    /*request(uri, function (err, resp, data) {
 
-        if (err !== true && resp && resp.statusCode == 200) {
-            console.log(data);
-            var jsonData = JSON.stringify(data,null,4);
-            console.log(jsonData);
-            if (parse !== jsonData) {
-                try {
-                    console.log("saved new data");
-                    console.log(data.length + " var längden på inserten server.js");
-                    parse = jsonData;
-                    socketIo.sockets.emit('load', jsonData);
-                    fs.writeFile('eniro.json', data, function (err) {
-                        if (err) throw err;
-                    });
-                }
-                catch (e) {
-                    fs.writeFile('eniro.json', "{}");
-                }
+     if (err !== true && resp && resp.statusCode == 200) {
+     console.log(data);
+     var jsonData = JSON.stringify(data,null,4);
+     console.log(jsonData);
+     if (parse !== jsonData) {
+     try {
+     console.log("saved new data");
+     console.log(data.length + " var längden på inserten server.js");
+     parse = jsonData;
+     socketIo.sockets.emit('load', jsonData);
+     fs.writeFile('eniro.json', data, function (err) {
+     if (err) throw err;
+     });
+     }
+     catch (e) {
+     fs.writeFile('eniro.json', "{}");
+     }
 
-            }
-            else {
-                parse = JSON.parse("{}");
-                console.log("no new data")
-            }
+     }
+     else {
+     parse = JSON.parse("{}");
+     console.log("no new data")
+     }
 
-        }
-    });
+     }
+     });*/
 };
+function testmongo() {
+
+}
