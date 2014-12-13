@@ -6,8 +6,8 @@ var Mashup = function (socketSetting, mapSetting) {
     var _mapSetting = mapSetting;
 
     var eniro = new Eniro();
-    eniro.waitForUserClick(function () {
-        console.log("userlicked");
+    eniro.waitForUserClick(function (test) {
+        console.log(test);
     });
 
     _socketSetting.on('load', function (eniroJson) {

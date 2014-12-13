@@ -15,14 +15,15 @@ var Eniro = function () {
 };
 
 Eniro.prototype.waitForUserClick = function (callback) {
-    var select = document.querySelector('#searchButton');
-    select.addEventListener('click', function (e) {
-        console.log(e.target);
-        makeSearch(e.target,"kalmar");
-        callback();
+    var select = document.querySelector('#companySelect');
+    var input = document.querySelector('#inputfield');
+    var button = document.querySelector('#searchButton');
+    button.addEventListener('click', function () {
+        callback({selectedValue : select.options.selectedIndex,input: input.value});
     })
 
 };
 function makeSearch(category,searchstring) {
+
 
 }
