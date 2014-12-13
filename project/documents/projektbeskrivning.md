@@ -9,11 +9,19 @@ Eniro kommer användas för söka efter relevanta företagskategorier vid flytt 
 Sökningen kommer också gå att kombinera med sökning efter viss ort.
 
 Företagens position kommer presenteras via google maps api. 
-Förövrigt ska jag försöka uppfylla resten av projektkraven för godkänt.
+
+Jag har spikat teknikerna till 99%
+Client: Javascript
+Backend: node js {  
+  "express": "~4.9.0",  
+  "socket.io": "~1.0.0",  
+  "jade": "~1.6.0"  
+  "mongodb":"~2.0.0",  
+}
 
 Det är väl mitt projektmål för G. 
 
 Vid entusiasm+tid:
-Implementera företagens facebooksidor (finns i enirodata)
+Implementera företagssökningars facebooksidor (finns i enirodata)
 
 David Grenmyr dg222cs
