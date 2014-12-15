@@ -17,8 +17,10 @@ var request = require('request');
 // end
 
 // CODE ASSORTED WITH MONGODB
-/*var MongoClient = require('mongodb').MongoClient
-    , assert = require('assert');*/
+// New Code
+var mongo = require('mongodb');
+var monk = require('monk');
+var db = monk('localhost:27017/enirodb');
 //END
 
 // view engine setup
@@ -32,6 +34,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+// Make our db accessible to our router
+/*
+app.use(function (req, res, next) {
+    req.db = db;
+    next();
+});
+*/
+
 
 app.use('/', routes);
 app.use('/users', users);
@@ -100,6 +112,7 @@ socketIo.sockets.on('connection', function (client) {
 });
 
 var requestEniro = function (search) {
+    //TODO gör så sökord och stad blir små bokstäver, i klient eller här?
     var geo_area = '&geo_area=' + search.geo_area;
 
     var search_word = '&search_word=' + search.search_word;
@@ -108,38 +121,37 @@ var requestEniro = function (search) {
     var searchProperties = "http://api.eniro.com/cs/search/basic?profile=davidg&key=5286734301137522208&country=se&version=1.1.3";
     var uri = searchProperties + search_word + geo_area;
     console.log(uri);
-    //var uri = "http://api.eniro.com/cs/search/basic?profile=davidg&key=5286734301137522208&country=se&version=1.1.3&search_word="+search_word+"&geo_area=kalmar";
-    //console.log(search);
-    testmongo();
-    /*request(uri, function (err, resp, data) {
+    //var uri = "http://api.eniro.com/cs/search/basic?profile=davidg&key=5286734301137522208&country=se&version=1.1.3&search_word=" + search_word + "&geo_area=kalmar";
+    console.log(search);
 
-     if (err !== true && resp && resp.statusCode == 200) {
-     console.log(data);
-     var jsonData = JSON.stringify(data,null,4);
-     console.log(jsonData);
-     if (parse !== jsonData) {
-     try {
-     console.log("saved new data");
-     console.log(data.length + " var längden på inserten server.js");
-     parse = jsonData;
-     socketIo.sockets.emit('load', jsonData);
-     fs.writeFile('eniro.json', data, function (err) {
-     if (err) throw err;
-     });
-     }
-     catch (e) {
-     fs.writeFile('eniro.json', "{}");
-     }
+    request(uri, function (err, resp, data) {
 
-     }
-     else {
-     parse = JSON.parse("{}");
-     console.log("no new data")
-     }
-
-     }
-     });*/
+        if (err !== true && resp && resp.statusCode == 200) {
+                    console.log("saved new data");
+                    console.log(data.length + " var längden på inserten server.js");
+                    console.log(search.geo_area);
+                    testmongo(search.geo_area,data);
+        }
+    });
 };
-function testmongo() {
+function testmongo(city,data) {
+    //kommando för browse databas
+    // mongo
+    // use enirodb
+    // db."Stad".find().pretty()
 
+    //visa alla: show collections
+    console.log(data);
+    data =JSON.parse(data);
+    console.log("insertkategori var"+ city);
+    var collection = db.get(city);
+    collection.insert(data, function (err) {
+        if (err) {
+            // If it failed, return error
+            console.log("error inserting");
+        }
+        else {
+            console.log("succes inserting");
+        }
+    });
 }
