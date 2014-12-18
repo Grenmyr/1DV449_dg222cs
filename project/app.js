@@ -38,11 +38,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Make our db accessible to our router
 /*
-app.use(function (req, res, next) {
-    req.db = db;
-    next();
-});
-*/
+ app.use(function (req, res, next) {
+ req.db = db;
+ next();
+ });
+ */
 
 
 app.use('/', routes);
@@ -122,23 +122,28 @@ var requestEniro = function (search) {
     request(uri, function (err, resp, data) {
 
         if (err !== true && resp && resp.statusCode == 200) {
-                    console.log("saved new data");
-                    console.log(data.length + " var längden på inserten server.js");
-                    console.log(search.geo_area);
-                   var parse = prepareData(data);
-                    console.log(parse);
-                    //insert(search.geo_area,data);
+            console.log("saved new data");
+            console.log(data.length + " var längden på inserten server.js");
+            console.log(search.geo_area);
+            //var parse = prepareData(data,search_word);
+            find(search.geo_area,"companytyp",function(callback){
+                console.log(callback);
+            });
+
+            //console.log(parse);
+            //insert(search.geo_area,parse);
         }
     });
 };
-function prepareData(data){
+function prepareData(data,search_word) {
     parse = JSON.parse(data);
     //console.log(parse);
     parse['timestamp'] = new Date().getTime();
+    parse['search_word'] = search_word;
     return parse;
 }
 
-function insert(city,data) {
+function insert(city, data) {
     //kommando för browse databas
     // mongo
     // use enirodb
@@ -146,8 +151,9 @@ function insert(city,data) {
 
     //visa alla: show collections
     console.log(data);
-    data =JSON.parse(data);
-    console.log("insertkategori var"+ city);
+    data = JSON.parse(data);
+    console.log("insertkategori var" + city);
+
     var collection = db.get(city);
     collection.insert(data, function (err) {
         if (err) {
@@ -159,7 +165,14 @@ function insert(city,data) {
         }
     });
 }
-function find (){
-    var db = req.db;
-    db.collection('Kalmar',callbacl()).find();
+function find(city,companyType,callback) {
+    //console.log(city);
+    var collection = db.get(city);
+    console.log(typeof collection.find);
+    collection.find({title:'Gula sidorna API'},function(err, data){
+
+        console.log(data[0]);
+    });
+    //console.log(results);
 }
+
