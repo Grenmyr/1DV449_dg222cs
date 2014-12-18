@@ -17,7 +17,8 @@ Eniro.prototype.waitForUserClick = function (callback) {
     var input = document.querySelector('#inputfield');
     var button = document.querySelector('#searchButton');
     button.addEventListener('click', function () {
-        callback({search_word: select.options.selectedIndex, geo_area: input.value});
+        callback({search_word: select.options.selectedIndex,
+            geo_area: input.value.toLocaleLowerCase()});
     })
 
 };
