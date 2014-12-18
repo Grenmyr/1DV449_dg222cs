@@ -116,25 +116,29 @@ var requestEniro = function (search) {
     var geo_area = '&geo_area=' + search.geo_area;
 
     var search_word = '&search_word=' + search.search_word;
-    console.log("area " + search.geo_area);
-    console.log("firmatyp " + search.search_word);
     var searchProperties = "http://api.eniro.com/cs/search/basic?profile=davidg&key=5286734301137522208&country=se&version=1.1.3";
     var uri = searchProperties + search_word + geo_area;
-    console.log(uri);
     //var uri = "http://api.eniro.com/cs/search/basic?profile=davidg&key=5286734301137522208&country=se&version=1.1.3&search_word=" + search_word + "&geo_area=kalmar";
-    console.log(search);
-
     request(uri, function (err, resp, data) {
 
         if (err !== true && resp && resp.statusCode == 200) {
                     console.log("saved new data");
                     console.log(data.length + " var längden på inserten server.js");
                     console.log(search.geo_area);
-                    testmongo(search.geo_area,data);
+                   var parse = prepareData(data);
+                    console.log(parse);
+                    //insert(search.geo_area,data);
         }
     });
 };
-function testmongo(city,data) {
+function prepareData(data){
+    parse = JSON.parse(data);
+    //console.log(parse);
+    parse['timestamp'] = new Date().getTime();
+    return parse;
+}
+
+function insert(city,data) {
     //kommando för browse databas
     // mongo
     // use enirodb
@@ -154,4 +158,8 @@ function testmongo(city,data) {
             console.log("succes inserting");
         }
     });
+}
+function find (){
+    var db = req.db;
+    db.collection('Kalmar',callbacl()).find();
 }
