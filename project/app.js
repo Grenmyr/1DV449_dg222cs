@@ -112,65 +112,58 @@ socketIo.sockets.on('connection', function (client) {
 });
 
 var requestEniro = function (search) {
-    //dropCollection(search.geo_area);
-    find(search.geo_area,search.search_word,function(data){
-        // data[0] innehåller företagen
-        // och timestamp?
-        var refreshTime = new Date().getTime() -3600000;
-        //console.log(refreshTime);
-        //console.log(data[0].timestamp);
-        if(data.length !== 0 && data[0].timestamp > refreshTime ){
 
-            //console.log(data[0])
-            console.log(data[0].adverts[2].location);
-        }
-        else{
+    find(search , function (data) {
+        var refreshTime = new Date().getTime()-100000;
+        if (data.length === 0 || data[0].timestamp < refreshTime) {
+
             console.log("fanns ingen data sparad lokalt eller gammal timestamp");
+            requestEniroData(search);
 
-            // hämta data.
         }
-
+        else {
+            console.log("Gammal data fans sparad eller fräsh timestamp");
+            console.log(refreshTime);
+            console.log(data[0].timestamp);
+            //console.log(data[0].adverts[2].location);
+        }
     });
 
+
+};
+function requestEniroData(search) {
 
     var geo_area = '&geo_area=' + search.geo_area;
     var search_word = '&search_word=' + search.search_word;
     var searchProperties = "http://api.eniro.com/cs/search/basic?profile=davidg&key=5286734301137522208&country=se&version=1.1.3";
     var uri = searchProperties + search_word + geo_area;
+
     //var uri = "http://api.eniro.com/cs/search/basic?profile=davidg&key=5286734301137522208&country=se&version=1.1.3&search_word=" + search_word + "&geo_area=kalmar";
-    /*request(uri, function (err, resp, data) {
+    request(uri, function (err, resp, data) {
 
         if (err !== true && resp && resp.statusCode == 200) {
             console.log("saved new data");
+
             console.log(data.length
-            +" var längden på inserten "
-            +"i område "+search.geo_area+" firmatypen var "+search.search_word);
-            console.log(search.geo_area);
-            var parse = prepareData(data,search.search_word);
-            insert(search.geo_area,parse);
+            + " var längden på inserten "
+            + "i område " + search.geo_area + " firmatypen var " + search.search_word);
+
+            var parse = prepareData(data);
+            insert(search, parse);
         }
-    });*/
-};
-function prepareData(data,search_word) {
+    });
+}
+
+function prepareData(data) {
     parse = JSON.parse(data);
     parse['timestamp'] = new Date().getTime();
-    parse['search_word'] = search_word;
-    //console.log(parse);
     return parse;
 }
 
-function insert(city, data) {
-    //kommando för browse databas
-    // mongo
-    // use enirodb
-    // db."Stad".find().pretty()
+function insert(search, data) {
+    dropCollection(search);
 
-    //visa alla: show collections
-    //console.log(data);
-    //data = JSON.parse(data);
-    //console.log("insertkategori var" + city);
-
-    var collection = db.get(city);
+    var collection = db.get(search.geo_area + search.search_word);
     collection.insert(data, function (err) {
         if (err) {
             // If it failed, return error
@@ -181,17 +174,13 @@ function insert(city, data) {
         }
     });
 }
-function find(city,companyType,callback) {
-    //console.log(city);
-    var collection = db.get(city);
-    //console.log(typeof collection.find);
-    collection.find({search_word:companyType},function(err, data){
+function find(search, callback) {
+    var collection = db.get(search.geo_area + search.search_word);
+    collection.find( {}, function (err, data) {
         callback(data);
-        //console.log(data[0]);
     });
-    //console.log(results);
 }
-function dropCollection(collectionName){
-    var collection = db.get(collectionName);
+function dropCollection(search) {
+    var collection = db.get(search.geo_area+search.search_word);
     collection.drop();
 }
