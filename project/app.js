@@ -115,12 +115,18 @@ var requestEniro = function (search) {
     //dropCollection(search.geo_area);
     find(search.geo_area,search.search_word,function(data){
         // data[0] innehåller företagen
-        if(data.length !== 0){
+        // och timestamp?
+        var refreshTime = new Date().getTime() -3600000;
+        //console.log(refreshTime);
+        //console.log(data[0].timestamp);
+        if(data.length !== 0 && data[0].timestamp > refreshTime ){
 
             //console.log(data[0])
-            console.log(data[0].adverts[0].companyInfo);
+            console.log(data[0].adverts[2].location);
         }
         else{
+            console.log("fanns ingen data sparad lokalt eller gammal timestamp");
+
             // hämta data.
         }
 
@@ -147,9 +153,9 @@ var requestEniro = function (search) {
 };
 function prepareData(data,search_word) {
     parse = JSON.parse(data);
-    //console.log(parse);
     parse['timestamp'] = new Date().getTime();
     parse['search_word'] = search_word;
+    //console.log(parse);
     return parse;
 }
 
