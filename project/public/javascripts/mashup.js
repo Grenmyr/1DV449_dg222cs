@@ -16,13 +16,15 @@ var Mashup = function (socketSetting) {
         eniroSearch.search_word = _eniro.searchParameters[eniroSearch.search_word];
         console.log("skickade eniroSearch från Mashup.js");
         socketEmit('eniroSearch', eniroSearch);
-        mapReference = _map.initializeMap();
         //console.log(_map.mapReference);
     });
 
     _companySearch.waitForUserClick(function (selectedCompany) {
         _detailedView.hideSearchView();
         _detailedView.renderDetailedView(selectedCompany);
+
+
+        mapReference = _map.initializeMap(selectedCompany['location']['coordinates'][0]);
         console.log(selectedCompany);
     });
 
