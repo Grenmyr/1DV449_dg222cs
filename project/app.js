@@ -129,8 +129,9 @@ var requestEniro = function (search,callback) {
             console.log("Gammal data fans sparad eller fräsh timestamp");
             console.log(refreshTime);
             console.log(data[0].timestamp);
-            //companySearch = data;
-            callback(data);
+            var companySearch;
+            companySearch = data[0];
+            callback(companySearch);
             //console.log(data[0].adverts[2].location);
         }
 
