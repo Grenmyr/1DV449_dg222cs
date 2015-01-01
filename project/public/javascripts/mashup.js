@@ -21,6 +21,7 @@ var Mashup = function (socketSetting) {
     });
 
     _companySearch.waitForUserClick(function (selectedCompany) {
+        _detailedView.hideSearchView();
         _detailedView.renderDetailedView(selectedCompany);
         console.log(selectedCompany);
     });
