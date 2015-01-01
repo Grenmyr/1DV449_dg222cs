@@ -10,29 +10,26 @@ var Mashup = function (socketSetting) {
     var _map = new Map();
     var _detailedView = new DetailedView();
     var _companySearch = new CompanySearch();
-    var mapReference;
+
 
     _eniro.waitForUserClick(function (eniroSearch) {
         eniroSearch.search_word = _eniro.searchParameters[eniroSearch.search_word];
         console.log("skickade eniroSearch från Mashup.js");
         socketEmit('eniroSearch', eniroSearch);
         //console.log(_map.mapReference);
+
     });
 
     _companySearch.waitForUserClick(function (selectedCompany) {
         _detailedView.hideSearchView();
         _detailedView.renderDetailedView(selectedCompany);
-
-
-        mapReference = _map.initializeMap(selectedCompany['location']['coordinates'][0]);
-        console.log(selectedCompany);
+        _map.showSelectedCompany(selectedCompany['location']['coordinates'][0]);
     });
 
     _socketSetting.on('companySearch', function (companySearch) {
-        //console.log(companySearch);
-
+        _map.initializeMap(companySearch);
+        _map.addMarkers();
         _companySearch.generateCompanies(companySearch);
-        console.log("skickar");
     });
 
 };

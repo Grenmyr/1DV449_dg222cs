@@ -7,6 +7,7 @@ var CompanySearch = function () {
     var div = document.querySelector('#companySearch');
     var listDiv = document.createElement('div');
     listDiv.setAttribute('id','listDiv');
+    div.appendChild(listDiv);
     var ul = document.createElement('ul');
 
     this.waitForUserClick = function (callback){
@@ -19,12 +20,16 @@ var CompanySearch = function () {
     };
 
     this.generateCompanies = function (companies){
+
         _companies = companies;
 
-        while (listDiv.hasChildNodes()) {
-            listDiv.removeChild(listDiv.lastChild);
+        console.log(_companies['adverts'].length)
+
+        while (ul.hasChildNodes()) {
+            console.log("remove")
+            ul.removeChild(ul.lastChild);
         }
-        div.appendChild(listDiv);
+
 
         _companies['adverts'].forEach(function (company,i) {
             var li = document.createElement('li');
