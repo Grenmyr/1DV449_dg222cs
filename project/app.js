@@ -106,32 +106,40 @@ socketIo.sockets.on('connection', function (client) {
     //socketIo.set('index', { test: 'test set med socket' })
     //client.emit('load', {test: "testobjekt"});
     client.on('eniroSearch', function (search) {
-
-        requestEniro(search)
+        requestEniro(search,function(companySearch){
+            client.emit('companySearch',companySearch);
+        })
     });
 });
 
-var requestEniro = function (search) {
-
+var requestEniro = function (search,callback) {
+    var companySearch;
     find(search , function (data) {
         var refreshTime = new Date().getTime()-100000;
         if (data.length === 0 || data[0].timestamp < refreshTime) {
 
             console.log("fanns ingen data sparad lokalt eller gammal timestamp");
-            requestEniroData(search);
-
+            requestEniroData(search,function (data){
+                console.log(data.timestamp);
+                //companySearch = data;
+                callback(data)
+            });
         }
         else {
             console.log("Gammal data fans sparad eller fräsh timestamp");
             console.log(refreshTime);
             console.log(data[0].timestamp);
+            //companySearch = data;
+            callback(data);
             //console.log(data[0].adverts[2].location);
         }
+
+
     });
 
 
 };
-function requestEniroData(search) {
+function requestEniroData(search,callback) {
 
     var geo_area = '&geo_area=' + search.geo_area;
     var search_word = '&search_word=' + search.search_word;
@@ -150,6 +158,7 @@ function requestEniroData(search) {
 
             var parse = prepareData(data);
             insert(search, parse);
+            callback(parse);
         }
     });
 }

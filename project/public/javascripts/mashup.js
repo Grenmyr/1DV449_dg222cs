@@ -21,7 +21,10 @@ var Mashup = function (socketSetting) {
         console.log("connect");
         console.log(eniroJson);
     });*/
+    _socketSetting.on('companySearch', function (companySearch) {
+        console.log(companySearch);
 
+    });
 
 };
 function socketEmit(emitName,search){
