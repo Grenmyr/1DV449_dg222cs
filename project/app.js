@@ -132,7 +132,6 @@ var requestEniro = function (search,callback) {
             var companySearch;
             companySearch = data[0];
             callback(companySearch);
-            //console.log(data[0].adverts[2].location);
         }
 
 

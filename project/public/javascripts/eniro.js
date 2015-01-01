@@ -25,5 +25,4 @@ Eniro.prototype.waitForUserClick = function (callback) {
 Eniro.prototype.searchParameters = [ "flyttfirma", "städfirma"];
 function makeSearch(category, searchstring) {
 
-
 }

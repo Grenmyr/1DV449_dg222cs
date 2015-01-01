@@ -2,45 +2,39 @@
  * Created by dav on 2015-01-01.
  */
 var CompanySearch = function () {
-    console.log("companysearchKonstruktor");
-
     var _companies;
+
     var div = document.querySelector('#companySearch');
     var listDiv = document.createElement('div');
     listDiv.setAttribute('id','listDiv');
+    var ul = document.createElement('ul');
 
+    this.waitForUserClick = function (callback){
+        ul.addEventListener('click', function (e) {
+            e.preventDefault();
+            if (e.target.nodeName === 'A') {
+                callback(_companies['adverts'][e.target.parentNode.id]);
+            }
+        });
+    };
 
     this.generateCompanies = function (companies){
-
         _companies = companies;
-
 
         while (listDiv.hasChildNodes()) {
             listDiv.removeChild(listDiv.lastChild);
         }
-
-        console.log(_companies);
-        console.log(_companies['totalHits']);
-
-
-
-
         div.appendChild(listDiv);
-        var ul = document.createElement('ul');
 
-        //console.log(companies);
-
-        _companies['adverts'].forEach(function (company) {
+        _companies['adverts'].forEach(function (company,i) {
             var li = document.createElement('li');
+            li.setAttribute('id',i);
             var a = document.createElement('a');
-            console.log(company['companyInfo']['companyName']);
+            //console.log(company['companyInfo']['companyName']);
             a.textContent = company['companyInfo']['companyName'];
             li.appendChild(a);
             ul.appendChild(li);
         });
-
         listDiv.appendChild(ul);
     };
-
-
 };
