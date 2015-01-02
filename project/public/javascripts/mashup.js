@@ -48,7 +48,7 @@ var Mashup = function (socketSetting) {
         _search['adverts'] = validCompanies;
         _map.setCompanies(_search);
         _map.addMarkers();
-
+        console.log(validCompanies.length)
 
         _map.focusOnSelectedCompany(_search['adverts'][0]);
         _detailedView.renderDetailedView(_search['adverts'][0]);

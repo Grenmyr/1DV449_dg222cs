@@ -146,7 +146,7 @@ function requestEniroData(search,callback) {
 
     var geo_area = '&geo_area=' + search.geo_area;
     var search_word = '&search_word=' + search.search_word;
-    var searchProperties = "http://api.eniro.com/cs/search/basic?profile=davidg&key=5286734301137522208&country=se&version=1.1.3";
+    var searchProperties = "http://api.eniro.com/cs/search/basic?profile=davidg&key=5286734301137522208&country=se&from_list=1&to_list=100&version=1.1.3";
     var uri = searchProperties + search_word + geo_area;
 
     //var uri = "http://api.eniro.com/cs/search/basic?profile=davidg&key=5286734301137522208&country=se&version=1.1.3&search_word=" + search_word + "&geo_area=kalmar";
