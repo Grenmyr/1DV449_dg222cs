@@ -13,7 +13,7 @@ var DetailedView = function (){
     };
 
     this.renderDetailedView = function (company){
-        console.log(company);
+       // console.log(company);
         while (detailedViewDiv.hasChildNodes()) {
 
             detailedViewDiv.removeChild(detailedViewDiv.lastChild);
