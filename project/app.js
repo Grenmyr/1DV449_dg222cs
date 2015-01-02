@@ -121,7 +121,9 @@ var requestEniro = function (search,callback) {
             console.log("fanns ingen data sparad lokalt eller gammal timestamp");
             requestEniroData(search,function (data){
                 console.log(data.timestamp);
-                //companySearch = data;
+                var companySearch;
+
+
                 callback(data)
             });
         }
@@ -131,6 +133,7 @@ var requestEniro = function (search,callback) {
             console.log(data[0].timestamp);
             var companySearch;
             companySearch = data[0];
+            console.log(companySearch);
             callback(companySearch);
         }
 

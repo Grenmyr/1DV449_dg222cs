@@ -18,6 +18,24 @@ var CompanySearch = function () {
             }
         });
     };
+    this.generateComp = function(companies){
+        _companies = companies;
+
+
+
+
+        _companies['adverts'].forEach(function (company,i) {
+            var li = document.createElement('li');
+            li.setAttribute('id',i);
+            var a = document.createElement('a');
+            //console.log(company['companyInfo']['companyName']);
+            a.textContent = company['companyInfo']['companyName'];
+            li.appendChild(a);
+            ul.appendChild(li);
+        });
+        listDiv.appendChild(ul);
+
+    };
 
     this.generateCompanies = function (companies){
 

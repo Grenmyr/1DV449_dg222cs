@@ -5,7 +5,7 @@ var _socketSetting;
 
 var Mashup = function (socketSetting) {
     _socketSetting = io.connect(socketSetting);
-
+    var _companySearch;
     var _eniro = new Eniro();
     var _map = new Map();
     var _detailedView = new DetailedView();
@@ -26,10 +26,23 @@ var Mashup = function (socketSetting) {
         _map.showSelectedCompany(selectedCompany['location']['coordinates'][0]);
     });
 
+
     _socketSetting.on('companySearch', function (companySearch) {
-        _map.initializeMap(companySearch);
+        _companySearch = companySearch;
+        var validCompanies = [];
+        _companySearch['adverts'].forEach(function (company) {
+            if(company['location']['coordinates'][0]['longitude'] !== null){
+                validCompanies.push((company))
+            }
+        });
+        _companySearch['adverts'] = validCompanies;
+
+        _map.initializeMap(_companySearch);
         _map.addMarkers();
-        _companySearch.generateCompanies(companySearch);
+        _map.showSelectedCompany(_companySearch['adverts'][0]);
+        _detailedView.renderDetailedView(_companySearch['adverts'][0]);
+
+        //_companySearch.generateCompanies(companySearch);
     });
 
 };

@@ -5,6 +5,7 @@ var DetailedView = function (){
     var unknownAddress = "okänd adress";
     var contentDiv = document.querySelector('.content');
     var detailedViewDiv = document.createElement('div');
+    detailedViewDiv.setAttribute('id','detailedView');
 
     this.hideSearchView = function (){
         var divToModify =  document.querySelector('#companySearch');
@@ -24,9 +25,7 @@ var DetailedView = function (){
         var postArea = document.createElement('p');
         var postCode = document.createElement('p');
         if(company['address']['streetName'] === null){
-
             streetName.textContent = unknownAddress;
-
         }
         else{
             streetName.textContent = company['address']['streetName'];
@@ -36,6 +35,7 @@ var DetailedView = function (){
         addressDiv.appendChild(streetName);
         addressDiv.appendChild(postCode);
         addressDiv.appendChild(postArea);
+
 
 
 
