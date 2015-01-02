@@ -1,22 +1,50 @@
 #map{
-  width: 200px;
-  height: 200px
+ /* width: 200px;
+  height: 200px*/
+  height: 90%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+}
+#listDiv{
+  max-height: 30%;
+  overflow: auto;
 }
 #companySearch{
 
+  z-index: 100;
+  position: relative;
 }
 #start{
+  position: relative;
   font-size: 5em;
 }
-#map {
-  margin:auto auto;
+#leftArrow{
+
+  position: absolute;
+  height: 15%;
+  left:0;
+  display: none;
 }
+#rightArrow{
+  position: absolute;
+  height: 15%;
+  right: 0;
+  display: none;
+}
+
 .content{
-  width: 100%;
+  margin-left: 15%;
   height: 100%;
+  width: 100%;
   visibility: hidden;
 }
 body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 
