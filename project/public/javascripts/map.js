@@ -6,33 +6,56 @@ var Map = function () {
     var markers = [];
     var _companies;
 
+    var arrayIndex = 0;
+    var leftArrow = document.getElementById('leftArrow');
+    var rightArrow = document.getElementById('rightArrow');
+
     var mapOptions = {
         center: {lat: 58, lng: 15},
         zoom: 5
     };
-
-    this.initializeMap = function (companies) {
+    this.setCompanies = function (companies){
         _companies = companies;
-        console.log(_companies);
-        function loaded() {
+    };
 
+
+    this.initializeMap = function () {
+
+        function loaded() {
             Map.mapReference = new google.maps.Map(document.getElementById('map'),
                 mapOptions);
             //addMarker(coordinates);
-
         }
-
         google.maps.event.addDomListener(window, 'load', loaded());
         setupNavigation();
     };
     function setupNavigation() {
-        var leftArrow = document.getElementById('leftArrow');
-        var rightArrow = document.getElementById('rightArrow');
+
         leftArrow.style.display = "flex";
         rightArrow.style.display = "flex";
     }
 
-    this.showSelectedCompany = function (company) {
+    this.waitForUserArrowPress = function (callback) {
+
+        leftArrow.addEventListener('click', function (e) {
+            e.preventDefault();
+            if(arrayIndex > 0 ){
+                arrayIndex += -1;
+                callback(_companies['adverts'][arrayIndex]);
+            }
+        });
+
+        rightArrow.addEventListener('click', function (e) {
+            e.preventDefault();
+            if(arrayIndex < _companies['adverts'].length-1){
+                arrayIndex += 1;
+                callback(_companies['adverts'][arrayIndex]);
+            }
+        });
+
+    };
+
+    this.focusOnSelectedCompany = function (company) {
 
         var markerPosition = new google.maps.LatLng(
             company['location']['coordinates'][0]['latitude'],

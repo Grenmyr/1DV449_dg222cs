@@ -29,7 +29,7 @@
   display: none;
 }
 #rightArrow{
-  z-index: 2;
+  z-index: 3;
   position: absolute;
   height: 15%;
   right: 0;
@@ -38,7 +38,7 @@
 #detailedView{
   background-color: grey;
   opacity: 0.75;
-  z-index: 2;
+  z-index: 3;
   display: inline-block;
 }
 

@@ -44,7 +44,7 @@ var CompanySearch = function () {
         console.log(_companies['adverts'].length)
 
         while (ul.hasChildNodes()) {
-            console.log("remove")
+            console.log("remove");
             ul.removeChild(ul.lastChild);
         }
 

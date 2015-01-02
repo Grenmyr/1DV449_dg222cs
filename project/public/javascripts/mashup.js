@@ -5,9 +5,9 @@ var _socketSetting;
 
 var Mashup = function (socketSetting) {
     _socketSetting = io.connect(socketSetting);
-    var _companySearch;
+    var arrayIndex = 0;
     var _eniro = new Eniro();
-    var _map = new Map();
+    var _map = null;
     var _detailedView = new DetailedView();
     var _companySearch = new CompanySearch();
 
@@ -15,15 +15,22 @@ var Mashup = function (socketSetting) {
     _eniro.waitForUserClick(function (eniroSearch) {
         eniroSearch.search_word = _eniro.searchParameters[eniroSearch.search_word];
         console.log("skickade eniroSearch från Mashup.js");
-        socketEmit('eniroSearch', eniroSearch);
-        //console.log(_map.mapReference);
+        if (_map === null) {
+            _map = new Map();
+            _map.initializeMap();
 
+            _map.waitForUserArrowPress(function (navigationResponse) {
+                _map.focusOnSelectedCompany(navigationResponse);
+                _detailedView.renderDetailedView(navigationResponse);
+            });
+        }
+        socketEmit('eniroSearch', eniroSearch);
     });
 
     _companySearch.waitForUserClick(function (selectedCompany) {
         _detailedView.hideSearchView();
         _detailedView.renderDetailedView(selectedCompany);
-        _map.showSelectedCompany(selectedCompany['location']['coordinates'][0]);
+        _map.focusOnSelectedCompany(selectedCompany['location']['coordinates'][0]);
     });
 
 
@@ -31,15 +38,15 @@ var Mashup = function (socketSetting) {
         _companySearch = companySearch;
         var validCompanies = [];
         _companySearch['adverts'].forEach(function (company) {
-            if(company['location']['coordinates'][0]['longitude'] !== null){
+            if (company['location']['coordinates'][0]['longitude'] !== null) {
                 validCompanies.push((company))
             }
         });
         _companySearch['adverts'] = validCompanies;
-
-        _map.initializeMap(_companySearch);
+        _map.setCompanies(_companySearch);
         _map.addMarkers();
-        _map.showSelectedCompany(_companySearch['adverts'][0]);
+
+        _map.focusOnSelectedCompany(_companySearch['adverts'][0]);
         _detailedView.renderDetailedView(_companySearch['adverts'][0]);
 
         //_companySearch.generateCompanies(companySearch);
