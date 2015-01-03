@@ -48,15 +48,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 
+
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
-
-// error handlers
-
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
@@ -68,7 +67,6 @@ if (app.get('env') === 'development') {
         });
     });
 }
-
 // production error handler
 // no stacktraces leaked to user
 app.use(function (err, req, res, next) {
@@ -78,18 +76,9 @@ app.use(function (err, req, res, next) {
         error: {}
     });
 });
-// DATA SECTION
-var parse = JSON.parse("{}");
-try {
-    console.log(parse);
-    parse = JSON.parse(fs.readFileSync(__dirname + '/eniro.json'));
-}
-catch (e) {
-    console.log(e);
-    console.log("error när initiering");
-}
-// END DATA SECTION
 
+
+// Server settings
 var debug = require('debug')('project');
 app.set('port', process.env.PORT || 3000);
 
@@ -97,33 +86,35 @@ var server = app.listen(app.get('port'), function () {
     debug('Express server listening on port ' + server.address().port);
 });
 
+
 var socketIo = require('socket.io').listen(server);
 
+// WebSocket communication with clients.
 socketIo.sockets.on('connection', function (client) {
     console.log("connected");
-    //var data = requestEniro();
-
-    //socketIo.set('index', { test: 'test set med socket' })
-    //client.emit('load', {test: "testobjekt"});
     client.on('eniroSearch', function (search) {
+        console.log("server emit eniroSearch");
         requestEniro(search,function(companySearch){
             client.emit('companySearch',companySearch);
         })
     });
 });
 
+
+
+/*  Main function to control data flow, First check database if data client request is stored
+    In Mongodb with fresh timestamp, if it is, return that, if not it go through
+    requestEniroData() function to require new data. That data is returned to user, and saved
+    into database with fresh timestamp.
+*/
 var requestEniro = function (search,callback) {
-    var companySearch;
+
     find(search , function (data) {
         var refreshTime = new Date().getTime()-100000;
         if (data.length === 0 || data[0].timestamp < refreshTime) {
-
             console.log("fanns ingen data sparad lokalt eller gammal timestamp");
             requestEniroData(search,function (data){
                 console.log(data.timestamp);
-                var companySearch;
-
-
                 callback(data)
             });
         }
@@ -131,47 +122,51 @@ var requestEniro = function (search,callback) {
             console.log("Gammal data fans sparad eller fräsh timestamp");
             console.log(refreshTime);
             console.log(data[0].timestamp);
-            var companySearch;
-            companySearch = data[0];
-            console.log(companySearch);
-            callback(companySearch);
+            callback(data[0]);
         }
-
-
     });
-
-
 };
+
+
+// Function that communicate with Eniro API
 function requestEniroData(search,callback) {
 
     var geo_area = '&geo_area=' + search.geo_area;
     var search_word = '&search_word=' + search.search_word;
     var searchProperties = "http://api.eniro.com/cs/search/basic?profile=davidg&key=5286734301137522208&country=se&from_list=1&to_list=100&version=1.1.3";
     var uri = searchProperties + search_word + geo_area;
-
-    //var uri = "http://api.eniro.com/cs/search/basic?profile=davidg&key=5286734301137522208&country=se&version=1.1.3&search_word=" + search_word + "&geo_area=kalmar";
     request(uri, function (err, resp, data) {
-
         if (err !== true && resp && resp.statusCode == 200) {
-            console.log("saved new data");
-
             console.log(data.length
-            + " var längden på inserten "
-            + "i område " + search.geo_area + " firmatypen var " + search.search_word);
+            + " var längden på inserten från data hämtad av Eniro "
+            + "i område " + search.geo_area + " och firmatypen var " + search.search_word);
 
             var parse = prepareData(data);
             insert(search, parse);
             callback(parse);
         }
+        else{
+            console.log("response ifrån eniro Validerades inte, data hämtades ej.")
+        }
     });
 }
 
+// Function to parse data in safe way and add timestamp.
 function prepareData(data) {
-    parse = JSON.parse(data);
+    var parse = JSON.parse("{}");
+    try {
+        parse = JSON.parse(data);
+    }
+    catch (e) {
+        console.log("Unexpected error when parsing Eniro Data");
+    }
     parse['timestamp'] = new Date().getTime();
     return parse;
 }
 
+
+
+// Functions handling CRD with mongodb using Monk.
 function insert(search, data) {
     dropCollection(search);
 
