@@ -10,3 +10,10 @@
 * satt över 2 timmar med bugg i markers, pga skapade 2 instanser av en funktion för hålla ordning
 på aktuell företag på kartan. Felet var att det instanserades 2 referencer till samma funktion om man bytte kategori
 då räknade det även fel.
+
+3/1 2015
+*lagt in favicon genom "serve-favicon" i app.js även refaktorerat och kommenterat.
+
+TODO : Validera Request mot eniro?
+Oath inloggning för se facebook data?
+refaktorera detaljerad företagsvy.

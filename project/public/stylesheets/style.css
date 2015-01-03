@@ -35,11 +35,21 @@
   right: 0;
   display: none;
 }
-#detailedView{
+#basicView{
   background-color: grey;
   opacity: 0.75;
   z-index: 3;
   display: inline-block;
+}
+#basicView a:hover{
+    text-decoration: underline;
+    text-decoration: solid;
+    cursor: pointer;
+}
+#detailedDiv{
+    background-color: yellow;
+    display: inline-block;
+    z-index: 4;
 }
 
 .content{

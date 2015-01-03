@@ -4,8 +4,6 @@
 var Eniro = function () {
     // STRING DEPENDENCY TO INDEX.JS in Route Folder
 
-
-
     console.log("enirokonstruktor");
     this.requestData = function () {
         console.log("requestData")
