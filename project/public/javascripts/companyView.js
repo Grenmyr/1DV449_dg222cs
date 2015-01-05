@@ -55,7 +55,6 @@ var CompanyView = function () {
         companyViewDiv.appendChild(addressDiv);
         basicDiv.appendChild(companyViewDiv);
         contentDiv.appendChild(basicDiv);
-
     };
 
     function populateExternalLinks (node,externalLink) {
