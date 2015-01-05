@@ -6,7 +6,6 @@ var _socketSetting;
 var Mashup = function (socketSetting) {
     _socketSetting = io.connect(socketSetting);
     var _search;
-    var arrayIndex = 0;
     var _eniro = new Eniro();
     var _map = null;
     var _companyView = new CompanyView();

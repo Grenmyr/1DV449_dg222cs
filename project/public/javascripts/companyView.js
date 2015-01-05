@@ -17,7 +17,7 @@ var CompanyView = function () {
 
     this.renderBasicView = function (company) {
 
-        console.log(company)
+        console.log(company);
         while (companyViewDiv.hasChildNodes()) {
             companyViewDiv.removeChild(companyViewDiv.lastChild);
         }
@@ -29,11 +29,13 @@ var CompanyView = function () {
         var streetName = document.createElement('p');
         var postArea = document.createElement('p');
         var postCode = document.createElement('p');
-        var link = cloneA.cloneNode(true);
+        var homepageLink = cloneA.cloneNode(true);
+        homepageLink.setAttribute('id','hemsida');
+        var facebookLink = cloneA.cloneNode(true);
+        facebookLink.setAttribute('id','facebook');
 
-        link.addEventListener('click', function () {
-            window.open(company['homepage'], '_blank');
-        });
+        populateExternalLinks(homepageLink, company['homepage']);
+        populateExternalLinks(facebookLink, company['facebook']);
 
         if (company['address']['streetName'] === null) {
             streetName.textContent = unknownAddress;
@@ -42,20 +44,32 @@ var CompanyView = function () {
             streetName.textContent = company['address']['streetName'];
             postArea.textContent = company['address']['postArea'];
             postCode.textContent = company['address']['postCode'];
-            link.textContent = "Öppna Hemsida.";
         }
         addressDiv.appendChild(streetName);
         addressDiv.appendChild(postCode);
         addressDiv.appendChild(postArea);
 
         companyViewDiv.appendChild(header);
-        companyViewDiv.appendChild(link);
+        companyViewDiv.appendChild(homepageLink);
+        companyViewDiv.appendChild(facebookLink);
         companyViewDiv.appendChild(addressDiv);
         basicDiv.appendChild(companyViewDiv);
         contentDiv.appendChild(basicDiv);
 
     };
 
+    function populateExternalLinks (node,externalLink) {
+        if(externalLink !== null){
+            node.textContent = "Öppna "+ node.getAttribute('id');
+            node.addEventListener('click', function () {
+                window.open(externalLink, '_blank');
+            });
+        }
+        else{
+            node.textContent = node.getAttribute('id')+" Saknas";
+        }
+
+    }
     function renderDetailedView(company) {
         console.log(company);
         var detailedDiv = cloneDiv.cloneNode(true);

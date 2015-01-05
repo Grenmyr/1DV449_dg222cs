@@ -46,6 +46,10 @@
     text-decoration: solid;
     cursor: pointer;
 }
+#basicView a{
+    display: flex;
+}
+
 #detailedDiv{
     background-color: yellow;
     display: inline-block;
