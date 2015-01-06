@@ -49,7 +49,6 @@ var Mashup = function (socketSetting) {
                         })
                     }
                     else {
-                        // TODO if no connection with websockets. fix?
                         console.log("ny sökningskategori sökte via server");
                         socketEmit('eniroSearch', eniroSearch);
                     }
@@ -92,7 +91,10 @@ var Mashup = function (socketSetting) {
         _map.setCompanies(_search);
         _map.addMarkers();
         _map.focusOnSelectedCompany(_search['adverts'][0]);
+
+
         _companyView.renderBasicView(_search['adverts'][0]);
+
     }
 };
 function socketEmit(emitName, search) {

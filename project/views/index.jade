@@ -5,9 +5,10 @@ block content
 
   .content
     h1#connection
-    fb:login-button(scope='public_profile,email', onlogin='checkLoginState();')
-    #status
-    h4 Välkommen #{user}
+    h4#status
+    #fb-root
+
+    //h4 Välkommen #{user}
     #companySearch
       h4 Vad söker du?
       select#companySelect

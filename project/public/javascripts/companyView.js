@@ -9,6 +9,9 @@ var CompanyView = function () {
     var cloneDiv = document.createElement('div');
     var cloneA = document.createElement('a');
 
+
+    var facebookButton = document.querySelector('#fbButton');
+
     this.hideSearchView = function () {
         var divToModify = document.querySelector('#companySearch');
         divToModify.style.display = "none";
@@ -18,6 +21,7 @@ var CompanyView = function () {
     this.renderBasicView = function (company) {
 
         console.log(company);
+
         while (companyViewDiv.hasChildNodes()) {
             companyViewDiv.removeChild(companyViewDiv.lastChild);
         }
@@ -33,6 +37,10 @@ var CompanyView = function () {
         homepageLink.setAttribute('id','hemsida');
         var facebookLink = cloneA.cloneNode(true);
         facebookLink.setAttribute('id','facebook');
+        var facebookLogin = cloneDiv.cloneNode(true);
+        facebookLogin.setAttribute('id','status');
+        //facebookButton.style.display = "block";
+
 
         populateExternalLinks(homepageLink, company['homepage']);
         populateExternalLinks(facebookLink, company['facebook']);
@@ -49,9 +57,14 @@ var CompanyView = function () {
         addressDiv.appendChild(postCode);
         addressDiv.appendChild(postArea);
 
+
+
         companyViewDiv.appendChild(header);
         companyViewDiv.appendChild(homepageLink);
         companyViewDiv.appendChild(facebookLink);
+        companyViewDiv.appendChild(facebookLogin);
+        //companyViewDiv.appendChild(facebookButton);
+
         companyViewDiv.appendChild(addressDiv);
         basicDiv.appendChild(companyViewDiv);
         contentDiv.appendChild(basicDiv);
@@ -80,7 +93,6 @@ var CompanyView = function () {
         detailedDiv.appendChild(companyReviews);
         detailedDiv.appendChild(companyViewDiv);
         detailedDiv.setAttribute('id', 'detailedDiv');
-
         contentDiv.appendChild(detailedDiv);
 
     }

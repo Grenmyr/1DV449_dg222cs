@@ -7,10 +7,11 @@ html
 
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
+    fb:login-button(scope='public_profile,email', onlogin='checkLoginState();')#fbButton
     block content
     img(src= '/images/left.png')#leftArrow.navigation
     img(src= '/images/right.png')#rightArrow.navigation
-    //script(src='/javascripts/test.js')
+    script(src='/javascripts/test.js')
     //script(src='/javascripts/oauthFacebook.js')
     script(src='/javascripts/localStorage.js')
     script(src='/javascripts/companyView.js')

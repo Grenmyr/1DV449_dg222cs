@@ -49,6 +49,12 @@
 #basicView a{
     display: flex;
 }
+/*#fbButton {
+    display: none;
+}*/
+#fb-root{
+    display: none;
+}
 
 #detailedDiv{
     background-color: yellow;

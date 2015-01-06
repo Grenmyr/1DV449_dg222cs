@@ -6,7 +6,7 @@ router.get('/', function (req, res) {
 
     res.render('index', {
             title: 'Välkommen till flytthjälpen',
-            user: "testUser",
+            user: "ej inloggad",
             searchParameters :  ["Flyttfirma", "Städfirma"]
         }
     );
