@@ -6,8 +6,8 @@ var Map = function () {
     var markers = [];
     var _companies;
 
-    var redIcon =  "../images/red.png";
-    var greenIcon =  "../images/green.png";
+    var redIcon = "../images/red.png";
+    var greenIcon = "../images/green.png";
 
     var arrayIndex = 0;
     var leftArrow = document.getElementById('leftArrow');
@@ -30,6 +30,7 @@ var Map = function () {
                 mapOptions);
             //addMarker(coordinates);
         }
+
         this.style();
         google.maps.event.addDomListener(window, 'load', loaded());
         setupNavigation();
@@ -45,8 +46,8 @@ var Map = function () {
         leftArrow.addEventListener('click', function (e) {
             e.preventDefault();
             if (arrayIndex > 0) {
-                markers[arrayIndex].setMap(null) ;
-                createMarker(_companies['adverts'][arrayIndex],redIcon,function(callback){
+                markers[arrayIndex].setMap(null);
+                createMarker(_companies['adverts'][arrayIndex], redIcon, function (callback) {
                     markers[arrayIndex] = callback;
                 });
                 arrayIndex += -1;
@@ -60,10 +61,10 @@ var Map = function () {
             e.preventDefault();
             if (arrayIndex < _companies['adverts'].length - 1) {
 
-                    markers[arrayIndex].setMap(null) ;
-                    createMarker(_companies['adverts'][arrayIndex],redIcon,function(callback){
-                        markers[arrayIndex] = callback;
-                    });
+                markers[arrayIndex].setMap(null);
+                createMarker(_companies['adverts'][arrayIndex], redIcon, function (callback) {
+                    markers[arrayIndex] = callback;
+                });
                 arrayIndex += 1;
 
                 console.log(arrayIndex);
@@ -82,10 +83,10 @@ var Map = function () {
         Map.mapReference.setZoom(11);
 
 
-            markers[arrayIndex].setMap(null) ;
-            createMarker(_companies['adverts'][arrayIndex],greenIcon,function(callback){
-                markers[arrayIndex] = callback;
-            });
+        markers[arrayIndex].setMap(null);
+        createMarker(_companies['adverts'][arrayIndex], greenIcon, function (callback) {
+            markers[arrayIndex] = callback;
+        });
     };
 
     this.addMarkers = function () {
@@ -96,12 +97,12 @@ var Map = function () {
         arrayIndex = 0;
 
         _companies['adverts'].forEach(function (company) {
-            createMarker(company,redIcon, function (callback){
+            createMarker(company, redIcon, function (callback) {
                 markers.push(callback);
             });
         });
     };
-    function createMarker(company,icon,callback){
+    function createMarker(company, icon, callback) {
         //console.log(icon);
         var latitude = company['location']['coordinates'][0]['latitude'];
         var longitude = company['location']['coordinates'][0]['longitude'];
@@ -112,7 +113,7 @@ var Map = function () {
             position: markerPosition,
             map: Map.mapReference,
             title: "tempotitel",
-            icon : icon,
+            icon: icon,
             infoWindow: new google.maps.InfoWindow({
                 content: "tomkontent just nus"
             })
@@ -122,7 +123,11 @@ var Map = function () {
 
     this.style = function () {
         mapOptions.styles =
-            [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
+            [{"stylers": [{"hue": "#ff1a00"}, {"invert_lightness": true}, {"saturation": -100}, {"lightness": 33}, {"gamma": 0.5}]}, {
+                "featureType": "water",
+                "elementType": "geometry",
+                "stylers": [{"color": "#2D333C"}]
+            }]
     }
 };
 
