@@ -30,7 +30,7 @@ var Map = function () {
                 mapOptions);
             //addMarker(coordinates);
         }
-
+        this.style();
         google.maps.event.addDomListener(window, 'load', loaded());
         setupNavigation();
     };
@@ -118,6 +118,11 @@ var Map = function () {
             })
         });
         callback(marker);
+    }
+
+    this.style = function () {
+        mapOptions.styles =
+            [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
     }
 };
 

@@ -38,7 +38,7 @@ var Mashup = function (socketSetting) {
                         _localStorage.getItem(lastSearch, function (searchResult) {
                             if(searchResult){
                                 _search = searchResult;
-                                console.log("localstorage presenterade data");
+                                console.log("localstorage presenterade fräsh data");
                                 prepareData();
                             }
                             else{
