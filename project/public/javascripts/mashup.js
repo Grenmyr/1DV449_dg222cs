@@ -57,6 +57,11 @@ var Mashup = function (socketSetting) {
             });
         }
     );
+    _socketSetting.on('disconnect', function() {
+        var connectionHeader = document.querySelector('#connection');
+        connectionHeader.textContent = "Offline läge";
+    });
+
 
     _socketSetting.on('companySearch', function (companySearch) {
         if(companySearch['adverts'].length > 0){
