@@ -17,11 +17,12 @@ då räknade det även fel.
 5/1
 *Satt och försökte göra facebook inloggning på klienten fick problem med testa lokalt då
 det ej fungerade lokalt så jag har avnrutit oauth inloggningnen just nu.
+*refaktorerat företagsvy och lagt in länk till facebook.
 
-6/1 *stylat min google map
+6/1
+*stylat min google map
 *implementerat offline first cachning via localstorage. Funkar klockrent ev bara implementera meddelanden
 för användare om nätet är nere.
 
 TODO : Validera Request mot eniro?
 Oath inloggning för se facebook data?
-refaktorera detaljerad företagsvy.
