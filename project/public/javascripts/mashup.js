@@ -46,6 +46,7 @@ var Mashup = function (socketSetting) {
                         })
                     }
                     else {
+                        // TODO if no connection with websockets. fix?
                         console.log("ny sökningskategori sökte via server");
                         socketEmit('eniroSearch', eniroSearch);
                     }

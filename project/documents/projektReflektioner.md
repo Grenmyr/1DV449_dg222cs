@@ -14,6 +14,14 @@ då räknade det även fel.
 3/1 2015
 *lagt in favicon genom "serve-favicon" i app.js även refaktorerat och kommenterat.
 
+5/1
+*Satt och försökte göra facebook inloggning på klienten fick problem med testa lokalt då
+det ej fungerade lokalt så jag har avnrutit oauth inloggningnen just nu.
+
+6/1 *stylat min google map
+*implementerat offline first cachning via localstorage. Funkar klockrent ev bara implementera meddelanden
+för användare om nätet är nere.
+
 TODO : Validera Request mot eniro?
 Oath inloggning för se facebook data?
 refaktorera detaljerad företagsvy.
