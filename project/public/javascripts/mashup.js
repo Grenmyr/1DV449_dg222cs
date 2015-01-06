@@ -15,6 +15,9 @@ var Mashup = function (socketSetting) {
     //var _oauthFacebook = new OauthFacebook();
     //var test = new test();
 
+
+    var connectionHeader = document.querySelector('#connection');
+
     _eniro.waitForUserClick(function (eniroSearch) {
             eniroSearch.search_word = _eniro.searchParameters[eniroSearch.search_word];
             lastSearch = eniroSearch.geo_area + eniroSearch.search_word;
@@ -58,10 +61,12 @@ var Mashup = function (socketSetting) {
         }
     );
     _socketSetting.on('disconnect', function() {
-        var connectionHeader = document.querySelector('#connection');
         connectionHeader.textContent = "Offline läge";
     });
 
+    _socketSetting.on('connect', function() {
+        connectionHeader.textContent = "Online läge";
+    });
 
     _socketSetting.on('companySearch', function (companySearch) {
         if(companySearch['adverts'].length > 0){
