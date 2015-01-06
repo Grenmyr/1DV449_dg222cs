@@ -5,7 +5,7 @@ var _socketSetting;
 
 var Mashup = function (socketSetting) {
     _socketSetting = io.connect(socketSetting);
-    var searchParameter;
+    var lastSearch;
     var _search;
     var _eniro = new Eniro();
     var _map = null;
@@ -15,10 +15,10 @@ var Mashup = function (socketSetting) {
     //var _oauthFacebook = new OauthFacebook();
     //var test = new test();
 
-
     _eniro.waitForUserClick(function (eniroSearch) {
             eniroSearch.search_word = _eniro.searchParameters[eniroSearch.search_word];
-            searchParameter = eniroSearch.geo_area + eniroSearch.search_word;
+
+            lastSearch = eniroSearch.geo_area + eniroSearch.search_word;
 
             console.log("skickade eniroSearch från Mashup.js");
             if (_map === null) {
@@ -31,13 +31,12 @@ var Mashup = function (socketSetting) {
                 });
             }
 
-            _localStorage.localStorageComparability(function (supportLocalStorage) {
-                if (supportLocalStorage) {
-                    var refreshTime = new Date().getTime()-100000;
-                    console.log(refreshTime);
-                    if (localStorage[searchParameter]) {
-                        _localStorage.getItem(searchParameter, function (searchResult) {
-                            if(searchResult['timestamp'] > refreshTime){
+            _localStorage.localStorageComparability(function (browserSupport) {
+                if (browserSupport) {
+                    if (localStorage[lastSearch]) {
+
+                        _localStorage.getItem(lastSearch, function (searchResult) {
+                            if(searchResult){
                                 _search = searchResult;
                                 console.log("localstorage presenterade data");
                                 prepareData();
@@ -58,46 +57,18 @@ var Mashup = function (socketSetting) {
                 }
             });
         }
-    )
-    ;
-
-    /*     _companySearch.waitForUserClick(function (selectedCompany) {
-     _detailedView.hideSearchView();
-     _detailedView.renderBasicView(selectedCompany);
-     _map.focusOnSelectedCompany(selectedCompany);
-     });*/
-
+    );
 
     _socketSetting.on('companySearch', function (companySearch) {
         if(companySearch['adverts'].length > 0){
             _search = companySearch;
             console.log(_search);
-
-            _localStorage.setItem(searchParameter, _search);
-
+            _localStorage.setItem(lastSearch, _search);
             prepareData();
         }
         else{
-            console.log("inga träffar på sökning")
-            // present somehow there was no searchresults
+            console.log("inga träffar på sökning");
         }
-
-        /*   var validCompanies = [];
-         _search['adverts'].forEach(function (company) {
-         if (company['homepage'] !== null &&
-         company['location']['coordinates'][0]['longitude'] !== null) {
-         validCompanies.push((company))
-         }
-         });
-
-         console.log(companySearch['adverts'].length);
-         _search['adverts'] = validCompanies;
-         _map.setCompanies(_search);
-         _map.addMarkers();
-         console.log(validCompanies.length);
-
-         _map.focusOnSelectedCompany(_search['adverts'][0]);
-        _companyView.renderBasicView(_search['adverts'][0]);*/
     });
 
     function prepareData() {
@@ -108,12 +79,9 @@ var Mashup = function (socketSetting) {
                 validCompanies.push((company))
             }
         });
-
-        //console.log(companySearch['adverts'].length);
         _search['adverts'] = validCompanies;
         _map.setCompanies(_search);
         _map.addMarkers();
-        console.log(validCompanies.length);
 
         _map.focusOnSelectedCompany(_search['adverts'][0]);
         _companyView.renderBasicView(_search['adverts'][0]);

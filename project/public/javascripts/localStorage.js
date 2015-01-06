@@ -12,11 +12,20 @@ var Localstorage = function () {
     };
 
     this.getItem = function (searchParameter,callback){
-        var rawData = localStorage.getItem(searchParameter);
-        //console.log(rawData);
-       var item = JSON.parse(localStorage.getItem(searchParameter));
-        //console.log(item);
-        callback(item);
+
+        var refreshTime = new Date().getTime()-100000;
+        var searchResult = JSON.parse(localStorage.getItem(searchParameter));
+        console.log(searchResult['timestamp']);
+        console.log(refreshTime);
+        if(searchResult['timestamp'] > refreshTime){
+          callback(searchResult);
+        }
+        else{
+           callback(false);
+        }
+
+       //callback(JSON.parse(localStorage.getItem(searchParameter)));
+
     };
     this.setItem = function (searchParameter, object) {
         var stringifyObject = JSON.stringify(object);
