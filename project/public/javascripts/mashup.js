@@ -17,10 +17,8 @@ var Mashup = function (socketSetting) {
 
     _eniro.waitForUserClick(function (eniroSearch) {
             eniroSearch.search_word = _eniro.searchParameters[eniroSearch.search_word];
-
             lastSearch = eniroSearch.geo_area + eniroSearch.search_word;
 
-            console.log("skickade eniroSearch från Mashup.js");
             if (_map === null) {
                 _map = new Map();
                 _map.initializeMap();
