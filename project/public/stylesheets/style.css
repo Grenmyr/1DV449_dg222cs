@@ -6,7 +6,7 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: -1;
+  z-index: 3;
 }
 #listDiv{
   max-height: 30%;
@@ -22,14 +22,14 @@
   font-size: 5em;
 }
 #leftArrow{
-  z-index: 2;
+  z-index: 4;
   position: absolute;
   height: 15%;
   left:0;
   display: none;
 }
 #rightArrow{
-  z-index: 3;
+  z-index: 4;
   position: absolute;
   height: 15%;
   right: 0;
@@ -55,6 +55,18 @@
 #fb-root{
     display: none;
 }
+#connection{
+    z-index: 4;
+    display: inline-block;
+    position: relative;
+    margin-right: 12%;
+    float: right;
+
+}
+#status{
+    z-index: 4;/*
+    position: relative;*/
+}
 
 #detailedDiv{
     background-color: yellow;
@@ -63,7 +75,7 @@
 }
 
 .content{
-
+    display: inline-block;
   z-index: 2;
   margin-left: 15%;
   height: 100%;
