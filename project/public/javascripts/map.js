@@ -46,13 +46,11 @@ var Map = function () {
         leftArrow.addEventListener('click', function (e) {
             e.preventDefault();
             if (arrayIndex > 0) {
-                markers[arrayIndex].setMap(null);
-                createMarker(_companies['adverts'][arrayIndex], redIcon, function (callback) {
-                    markers[arrayIndex] = callback;
-                });
+
+                markers[arrayIndex].setIcon(redIcon);
                 arrayIndex += -1;
 
-                console.log(arrayIndex);
+                markers[arrayIndex].setIcon(greenIcon);
                 callback(_companies['adverts'][arrayIndex]);
             }
         });
@@ -61,13 +59,11 @@ var Map = function () {
             e.preventDefault();
             if (arrayIndex < _companies['adverts'].length - 1) {
 
-                markers[arrayIndex].setMap(null);
-                createMarker(_companies['adverts'][arrayIndex], redIcon, function (callback) {
-                    markers[arrayIndex] = callback;
-                });
+                markers[arrayIndex].setIcon(redIcon);
                 arrayIndex += 1;
 
-                console.log(arrayIndex);
+                markers[arrayIndex].setIcon(greenIcon);
+
                 callback(_companies['adverts'][arrayIndex]);
             }
         });
@@ -82,11 +78,7 @@ var Map = function () {
         Map.mapReference.setCenter(markerPosition);
         Map.mapReference.setZoom(11);
 
-
-        markers[arrayIndex].setMap(null);
-        createMarker(_companies['adverts'][arrayIndex], greenIcon, function (callback) {
-            markers[arrayIndex] = callback;
-        });
+        markers[arrayIndex].setIcon(greenIcon);
     };
 
     this.addMarkers = function () {
@@ -105,7 +97,6 @@ var Map = function () {
     };
 
     function createMarker(company, icon, callback) {
-        //console.log(icon);
 
         var latitude = company['location']['coordinates'][0]['latitude'];
         var longitude = company['location']['coordinates'][0]['longitude'];
@@ -124,25 +115,16 @@ var Map = function () {
         });
         callback(marker);
     }
-    function addEventListener (marker){
-        google.maps.event.addListener(marker, 'click', function () {
-                console.log(marker);
-        });
-    }
-    this.markerEventlisterner = function (){
+
+    this.markersEventListener = function (callback){
 
         markers.forEach(function(marker,i){
             google.maps.event.addListener(marker, 'click', function () {
-                markers[arrayIndex].setMap(null);
-                createMarker(_companies['adverts'][arrayIndex], redIcon, function (callback) {
-                    markers[arrayIndex] = callback;
-                });
 
+                markers[arrayIndex].setIcon(redIcon);
+                markers[i].setIcon(greenIcon);
                 arrayIndex = i;
-
-                createMarker(_companies['adverts'][arrayIndex], greenIcon, function (callback) {
-                    markers[arrayIndex] = callback;
-                });
+                callback(arrayIndex);
             });
         });
 
