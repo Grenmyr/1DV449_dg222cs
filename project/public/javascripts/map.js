@@ -15,7 +15,9 @@ var Map = function () {
 
     var mapOptions = {
         center: {lat: 58, lng: 15},
-        zoom: 5
+        zoom: 5,
+        disableDefaultUI: true
+
     };
     this.setCompanies = function (companies) {
 
