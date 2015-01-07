@@ -74,7 +74,7 @@ var Map = function () {
 
     };
 
-    this.focusOnSelectedCompany = function (company) {
+    Map.prototype.focusOnSelectedCompany = function (company) {
 
         var markerPosition = new google.maps.LatLng(
             company['location']['coordinates'][0]['latitude'],
@@ -90,6 +90,7 @@ var Map = function () {
     };
 
     this.addMarkers = function () {
+
         markers.forEach(function (marker) {
             marker.setMap(null);
         });
@@ -102,8 +103,10 @@ var Map = function () {
             });
         });
     };
+
     function createMarker(company, icon, callback) {
         //console.log(icon);
+
         var latitude = company['location']['coordinates'][0]['latitude'];
         var longitude = company['location']['coordinates'][0]['longitude'];
 
@@ -117,9 +120,33 @@ var Map = function () {
             infoWindow: new google.maps.InfoWindow({
                 content: "tomkontent just nus"
             })
+
         });
         callback(marker);
     }
+    function addEventListener (marker){
+        google.maps.event.addListener(marker, 'click', function () {
+                console.log(marker);
+        });
+    }
+    this.markerEventlisterner = function (){
+
+        markers.forEach(function(marker,i){
+            google.maps.event.addListener(marker, 'click', function () {
+                markers[arrayIndex].setMap(null);
+                createMarker(_companies['adverts'][arrayIndex], redIcon, function (callback) {
+                    markers[arrayIndex] = callback;
+                });
+
+                arrayIndex = i;
+
+                createMarker(_companies['adverts'][arrayIndex], greenIcon, function (callback) {
+                    markers[arrayIndex] = callback;
+                });
+            });
+        });
+
+    };
 
     this.style = function () {
         mapOptions.styles =

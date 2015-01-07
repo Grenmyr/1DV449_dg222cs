@@ -91,6 +91,7 @@ var Mashup = function (socketSetting) {
         _search['adverts'] = validCompanies;
         _map.setCompanies(_search);
         _map.addMarkers();
+        //_map.markerEventlisterner();
         _map.focusOnSelectedCompany(_search['adverts'][0]);
         _companyView.renderBasicView(_search['adverts'][0]);
 
