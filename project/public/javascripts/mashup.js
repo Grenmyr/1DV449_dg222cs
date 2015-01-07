@@ -15,14 +15,15 @@ var Mashup = function (socketSetting) {
     //var _oauthFacebook = new OauthFacebook();
     //var test = new test();
 
-
     var connectionHeader = document.querySelector('#connection');
+    var welcomeHeader = document.querySelector('#start');
 
     _eniro.waitForUserClick(function (eniroSearch) {
             eniroSearch.search_word = _eniro.searchParameters[eniroSearch.search_word];
             lastSearch = eniroSearch.geo_area + eniroSearch.search_word;
 
             if (_map === null) {
+                welcomeHeader.remove();
                 _map = new Map();
                 _map.initializeMap();
 
@@ -91,8 +92,6 @@ var Mashup = function (socketSetting) {
         _map.setCompanies(_search);
         _map.addMarkers();
         _map.focusOnSelectedCompany(_search['adverts'][0]);
-
-
         _companyView.renderBasicView(_search['adverts'][0]);
 
     }

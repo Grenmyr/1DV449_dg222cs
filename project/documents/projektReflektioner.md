@@ -22,7 +22,10 @@ det ej fungerade lokalt så jag har avnrutit oauth inloggningnen just nu.
 6/1
 *stylat min google map
 *implementerat offline first cachning via localstorage. Funkar klockrent ev bara implementera meddelanden
-för användare om nätet är nere.
+för användare om nätet är nere under användning. ej implementerat cache manifest.
+* Facebook inloggning via klient.
+
+7/1
 
 TODO : Validera Request mot eniro?
-Oath inloggning för se facebook data?
+cache manifest för spara script css och images

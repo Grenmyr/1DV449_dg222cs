@@ -11,7 +11,10 @@ var settings = {
     }
 };
 function init() {
-    waitForUserClick();
+    settings.html.content.style.visibility = "visible";
+    //settings.html.start.remove();
+    new Mashup(settings.socket);
+    //waitForUserClick();
 }
 
 

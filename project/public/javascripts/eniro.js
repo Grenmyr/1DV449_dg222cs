@@ -17,7 +17,15 @@ Eniro.prototype.waitForUserClick = function (callback) {
     button.addEventListener('click', function () {
         callback({search_word: select.options.selectedIndex,
             geo_area: input.value.toLocaleLowerCase()});
-    })
+    });
+
+    input.addEventListener('keypress', function (e) {
+        var key = e.which || e.keyCode;
+        if (key == 13) { //
+            callback({search_word: select.options.selectedIndex,
+                geo_area: input.value.toLocaleLowerCase()});
+        }
+    });
 
 };
 Eniro.prototype.searchParameters = [ "flyttfirma", "städfirma"];
