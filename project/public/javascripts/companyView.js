@@ -75,10 +75,11 @@ var CompanyView = function () {
             node.textContent = "Öppna "+ node.getAttribute('id');
             node.addEventListener('click', function () {
                 window.open(externalLink, '_blank');
+
             });
         }
         else{
-            node.textContent = node.getAttribute('id')+" Saknas";
+            node.remove();
         }
 
     }

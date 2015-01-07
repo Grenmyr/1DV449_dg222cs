@@ -79,7 +79,7 @@
         FB.api('/me', function (response) {
             console.log('Successful login for: ' + response.name);
             document.getElementById('status').textContent =
-                'Du är inloggad via facebook, ' + response.name + ' och har därmed tillgång' +
+              'Välkommen ' + response.name + ' inloggad via facebook du har tillgång' +
                 ' till all funktionalitet!';
         });
     }

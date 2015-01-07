@@ -20,7 +20,6 @@ var Map = function () {
 
     };
     this.setCompanies = function (companies) {
-
         _companies = companies;
     };
 
@@ -30,18 +29,17 @@ var Map = function () {
         function loaded() {
             Map.mapReference = new google.maps.Map(document.getElementById('map'),
                 mapOptions);
-            //addMarker(coordinates);
         }
 
         this.style();
         google.maps.event.addDomListener(window, 'load', loaded());
-        setupNavigation();
-    };
-    function setupNavigation() {
 
+    };
+    this.setupNavigation = function() {
+        Map.prototype.userNavigationGuide.style.visibility = "visible";
         leftArrow.style.display = "flex";
         rightArrow.style.display = "flex";
-    }
+    };
 
     this.waitForUserArrowPress = function (callback) {
 
@@ -143,3 +141,4 @@ var Map = function () {
 };
 
 Map.prototype.mapReference = null;
+Map.prototype.userNavigationGuide = document.getElementById('companySearch').firstChild.nextSibling;

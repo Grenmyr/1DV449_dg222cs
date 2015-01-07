@@ -28,7 +28,7 @@ för användare om nätet är nere under användning. ej implementerat cache man
 7/1
 * ändrat om startsida så välkomstsida och inledande ssökning smälter ihop.
 * lagt eventlisteners på alla markers som öppnar companyinfo.
-* Ändrat kartans z index så det går använda pan, scrollzoom osv.
+* Ändrat kartans z index så det går använda pan, scrollzoom osv även tagit bort all defaultstyling på den.
 
 TODO : Validera Request mot eniro?
 cache manifest för spara script css och images

@@ -3,12 +3,14 @@
  */
 var _socketSetting;
 
-var Mashup = function (socketSetting) {
+var Mashup = function (socketSetting,map) {
     _socketSetting = io.connect(socketSetting);
+    var firstLoad = true;
     var lastSearch;
     var _search;
     var _eniro = new Eniro();
-    var _map = null;
+    var _map = new Map();
+    _map.initializeMap();
     var _companyView = new CompanyView();
     var _localStorage = new Localstorage();
     //var _companySearch = new CompanySearch();
@@ -22,16 +24,17 @@ var Mashup = function (socketSetting) {
             eniroSearch.search_word = _eniro.searchParameters[eniroSearch.search_word];
             lastSearch = eniroSearch.geo_area + eniroSearch.search_word;
 
-            if (_map === null) {
+            if (firstLoad === true) {
                 welcomeHeader.remove();
-                _map = new Map();
-                _map.initializeMap();
+                _map.setupNavigation();
 
                 _map.waitForUserArrowPress(function (navigationResponse) {
+                    _map.userNavigationGuide.remove();
                     _map.focusOnSelectedCompany(navigationResponse);
                     _companyView.renderBasicView(navigationResponse);
                 });
             }
+
 
             _localStorage.localStorageComparability(function (browserSupport) {
                 if (browserSupport) {

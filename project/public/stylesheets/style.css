@@ -1,65 +1,89 @@
-#map{
- /* width: 200px;
-  height: 200px*/
-  height: 90%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 3;
-}
-#listDiv{
-  max-height: 30%;
-  overflow: auto;
-}
-#companySearch{
-
-  z-index: 100;
-  position: relative;
-}
-#start{
-  position: relative;
-  font-size: 5em;
-}
-#leftArrow{
-  z-index: 4;
-  position: absolute;
-  height: 15%;
-  left:0;
-  display: none;
-}
-#rightArrow{
-  z-index: 4;
-  position: absolute;
-  height: 15%;
-  right: 0;
-  display: none;
-}
-#basicView{
-  background-color: grey;
-  opacity: 0.75;
-  z-index: 3;
-  display: inline-block;
+#map {
+    /* width: 200px;
+     height: 200px*/
+    height: 90%;
     position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 3;
 }
-#basicView a:hover{
+
+#listDiv {
+    max-height: 30%;
+    overflow: auto;
+}
+
+#companySearch {
+    display: inline-block;
+    z-index: 100;
+    position: relative;
+}
+#companySearch h5 {
+   visibility: hidden;
+}
+
+#start {
+    position: relative;
+    font-size: 5em;
+    z-index: 4;
+}
+
+#leftArrow {
+    z-index: 4;
+    position: absolute;
+    height: 15%;
+    left: 0;
+    display: none;
+}
+
+#rightArrow {
+    z-index: 4;
+    position: absolute;
+    height: 15%;
+    right: 0;
+    display: none;
+}
+
+#basicView {
+
+    border-radius: 4px;
+    background-color: rgb(81,81,81);
+    opacity: 0.75;
+    z-index: 3;
+    display: inline-block;
+    position: absolute;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-top: 0.5%;
+}
+
+#basicView a:hover {
     text-decoration: underline;
     text-decoration: solid;
     cursor: pointer;
 
-    position: absolute;
+
 }
-#basicView a{
+
+#basicView a {
     display: flex;
+    color: rgb(74,102,181);
+    font-weight: 600;
 }
+
 #fbButton {
     z-index: 4;
     position: absolute;
+    float: left;
+    display: flex;
 }
-#fb-root{
+
+#fb-root {
     display: none;
 }
-#connection{
+
+#connection {
     z-index: 4;
     display: inline-block;
     position: relative;
@@ -67,25 +91,28 @@
     float: right;
 
 }
-#status{
-    z-index: 4;/*
-    position: relative;*/
+
+#status {
+    z-index: 4;
+    position: relative;
+    display: inline-flex;
 }
 
-#detailedDiv{
+#detailedDiv {
     background-color: yellow;
     display: inline-block;
     z-index: 4;
 }
 
-.content{
-    display: inline-block;
-  z-index: 2;
-  margin-left: 15%;
-  height: 100%;
-  width: 100%;
-  visibility: hidden;
+.content {
+    display: block;
+    z-index: 2;
+    margin-left: 15%;
+    height: 100%;
+    width: 100%;
+    visibility: hidden;
 }
+
 body {
     /* fix to avoid user select text*/
     -webkit-touch-callout: none;
@@ -94,16 +121,18 @@ body {
     -ms-user-select: none;
     user-select: none;
 
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    color: white;
+    /*rgb(207,207,207)*/
 
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 
 }
 
 a {
-  color: #00B7FF;
+    color: #00B7FF;
 }

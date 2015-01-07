@@ -3,15 +3,15 @@ extends layout
 block content
   h1#start= title
   .content
-    h4#status
     #fb-root
     //h4 Välkommen #{user}
     #companySearch
       h4 Vad söker du?
+      h3 Växla företag genom trycka på marker, eller använda navigering till höger och vänster.
       select#companySelect
         each parameter, i in searchParameters
           option(value=i) #{parameter}
-      input#inputfield(value='Kalmar', type='text', placeholder='välj ort (valfritt)', autofocus='autofocus')
+      input#inputfield(  type='text', placeholder='välj ort (valfritt)', autofocus='autofocus')
       button#searchButton sök
     #map
 
