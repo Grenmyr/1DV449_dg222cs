@@ -76,7 +76,8 @@ app.use(function (err, req, res, next) {
 
 // Server settings
 var debug = require('debug')('project');
-app.set('port', process.env.PORT || 3000);
+//app.set('port', process.env.PORT || 3000); // use local
+app.set('port', process.env.PORT || 80); // use when published
 
 var server = app.listen(app.get('port'), function () {
     debug('Express server listening on port ' + server.address().port);
@@ -90,13 +91,16 @@ socketIo.sockets.on('connection', function (client) {
     console.log("connected");
     client.on('eniroSearch', function (search) {
         console.log("server emit eniroSearch");
+
         requestEniro(search,function(companySearch){
             client.emit('companySearch',companySearch);
         })
     });
+    client.on('ping',function(int){
+            client.emit('pong',int);
+    });
+
 });
-
-
 
 /*  Main function to control data flow, First check database if data client request is stored
     In Mongodb with fresh timestamp, if it is, return that, if not it go through
