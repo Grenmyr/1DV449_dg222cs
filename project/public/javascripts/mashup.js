@@ -10,6 +10,8 @@ var Mashup = function (socketSetting) {
     var _map = null;
     var _companyView = new CompanyView();
     var _companySearch = new CompanySearch();
+    //var _oauthFacebook = new OauthFacebook();
+    //var test = new test();
 
 
     _eniro.waitForUserClick(function (eniroSearch) {
@@ -24,7 +26,6 @@ var Mashup = function (socketSetting) {
                 _companyView.renderBasicView(navigationResponse);
             });
         }
-
         socketEmit('eniroSearch', eniroSearch);
     });
 
