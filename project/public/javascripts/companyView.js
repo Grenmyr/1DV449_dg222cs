@@ -8,9 +8,7 @@ var CompanyView = function () {
     companyViewDiv.setAttribute('id', 'basicView');
     var cloneDiv = document.createElement('div');
     var cloneA = document.createElement('a');
-
     var header = document.createElement('h2');
-
     var divToModify = document.querySelector('#companySearch');
 
 
@@ -21,8 +19,7 @@ var CompanyView = function () {
         divToModify.style.display = "none";
     };
 
-    this.noResults = function(location){
-
+    this.noResults = function(){
         header.textContent = 'Din sökning gav inga träffar, behåller senaste sökning.';
 
             divToModify.appendChild(header);

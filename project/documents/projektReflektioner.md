@@ -31,5 +31,7 @@ för användare om nätet är nere under användning. ej implementerat cache man
 * Ändrat kartans z index så det går använda pan, scrollzoom osv även tagit bort all defaultstyling på den.
 * stylat om textfärger och lagt in hjälpmeddelanden.
 
+8/1 presenterar sökmeddelanden på klient.
+
 TODO : Validera Request mot eniro?
 cache manifest för spara script css och images
