@@ -22,7 +22,7 @@ var Mashup = function (socketSetting,map) {
 
     _eniro.waitForUserClick(function (eniroSearch) {
             eniroSearch.search_word = _eniro.searchParameters[eniroSearch.search_word];
-            lastSearch = eniroSearch.geo_area + eniroSearch.search_word;
+            lastSearch = eniroSearch.geo_area+'&' + eniroSearch.search_word;
 
             if (firstLoad === true) {
                 welcomeHeader.remove();
@@ -74,12 +74,11 @@ var Mashup = function (socketSetting,map) {
     _socketSetting.on('companySearch', function (companySearch) {
         if(companySearch['adverts'].length > 0){
             _search = companySearch;
-            console.log(_search);
             _localStorage.setItem(lastSearch, _search);
             prepareData();
         }
         else{
-            console.log("inga träffar på sökning");
+            _companyView.noResults();
         }
     });
 
@@ -94,6 +93,7 @@ var Mashup = function (socketSetting,map) {
         _search['adverts'] = validCompanies;
         _map.setCompanies(_search);
         _map.addMarkers();
+        _companyView.results(lastSearch,_search['adverts'].length);
         _map.markersEventListener(function(index){
             _map.focusOnSelectedCompany(_search['adverts'][index]);
             _companyView.renderBasicView(_search['adverts'][index]);

@@ -9,18 +9,32 @@ var CompanyView = function () {
     var cloneDiv = document.createElement('div');
     var cloneA = document.createElement('a');
 
+    var header = document.createElement('h2');
+
+    var divToModify = document.querySelector('#companySearch');
+
 
     var facebookButton = document.querySelector('#fbButton');
 
     this.hideSearchView = function () {
-        var divToModify = document.querySelector('#companySearch');
+        divToModify = document.querySelector('#companySearch');
         divToModify.style.display = "none";
+    };
+
+    this.noResults = function(location){
+
+        header.textContent = 'Din sökning gav inga träffar, behåller senaste sökning.';
+
+            divToModify.appendChild(header);
+    };
+    this.results = function (lastSearch,results){
+        lastSearch = lastSearch.split('&');
+        header.textContent = results+' resultat från sökningen '+ lastSearch[1]+' : ' +lastSearch[0];
+        divToModify.appendChild(header);
     };
 
 
     this.renderBasicView = function (company) {
-
-        console.log(company);
 
         while (companyViewDiv.hasChildNodes()) {
             companyViewDiv.removeChild(companyViewDiv.lastChild);
