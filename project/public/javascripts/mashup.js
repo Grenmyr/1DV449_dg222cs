@@ -100,7 +100,6 @@ var Mashup = function () {
             });
             _search['adverts'] = validCompanies;
             _map.setCompanies(_search);
-            _companyView.setCompanies(_search);
             _map.addMarkers();
             _companyView.results(lastSearch, _search['adverts'].length);
             _map.markersEventListener(function (index) {
@@ -109,7 +108,6 @@ var Mashup = function () {
             });
             _map.focusOnSelectedCompany(_search['adverts'][0]);
             _companyView.renderBasicView(_search['adverts'][0]);
-
         }
 
         function socketEmit(emitName, search) {

@@ -11,19 +11,15 @@ var CompanyView = function () {
     var header = document.createElement('h2');
     var divToModify = document.querySelector('#companySearch');
 
-    var _companies;
 
-    this.noResults = function(){
+    this.noResults = function () {
         header.textContent = 'Din sökning gav inga träffar, behåller senaste sökning.';
-            divToModify.appendChild(header);
-    };
-    this.results = function (lastSearch,results){
-        lastSearch = lastSearch.split('&');
-        header.textContent = results+' resultat från sökningen '+ lastSearch[1]+' : ' +lastSearch[0];
         divToModify.appendChild(header);
     };
-    this.setCompanies = function (companies) {
-        _companies = companies;
+    this.results = function (lastSearch, results) {
+        lastSearch = lastSearch.split('&');
+        header.textContent = results + ' resultat från sökningen ' + lastSearch[1] + ' : ' + lastSearch[0];
+        divToModify.appendChild(header);
     };
 
 
@@ -41,14 +37,18 @@ var CompanyView = function () {
         var postArea = document.createElement('p');
         var postCode = document.createElement('p');
         var homepageLink = cloneA.cloneNode(true);
-        homepageLink.setAttribute('id','hemsida');
+        homepageLink.setAttribute('id', 'hemsida');
         var facebookLink = cloneA.cloneNode(true);
-        facebookLink.setAttribute('id','facebook');
+        facebookLink.setAttribute('id', 'facebook');
         var facebookLogin = cloneDiv.cloneNode(true);
-        facebookLogin.setAttribute('id','status');
+        facebookLogin.setAttribute('id', 'status');
 
-        populateExternalLinks(homepageLink, company['homepage']);
-        populateExternalLinks(facebookLink, company['facebook']);
+        var loginCheck = window.checkLoginState2();
+        console.log(loginCheck);
+
+
+        homepageOpen(homepageLink, company['homepage']);
+        facebookOpen(facebookLink, company['facebook'], loginCheck);
 
         if (company['address']['streetName'] === null) {
             streetName.textContent = unknownAddress;
@@ -72,17 +72,35 @@ var CompanyView = function () {
         contentDiv.appendChild(basicDiv);
     };
 
-    function populateExternalLinks (node,externalLink) {
-        if(externalLink !== null){
-            node.textContent = "Öppna "+ node.getAttribute('id');
+    function facebookOpen(node, externalLink, loginCheck) {
+        if (externalLink !== null) {
+
+            if (loginCheck === "connected") {
+                node.textContent = "Öppna " + node.getAttribute('id');
+            }
+            else {
+                node.textContent = "Logga in för se " + node.getAttribute('id');
+            }
             node.addEventListener('click', function () {
-                window.open(externalLink, '_blank');
+                loginCheck = window.checkLoginState2();
+                if (loginCheck === "connected") {
+                    window.open(externalLink, '_blank');
+                }
+
             });
         }
-        else{
+        else {
             node.remove();
         }
 
     }
+
+    function homepageOpen(node, externalLink) {
+        node.textContent = "Öppna " + node.getAttribute('id');
+        node.addEventListener('click', function () {
+            window.open(externalLink, '_blank');
+        });
+    }
+
 
 };

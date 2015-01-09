@@ -29,11 +29,20 @@
 // This function is called when someone finishes with the Login
 // Button.  See the onlogin handler attached to it in the sample
 // code below.
-    function checkLoginState() {
+    var checkLoginState = function() {
         FB.getLoginStatus(function (response) {
             statusChangeCallback(response);
         });
-    }
+    };
+
+window.checkLoginState2 = function() {
+    var status;
+    FB.getLoginStatus(function (response) {
+      status = response.status;
+
+    });
+    return status;
+};
 
     window.fbAsyncInit = function () {
         FB.init({
@@ -81,5 +90,6 @@
             document.getElementById('status').textContent =
               'Välkommen ' + response.name + ' inloggad via facebook du har tillgång' +
                 ' till all funktionalitet!';
+            document.getElementById('facebook').textContent = "Öppna facebook";
         });
     }
