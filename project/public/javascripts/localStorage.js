@@ -2,7 +2,7 @@
  * Created by dav on 2015-01-08.
  */
 var Localstorage = function () {
-
+    var oneWeek = 604800000;
     this.localStorageComparability = function (callback) {
         if(typeof(Storage) !== "undefined") {
             callback (true);
@@ -12,11 +12,8 @@ var Localstorage = function () {
     };
 
     this.getItem = function (searchParameter,callback){
-
-        var refreshTime = new Date().getTime()-100000;
+        var refreshTime = new Date().getTime()- oneWeek;
         var searchResult = JSON.parse(localStorage.getItem(searchParameter));
-        //console.log(searchResult['timestamp']);
-        //console.log(refreshTime);
         if(searchResult['timestamp'] > refreshTime){
           callback(searchResult);
         }

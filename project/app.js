@@ -76,8 +76,8 @@ app.use(function (err, req, res, next) {
 
 // Server settings
 var debug = require('debug')('project');
-//app.set('port', process.env.PORT || 3000); // use local
-app.set('port', process.env.PORT || 80); // use when published
+app.set('port', process.env.PORT || 3000); // use local
+//app.set('port', process.env.PORT || 80); // use when published
 
 var server = app.listen(app.get('port'), function () {
     debug('Express server listening on port ' + server.address().port);
@@ -107,10 +107,11 @@ socketIo.sockets.on('connection', function (client) {
     requestEniroData() function to require new data. That data is returned to user, and saved
     into database with fresh timestamp.
 */
+var oneWeek = 604800000;
 var requestEniro = function (search,callback) {
 
     find(search , function (data) {
-        var refreshTime = new Date().getTime()-100000;
+        var refreshTime = new Date().getTime()- oneWeek;
         if (data.length === 0 || data[0].timestamp < refreshTime) {
             console.log("fanns ingen data sparad lokalt eller gammal timestamp");
             requestEniroData(search,function (data){

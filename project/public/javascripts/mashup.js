@@ -5,8 +5,8 @@
 
 var Mashup = function () {
     var _socketSetting;
-    //_socketSetting = io.connect('http://localhost:3000');
-    _socketSetting = io.connect('188.166.30.34');
+    _socketSetting = io.connect('http://localhost:3000');
+    //_socketSetting = io.connect('188.166.30.34');
     var firstLoad = true;
     var lastSearch;
     var _search;
@@ -16,12 +16,14 @@ var Mashup = function () {
     var _companyView = new CompanyView();
     var _localStorage = new Localstorage();
     var ping = 0;
-    var pong = 1;
+    var pong = 0;
     var connectionHeader = document.querySelector('#connection');
     var welcomeHeader = document.querySelector('#start');
+
     _socketSetting.on('connect', function () {
 
     });
+
         setInterval(function(){
             ping++;
             socketEmit('ping', ping);
@@ -43,6 +45,7 @@ var Mashup = function () {
                 lastSearch = eniroSearch.geo_area + '&' + eniroSearch.search_word;
 
                 if (firstLoad === true) {
+
                     welcomeHeader.remove();
                     _map.setupNavigation();
 
@@ -83,8 +86,6 @@ var Mashup = function () {
         );
 
         _socketSetting.on('disconnect', function () {
-            console.log("disconnected");
-            connectionHeader.textContent = "Offline läge";
         });
 
 

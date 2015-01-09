@@ -3,11 +3,6 @@
  */
 var Eniro = function () {
     // STRING DEPENDENCY TO INDEX.JS in Route Folder
-
-    console.log("enirokonstruktor");
-    this.requestData = function () {
-        console.log("requestData")
-    };
 };
 
 Eniro.prototype.waitForUserClick = function (callback) {
@@ -29,6 +24,3 @@ Eniro.prototype.waitForUserClick = function (callback) {
 
 };
 Eniro.prototype.searchParameters = [ "flyttfirma", "städfirma"];
-function makeSearch(category, searchstring) {
-
-}

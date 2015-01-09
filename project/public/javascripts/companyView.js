@@ -11,17 +11,8 @@ var CompanyView = function () {
     var header = document.createElement('h2');
     var divToModify = document.querySelector('#companySearch');
 
-
-    var facebookButton = document.querySelector('#fbButton');
-
-    this.hideSearchView = function () {
-        divToModify = document.querySelector('#companySearch');
-        divToModify.style.display = "none";
-    };
-
     this.noResults = function(){
         header.textContent = 'Din sökning gav inga träffar, behåller senaste sökning.';
-
             divToModify.appendChild(header);
     };
     this.results = function (lastSearch,results){
@@ -50,8 +41,6 @@ var CompanyView = function () {
         facebookLink.setAttribute('id','facebook');
         var facebookLogin = cloneDiv.cloneNode(true);
         facebookLogin.setAttribute('id','status');
-        //facebookButton.style.display = "block";
-
 
         populateExternalLinks(homepageLink, company['homepage']);
         populateExternalLinks(facebookLink, company['facebook']);
@@ -68,13 +57,10 @@ var CompanyView = function () {
         addressDiv.appendChild(postCode);
         addressDiv.appendChild(postArea);
 
-
-
         companyViewDiv.appendChild(header);
         companyViewDiv.appendChild(homepageLink);
         companyViewDiv.appendChild(facebookLink);
         companyViewDiv.appendChild(facebookLogin);
-        //companyViewDiv.appendChild(facebookButton);
 
         companyViewDiv.appendChild(addressDiv);
         basicDiv.appendChild(companyViewDiv);
@@ -86,26 +72,11 @@ var CompanyView = function () {
             node.textContent = "Öppna "+ node.getAttribute('id');
             node.addEventListener('click', function () {
                 window.open(externalLink, '_blank');
-
             });
         }
         else{
             node.remove();
         }
-
-    }
-    function renderDetailedView(company) {
-        console.log(company);
-        var detailedDiv = cloneDiv.cloneNode(true);
-        var companyReviews = cloneA.cloneNode(true);
-        companyReviews.href = company['companyReviews'];
-        companyReviews.textContent = "konsumentomdömme från rejta";
-        var companyViewDiv = document.querySelector('#basicView');
-
-        detailedDiv.appendChild(companyReviews);
-        detailedDiv.appendChild(companyViewDiv);
-        detailedDiv.setAttribute('id', 'detailedDiv');
-        contentDiv.appendChild(detailedDiv);
 
     }
 
