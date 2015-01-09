@@ -100,6 +100,12 @@ socketIo.sockets.on('connection', function (client) {
             client.emit('pong',int);
     });
 
+    client.on('offlineData',function(bool){
+        client.emit('offlineData',bool)
+    })
+
+
+
 });
 
 /*  Main function to control data flow, First check database if data client request is stored

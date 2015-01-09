@@ -53,7 +53,6 @@ var Map = function () {
 
                 markers[arrayIndex].setIcon(greenIcon);
                 callback(_companies['adverts'][arrayIndex]);
-                console.log(arrayIndex);
             }
         });
 
@@ -67,7 +66,6 @@ var Map = function () {
                 markers[arrayIndex].setIcon(greenIcon);
 
                 callback(_companies['adverts'][arrayIndex]);
-                console.log(arrayIndex);
             }
         });
 

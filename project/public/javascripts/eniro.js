@@ -2,8 +2,19 @@
  * Created by dav on 2014-12-12.
  */
 var Eniro = function () {
+    var offlineData = document.querySelector('#offlineData');
     // STRING DEPENDENCY TO INDEX.JS in Route Folder
+
+    this.offlineDataRequest = function (callback) {
+        console.log(offlineData);
+        offlineData.addEventListener('click',function (){
+            callback(true);
+        })
+    };
+
 };
+
+
 
 Eniro.prototype.waitForUserClick = function (callback) {
     var select = document.querySelector('#companySelect');
