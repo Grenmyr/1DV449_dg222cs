@@ -101,12 +101,28 @@ socketIo.sockets.on('connection', function (client) {
     });
 
     client.on('offlineData',function(bool){
+        requestOfflineData(function(offlineData){
+            console.log(offlineData)
+        });
         client.emit('offlineData',bool)
     })
 
 
 
 });
+var requestOfflineData = function (callback){
+    dbFind(function(offlineData){
+            callback(offlineData);
+        console.log(offlineData);
+    } );
+};
+
+function dbFind(callback) {
+
+    // Måste hämta alla collections
+    console.log("tried to get data");
+}
+
 
 /*  Main function to control data flow, First check database if data client request is stored
     In Mongodb with fresh timestamp, if it is, return that, if not it go through
@@ -192,6 +208,7 @@ function find(search, callback) {
         }
         callback(data);
     });
+    db.close();
 }
 function dropCollection(search) {
     var collection = db.get(search.geo_area+search.search_word);

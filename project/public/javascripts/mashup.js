@@ -19,6 +19,7 @@ var Mashup = function () {
     var pong = 0;
     var connectionHeader = document.querySelector('#connection');
     var welcomeHeader = document.querySelector('#start');
+    var offlineData = document.querySelector('#offlineData');
 
 
     setInterval(function () {
@@ -26,11 +27,12 @@ var Mashup = function () {
         socketEmit('ping', ping);
         if (ping > pong + 1) {
             connectionHeader.textContent = "Offline läge";
+            offlineData.style.display = "none";
         }
         else {
             connectionHeader.textContent = "Online läge";
+            offlineData.style.display = "inline-block";
         }
-        //window.checkLoginState2();
     }, 3000);
 
     _socketSetting.on('pong', function (resp) {
