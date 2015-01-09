@@ -11,6 +11,8 @@ var CompanyView = function () {
     var header = document.createElement('h2');
     var divToModify = document.querySelector('#companySearch');
 
+    var _companies;
+
     this.noResults = function(){
         header.textContent = 'Din sökning gav inga träffar, behåller senaste sökning.';
             divToModify.appendChild(header);
@@ -19,6 +21,9 @@ var CompanyView = function () {
         lastSearch = lastSearch.split('&');
         header.textContent = results+' resultat från sökningen '+ lastSearch[1]+' : ' +lastSearch[0];
         divToModify.appendChild(header);
+    };
+    this.setCompanies = function (companies) {
+        _companies = companies;
     };
 
 

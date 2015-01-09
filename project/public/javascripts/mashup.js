@@ -20,10 +20,6 @@ var Mashup = function () {
     var connectionHeader = document.querySelector('#connection');
     var welcomeHeader = document.querySelector('#start');
 
-    _socketSetting.on('connect', function () {
-
-    });
-
         setInterval(function(){
             ping++;
             socketEmit('ping', ping);
@@ -40,20 +36,18 @@ var Mashup = function () {
         });
 
         _eniro.waitForUserClick(function (eniroSearch) {
-
                 eniroSearch.search_word = _eniro.searchParameters[eniroSearch.search_word];
                 lastSearch = eniroSearch.geo_area + '&' + eniroSearch.search_word;
 
                 if (firstLoad === true) {
-
                     welcomeHeader.remove();
                     _map.setupNavigation();
-
                     _map.waitForUserArrowPress(function (navigationResponse) {
                         _map.userNavigationGuide.remove();
                         _map.focusOnSelectedCompany(navigationResponse);
                         _companyView.renderBasicView(navigationResponse);
                     });
+                    firstLoad = false;
                 }
 
 
@@ -85,10 +79,6 @@ var Mashup = function () {
             }
         );
 
-        _socketSetting.on('disconnect', function () {
-        });
-
-
         _socketSetting.on('companySearch', function (companySearch) {
             if (companySearch['adverts'].length > 0) {
                 _search = companySearch;
@@ -110,6 +100,7 @@ var Mashup = function () {
             });
             _search['adverts'] = validCompanies;
             _map.setCompanies(_search);
+            _companyView.setCompanies(_search);
             _map.addMarkers();
             _companyView.results(lastSearch, _search['adverts'].length);
             _map.markersEventListener(function (index) {

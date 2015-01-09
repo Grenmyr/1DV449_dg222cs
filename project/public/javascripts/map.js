@@ -21,6 +21,7 @@ var Map = function () {
     };
     this.setCompanies = function (companies) {
         _companies = companies;
+        arrayIndex = 0;
     };
 
 
@@ -52,6 +53,7 @@ var Map = function () {
 
                 markers[arrayIndex].setIcon(greenIcon);
                 callback(_companies['adverts'][arrayIndex]);
+                console.log(arrayIndex);
             }
         });
 
@@ -65,6 +67,7 @@ var Map = function () {
                 markers[arrayIndex].setIcon(greenIcon);
 
                 callback(_companies['adverts'][arrayIndex]);
+                console.log(arrayIndex);
             }
         });
 
