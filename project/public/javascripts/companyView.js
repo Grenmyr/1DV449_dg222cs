@@ -44,8 +44,6 @@ var CompanyView = function () {
         facebookLogin.setAttribute('id', 'status');
 
         var loginCheck = window.checkLoginState2();
-        console.log(loginCheck);
-
 
         homepageOpen(homepageLink, company['homepage']);
         facebookOpen(facebookLink, company['facebook'], loginCheck);
