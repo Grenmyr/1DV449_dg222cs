@@ -9,6 +9,18 @@ images/right.png
 
 stylesheets/style.css
 
+javascripts/companySearch.js
+javascripts/companyView.js
+javascripts/eniro.js
+javascripts/init.js
+javascripts/localStorage.js
+javascripts/map.js
+javascripts/mashup.js
+javascripts/facebookOauth.js
+javascripts/map.js
+
+socket.io/socket.io.js
+
 
 
 
