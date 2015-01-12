@@ -97,7 +97,6 @@ var Map = function () {
     };
 
     function createMarker(company, icon, callback) {
-
         var latitude = company['location']['coordinates'][0]['latitude'];
         var longitude = company['location']['coordinates'][0]['longitude'];
 
@@ -106,12 +105,8 @@ var Map = function () {
         var marker = new google.maps.Marker({
             position: markerPosition,
             map: Map.mapReference,
-            title: "tempotitel",
-            icon: icon,
-            infoWindow: new google.maps.InfoWindow({
-                content: "tomkontent just nus"
-            })
-
+            title: company['companyInfo']['companyName'],
+            icon: icon
         });
         callback(marker);
     }
