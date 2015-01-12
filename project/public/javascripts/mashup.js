@@ -107,6 +107,7 @@ var Mashup = function () {
     });
 
     function prepareData() {
+
         var validCompanies = [];
         _search['adverts'].forEach(function (company) {
             if (company['homepage'] !== null &&
@@ -118,10 +119,15 @@ var Mashup = function () {
         _map.setCompanies(_search);
         _map.addMarkers();
         _companyView.results(lastSearch, _search['adverts'].length);
+        if(_search['adverts'].length === 0){
+            _companyView.clearCompanyViewDiv();
+            return;
+        }
         _map.markersEventListener(function (index) {
             _map.focusOnSelectedCompany(_search['adverts'][index]);
             _companyView.renderBasicView(_search['adverts'][index]);
         });
+
         _map.focusOnSelectedCompany(_search['adverts'][0]);
         _companyView.renderBasicView(_search['adverts'][0]);
     }

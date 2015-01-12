@@ -118,6 +118,7 @@ var companyTypes = ['flyttfirma','städfirma'];
 requestOfflineData = function (callback){
     //console.log(companyTypes);
         findAll(function (entireDB){
+            console.log(entireDB);
             callback(entireDB) ;
         });
 
@@ -179,8 +180,10 @@ function requestEniroData(search,callback) {
             + "i område " + search.geo_area + " och firmatypen var " + search.search_word);
 
             var parse = prepareData(data,search);
-            console.log(parse.timestamp);
-            insert(search, parse);
+            console.log(parse);
+            if(parse['totalHits'] !== 0){
+                insert(search, parse);
+            }
             callback(parse);
         }
         else{
@@ -204,7 +207,6 @@ function prepareData(data,search) {
     parse['timestamp'] = new Date().getTime();
     console.log(search.geo_area +" geo area i prepareparse");
     parse['city'] = search.geo_area;
-    parse['test'] = test;
     return parse;
 }
 

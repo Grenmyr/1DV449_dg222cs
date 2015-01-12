@@ -72,7 +72,6 @@ var Map = function () {
     };
 
     Map.prototype.focusOnSelectedCompany = function (company) {
-
         var markerPosition = new google.maps.LatLng(
             company['location']['coordinates'][0]['latitude'],
             company['location']['coordinates'][0]['longitude']);

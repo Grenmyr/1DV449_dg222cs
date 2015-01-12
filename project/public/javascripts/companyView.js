@@ -21,13 +21,15 @@ var CompanyView = function () {
         header.textContent = results + ' resultat från sökningen ' + lastSearch[1] + ' : ' + lastSearch[0];
         divToModify.appendChild(header);
     };
-
-
-    this.renderBasicView = function (company) {
-
+    this.clearCompanyViewDiv = function (){
         while (companyViewDiv.hasChildNodes()) {
             companyViewDiv.removeChild(companyViewDiv.lastChild);
         }
+    };
+
+    this.renderBasicView = function (company) {
+
+        this.clearCompanyViewDiv();
 
         var header = document.createElement('h2');
         header.textContent = company['companyInfo']['companyName'];
