@@ -101,27 +101,39 @@ socketIo.sockets.on('connection', function (client) {
     });
 
     client.on('offlineData',function(bool){
-        requestOfflineData(function(offlineData){
-            console.log(offlineData)
+        findAll(function(offlineData){
+            console.log(offlineData);
+            console.log("callback hit");
+            client.emit('offlineData',offlineData)
+
         });
-        client.emit('offlineData',bool)
+       /* console.log("körs sista");
+        client.emit('offlineData',bool)*/
     })
 
 
 
 });
-var requestOfflineData = function (callback){
-    dbFind(function(offlineData){
+var companyTypes = ['flyttfirma','städfirma'];
+requestOfflineData = function (callback){
+    //console.log(companyTypes);
+        findAll(function (entireDB){
+            callback(entireDB) ;
+        });
+
+
+
+   /* dbFind(function(offlineData){
             callback(offlineData);
         console.log(offlineData);
-    } );
+    } );*/
 };
 
-function dbFind(callback) {
+/*function dbFind(callback) {
 
-    // Måste hämta alla collections
+    // Måste hämta alla companyTypes
     console.log("tried to get data");
-}
+}*/
 
 
 /*  Main function to control data flow, First check database if data client request is stored
@@ -129,8 +141,8 @@ function dbFind(callback) {
     requestEniroData() function to require new data. That data is returned to user, and saved
     into database with fresh timestamp.
 */
-/*var oneWeek = 604800000;*/
-var oneWeek = 10000;
+var oneWeek = 604800000;
+//var oneWeek = 30000;
 var requestEniro = function (search,callback) {
 
     find(search , function (data) {
@@ -167,6 +179,7 @@ function requestEniroData(search,callback) {
             + "i område " + search.geo_area + " och firmatypen var " + search.search_word);
 
             var parse = prepareData(data,search);
+            console.log(parse.timestamp);
             insert(search, parse);
             callback(parse);
         }
@@ -178,16 +191,9 @@ function requestEniroData(search,callback) {
 var test = 0;
 // Function to parse data in safe way and add timestamp.
 function prepareData(data,search) {
+    // remove test later;
     test ++;
-   /* var parse = JSON.parse("{}");
-    try {
-        parse = JSON.parse(data);
-    }
-    catch (e) {
-        console.log("Unexpected error when parsing Eniro Data");
-    }
-    parse['timestamp'] = new Date().getTime();
-    return parse;*/
+
     var parse = JSON.parse("{}");
     try {
         parse = JSON.parse(data);
@@ -204,17 +210,8 @@ function prepareData(data,search) {
 
 // Functions handling CRD with mongodb using Monk.
 function insert(search, data) {
-    /*dropCollection(search);
-    var collection = db.get(search.geo_area + search.search_word);
-    collection.insert(data, function (err) {
-        if (err) {
-            console.log("error inserting");
-        }
-        else {
-            console.log("succes inserting");
-        }
-    });*/
-    //removeDocument(search);
+
+    removeDocument(search);
     //db.open();
     var collection = db.get(search.search_word);
     collection.update({city : search.geo_area}, data, {upsert:true}, function (err) {
@@ -229,14 +226,6 @@ function insert(search, data) {
     });
 }
 function find(search, callback) {
-    /*var collection = db.get(search.geo_area + search.search_word);
-    collection.find( {}, function (err, data) {
-        if (err) {
-            console.log("error when using Find");
-        }
-        callback(data);
-    });
-    db.close();*/
     //dropCollection(search);
     var collection = db.get(search.search_word);
     collection.find( { city : search.geo_area }, function (err, data) {
@@ -244,8 +233,25 @@ function find(search, callback) {
             console.log("error when using Find");
         }
         callback(data);
+        //db.close();
     });
-    //db.close();
+}
+function findAll(callback) {
+    var collection;
+    companyTypes.forEach(function (companyType) {
+        collection = db.get(companyType);
+        collection.find({}, function (err, data) {
+            if (err) {
+                console.log("error i findAll");
+            }
+            //console.log(data);
+            data[0].search_word = companyType;
+            callback(data);
+        });
+    });
+
+
+    //console.log(allData);
 }
 function dropCollection(search) {
     var collection = db.get(search.search_word);
