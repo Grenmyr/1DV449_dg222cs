@@ -2,7 +2,8 @@
  * Created by dav on 2015-01-08.
  */
 var Localstorage = function () {
-    var oneWeek = 604800000;
+    //var oneWeek = 604800000;
+    var oneWeek = 1000;
     this.localStorageComparability = function (callback) {
         if(typeof(Storage) !== "undefined") {
             callback (true);

@@ -129,12 +129,13 @@ function dbFind(callback) {
     requestEniroData() function to require new data. That data is returned to user, and saved
     into database with fresh timestamp.
 */
-var oneWeek = 604800000;
+/*var oneWeek = 604800000;*/
+var oneWeek = 10000;
 var requestEniro = function (search,callback) {
 
     find(search , function (data) {
         var refreshTime = new Date().getTime()- oneWeek;
-        if (data.length === 0 || data[0].timestamp < refreshTime) {
+        if (data === undefined || data.length === 0 || data[0].timestamp < refreshTime) {
             console.log("fanns ingen data sparad lokalt eller gammal timestamp");
             requestEniroData(search,function (data){
                 console.log(data.timestamp);
@@ -145,6 +146,7 @@ var requestEniro = function (search,callback) {
             console.log("Gammal data fans sparad eller fräsh timestamp");
             console.log(refreshTime);
             console.log(data[0].timestamp);
+            console.log("testvärde"+data[0].test);
             callback(data[0]);
         }
     });
@@ -164,7 +166,7 @@ function requestEniroData(search,callback) {
             + " var längden på inserten från data hämtad av Eniro "
             + "i område " + search.geo_area + " och firmatypen var " + search.search_word);
 
-            var parse = prepareData(data);
+            var parse = prepareData(data,search);
             insert(search, parse);
             callback(parse);
         }
@@ -173,9 +175,19 @@ function requestEniroData(search,callback) {
         }
     });
 }
-
+var test = 0;
 // Function to parse data in safe way and add timestamp.
-function prepareData(data) {
+function prepareData(data,search) {
+    test ++;
+   /* var parse = JSON.parse("{}");
+    try {
+        parse = JSON.parse(data);
+    }
+    catch (e) {
+        console.log("Unexpected error when parsing Eniro Data");
+    }
+    parse['timestamp'] = new Date().getTime();
+    return parse;*/
     var parse = JSON.parse("{}");
     try {
         parse = JSON.parse(data);
@@ -184,12 +196,15 @@ function prepareData(data) {
         console.log("Unexpected error when parsing Eniro Data");
     }
     parse['timestamp'] = new Date().getTime();
+    console.log(search.geo_area +" geo area i prepareparse");
+    parse['city'] = search.geo_area;
+    parse['test'] = test;
     return parse;
 }
 
 // Functions handling CRD with mongodb using Monk.
 function insert(search, data) {
-    dropCollection(search);
+    /*dropCollection(search);
     var collection = db.get(search.geo_area + search.search_word);
     collection.insert(data, function (err) {
         if (err) {
@@ -198,19 +213,49 @@ function insert(search, data) {
         else {
             console.log("succes inserting");
         }
+    });*/
+    //removeDocument(search);
+    //db.open();
+    var collection = db.get(search.search_word);
+    collection.update({city : search.geo_area}, data, {upsert:true}, function (err) {
+        if (err) {
+            console.log(err);
+            console.log("error inserting");
+        }
+        else {
+            console.log("succes inserting");
+        }
+        //db.close();
     });
 }
 function find(search, callback) {
-    var collection = db.get(search.geo_area + search.search_word);
+    /*var collection = db.get(search.geo_area + search.search_word);
     collection.find( {}, function (err, data) {
         if (err) {
             console.log("error when using Find");
         }
         callback(data);
     });
-    db.close();
+    db.close();*/
+    //dropCollection(search);
+    var collection = db.get(search.search_word);
+    collection.find( { city : search.geo_area }, function (err, data) {
+        if (err) {
+            console.log("error when using Find");
+        }
+        callback(data);
+    });
+    //db.close();
 }
 function dropCollection(search) {
-    var collection = db.get(search.geo_area+search.search_word);
+    var collection = db.get(search.search_word);
     collection.drop();
+}
+function removeDocument(search) {
+    console.log(
+        "RemoveOldDocument "+search.geo_area +
+        " och collection var " + search.search_word);
+
+    var collection = db.get(search.search_word);
+    collection.remove({city : search.geo_area});
 }
