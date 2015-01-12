@@ -102,7 +102,7 @@ socketIo.sockets.on('connection', function (client) {
 
     client.on('offlineData',function(bool){
         findAll(function(offlineData){
-            console.log(offlineData);
+            //console.log(offlineData);
             console.log("callback hit");
             client.emit('offlineData',offlineData)
 
@@ -118,7 +118,7 @@ var companyTypes = ['flyttfirma','städfirma'];
 requestOfflineData = function (callback){
     //console.log(companyTypes);
         findAll(function (entireDB){
-            console.log(entireDB);
+            //console.log(entireDB);
             callback(entireDB) ;
         });
 
@@ -191,12 +191,9 @@ function requestEniroData(search,callback) {
         }
     });
 }
-var test = 0;
+
 // Function to parse data in safe way and add timestamp.
 function prepareData(data,search) {
-    // remove test later;
-    test ++;
-
     var parse = JSON.parse("{}");
     try {
         parse = JSON.parse(data);
@@ -247,7 +244,9 @@ function findAll(callback) {
                 console.log("error i findAll");
             }
             //console.log(data);
-            data[0].search_word = companyType;
+            if(data[0] !==undefined){
+                data[0].search_word = companyType;
+            }
             callback(data);
         });
     });
