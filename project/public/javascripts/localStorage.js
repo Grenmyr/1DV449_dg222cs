@@ -3,7 +3,6 @@
  */
 var Localstorage = function () {
     var oneWeek = 604800000;
-    //var oneWeek = 30000;
     this.localStorageComparability = function (callback) {
         if(typeof(Storage) !== "undefined") {
             callback (true);
@@ -13,12 +12,12 @@ var Localstorage = function () {
     };
 
     this.getItem = function (searchParameter,callback){
-        var refreshTime = new Date().getTime()- oneWeek;
-        console.log(searchParameter);
+        var time = new Date().getTime();
+        //console.log(searchParameter);
         var searchResult = JSON.parse(localStorage.getItem(searchParameter));
-        console.log(searchResult['timestamp']);
-        console.log(new Date().getTime());
-        if(searchResult['timestamp'] +oneWeek > refreshTime){
+        //console.log(searchResult['timestamp']);
+        //console.log(time);
+        if(searchResult['timestamp'] > time -oneWeek){
           callback(searchResult);
         }
         else{
@@ -26,7 +25,7 @@ var Localstorage = function () {
         }
     };
     this.setItem = function (searchParameter, object) {
-        console.log(searchParameter);
+        //console.log(searchParameter);
         var stringifyObject = JSON.stringify(object);
         localStorage.setItem(searchParameter,stringifyObject);
     };
@@ -34,11 +33,14 @@ var Localstorage = function () {
     this.setManyItems = function (cities){
         var stringifyObject;
         var searchWord = "&" +cities[0].search_word;
+        var time = new Date().getTime();
         cities.forEach(function(object){
-            //console.log(object);
-            //console.log(object.city+searchWord);
-            stringifyObject =  JSON.stringify(object);
-            localStorage.setItem(object.city+searchWord,stringifyObject);
+            if(object.timestamp > time - oneWeek){
+                //console.log(object);
+                //console.log(object.city+searchWord);
+                stringifyObject =  JSON.stringify(object);
+                localStorage.setItem(object.city+searchWord,stringifyObject);
+            }
         })
     }
 };

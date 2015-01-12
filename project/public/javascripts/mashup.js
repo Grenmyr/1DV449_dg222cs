@@ -84,21 +84,18 @@ var Mashup = function () {
                 }
             });
         });
-    var _entire = [];
     _eniro.offlineDataRequest(function(callback){
         if(callback){
             socketEmit('offlineData', true);
             _socketSetting.on('offlineData', function (data) {
-                //console.log(data);
                 _localStorage.setManyItems(data);
-                _entire.push(data);
+                offlineData.remove();
             });
         }
 
     });
 
     _socketSetting.on('companySearch', function (companySearch) {
-        console.log(_entire);
         if (companySearch['adverts'].length > 0) {
             _search = companySearch;
             _localStorage.setItem(lastSearch, _search);
