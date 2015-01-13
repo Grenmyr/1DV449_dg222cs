@@ -1,5 +1,6 @@
 doctype html
-html(manifest="example.appcache")
+//html(manifest="example.appcache")
+html
   head
     title= title
 
@@ -18,13 +19,13 @@ html(manifest="example.appcache")
     block content
     img(src= '/images/left.png')#leftArrow.navigation
     img(src= '/images/right.png')#rightArrow.navigation
-    //script(src='/javascripts/facebookOauth.js')
-    //script(src='/javascripts/localStorage.js')
-    //script(src='/javascripts/companyView.js')
-    //script(src='/javascripts/map.js')
-    //script(src='/javascripts/eniro.js')
-    //script(src='/javascripts/mashup.js')
+    script(src='/javascripts/facebookOauth.js')
+    script(src='/javascripts/localStorage.js')
+    script(src='/javascripts/companyView.js')
+    script(src='/javascripts/map.js')
+    script(src='/javascripts/eniro.js')
+    script(src='/javascripts/mashup.js')
     script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAP26S2BhyRH2Z8q2JLwYrUTofaDP18Qpc")
-    //script(src='/javascripts/init.js')
-    script(src='/javascripts/minified.js')
+    script(src='/javascripts/init.js')
+    //script(src='/javascripts/minified.js')
 

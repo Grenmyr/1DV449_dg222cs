@@ -30,13 +30,14 @@ var Map = function () {
         function loaded() {
             Map.mapReference = new google.maps.Map(document.getElementById('map'),
                 mapOptions);
+            mapLoaded = true;
         }
 
         this.style();
         google.maps.event.addDomListener(window, 'load', loaded());
 
     };
-    this.setupNavigation = function() {
+    this.setupNavigation = function () {
         Map.prototype.userNavigationGuide.style.visibility = "visible";
         leftArrow.style.display = "flex";
         rightArrow.style.display = "flex";
@@ -47,40 +48,49 @@ var Map = function () {
         leftArrow.addEventListener('click', function (e) {
             e.preventDefault();
             if (arrayIndex > 0) {
+                if (window.online || window.loadedMapOnce) {
 
-                markers[arrayIndex].setIcon(redIcon);
+                    markers[arrayIndex].setIcon(redIcon);
+                }
                 arrayIndex += -1;
+                if (window.online  || window.loadedMapOnce) {
 
-                markers[arrayIndex].setIcon(greenIcon);
+                    markers[arrayIndex].setIcon(greenIcon);
+
+
+                    if (arrayIndex === 0) {
+                        leftArrow.style.display = "none";
+                    }
+                    else {
+                        leftArrow.style.display = "inline-block";
+                        rightArrow.style.display = "inline-block"
+                    }
+                }
                 callback(_companies['adverts'][arrayIndex]);
-                if(arrayIndex === 0){
-                    leftArrow.style.display = "none";
-                }
-                else{
-                    leftArrow.style.display = "inline-block";
-                    rightArrow.style.display = "inline-block"
-                }
             }
         });
 
         rightArrow.addEventListener('click', function (e) {
             e.preventDefault();
             if (arrayIndex < _companies['adverts'].length - 1) {
-
-                markers[arrayIndex].setIcon(redIcon);
+                if (window.online  || window.loadedMapOnce) {
+                    markers[arrayIndex].setIcon(redIcon);
+                }
                 arrayIndex += 1;
+                if (window.online  || window.loadedMapOnce) {
+                    markers[arrayIndex].setIcon(greenIcon);
 
-                markers[arrayIndex].setIcon(greenIcon);
 
+                    if (arrayIndex === _companies['adverts'].length - 1) {
+                        rightArrow.style.display = "none";
+                        leftArrow.style.display = "inline-block";
+                    }
+                    else {
+                        rightArrow.style.display = "inline-block";
+                        leftArrow.style.display = "inline-block";
+                    }
+                }
                 callback(_companies['adverts'][arrayIndex]);
-                if(arrayIndex === _companies['adverts'].length -1){
-                    rightArrow.style.display = "none";
-                    leftArrow.style.display = "inline-block";
-                }
-                else{
-                    rightArrow.style.display = "inline-block";
-                    leftArrow.style.display = "inline-block";
-                }
             }
 
         });
@@ -127,9 +137,9 @@ var Map = function () {
         callback(marker);
     }
 
-    this.markersEventListener = function (callback){
+    this.markersEventListener = function (callback) {
 
-        markers.forEach(function(marker,i){
+        markers.forEach(function (marker, i) {
             google.maps.event.addListener(marker, 'click', function () {
 
                 markers[arrayIndex].setIcon(redIcon);

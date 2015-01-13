@@ -2,7 +2,8 @@
  * Created by dav on 2014-12-11.
  */
 
-
+window.online = false;
+window.loadedMapOnce = false;
 var Mashup = function () {
     var _socketSetting;
     _socketSetting = io.connect('http://localhost:3000');
@@ -12,13 +13,11 @@ var Mashup = function () {
     var _search;
     var _eniro = new Eniro();
     var _map = new Map();
-    _map.initializeMap();
+
     var _companyView = new CompanyView();
     var _localStorage = new Localstorage();
     var ping = 0;
     var pong = 0;
-    var online = true;
-
 
     var connectionHeader = document.querySelector('#connection');
     var welcomeHeader = document.querySelector('#start');
@@ -29,15 +28,21 @@ var Mashup = function () {
     setInterval(function () {
         ping++;
         socketEmit('ping', ping);
-        if (ping > pong + 1) {
+        if (ping > pong +1) {
             connectionHeader.textContent = "Offline läge";
             offlineData.style.display = "none";
-            online = false;
+            window.online = false;
+            console.log("offline")
         }
         else {
             connectionHeader.textContent = "Online läge";
             offlineData.style.display = "inline-block";
-            online = true;
+            window.online = true;
+            if(!window.loadedMapOnce){
+                _map.initializeMap();
+                window.loadedMapOnce = true;
+            }
+            console.log("online")
         }
     }, 3000);
 
@@ -55,7 +60,9 @@ var Mashup = function () {
             _map.setupNavigation();
             _map.waitForUserArrowPress(function (navigationResponse) {
                 _map.userNavigationGuide.remove();
-                _map.focusOnSelectedCompany(navigationResponse);
+                if(window.online  || window.loadedMapOnce){
+                    _map.focusOnSelectedCompany(navigationResponse);
+                }
                 _companyView.renderBasicView(navigationResponse);
             });
             firstLoad = false;
@@ -81,7 +88,7 @@ var Mashup = function () {
                     })
                 }
                 else {
-                    if(!online) {
+                    if(! window.online ) {
                         waitHeader.style.display = "inline-block";
                     }
                     //console.log("ny sökningskategori sökte via server");
@@ -127,19 +134,25 @@ var Mashup = function () {
         });
         _search['adverts'] = validCompanies;
         _map.setCompanies(_search);
-        _map.addMarkers();
+        if(window.online  || window.loadedMapOnce){
+            _map.addMarkers();
+        }
+
         _companyView.results(lastSearch, _search['adverts'].length);
         if (_search['adverts'].length === 0) {
             _companyView.clearCompanyViewDiv();
             return;
         }
-        _map.markersEventListener(function (index) {
+      _map.markersEventListener(function (index) {
             _map.userNavigationGuide.remove();
-            _map.focusOnSelectedCompany(_search['adverts'][index]);
+          if(window.online  || window.loadedMapOnce){
+              _map.focusOnSelectedCompany(_search['adverts'][index]);
+          }
             _companyView.renderBasicView(_search['adverts'][index]);
         });
-
-        _map.focusOnSelectedCompany(_search['adverts'][0]);
+        if(window.online  || window.loadedMapOnce){
+            _map.focusOnSelectedCompany(_search['adverts'][0]);
+        }
         _companyView.renderBasicView(_search['adverts'][0]);
     }
 

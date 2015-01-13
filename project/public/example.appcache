@@ -6,7 +6,6 @@ images/red.png
 images/right.png
 images/favicon.ico
 
-
 javascripts/minified.js
 socket.io/socket.io.js
 
