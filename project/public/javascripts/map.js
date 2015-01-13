@@ -40,7 +40,7 @@ var Map = function () {
 
     };
     this.setupNavigation = function () {
-        Map.prototype.userNavigationGuide.style.display = "inline-block";
+        Map.prototype.userNavigationGuide.style.display = "block";
         leftArrow.style.display = "flex";
         rightArrow.style.display = "flex";
     };

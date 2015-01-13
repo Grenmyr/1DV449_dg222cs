@@ -82,7 +82,7 @@ var Mashup = function () {
                         }
                         else {
                             if(!window.onlineStatus ) {
-                                waitHeader.style.display = "inline-block";
+                                waitHeader.style.display = "block";
                             }
                             //console.log("Data finns men gammal i localstorage, Söker ny via server")
                             socketEmit('eniroSearch', eniroSearch);
@@ -91,7 +91,7 @@ var Mashup = function () {
                 }
                 else {
                     if(! window.onlineStatus ) {
-                        waitHeader.style.display = "inline-block";
+                        waitHeader.style.display = "block";
                     }
                     //console.log("ny sökningskategori sökte via server");
                     socketEmit('eniroSearch', eniroSearch);

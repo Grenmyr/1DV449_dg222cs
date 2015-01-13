@@ -43,4 +43,5 @@ för användare om nätet är nere under användning. ej implementerat cache man
 13/1
 * implementerade cache manifest.
 * minifierat http://minifyjavascript.com/
+* varierande bugfix för cache manifest och css, allt funkar pa chrome.
 
