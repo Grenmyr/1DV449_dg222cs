@@ -6,14 +6,8 @@ images/red.png
 images/right.png
 images/favicon.ico
 
-javascripts/companyView.js
-javascripts/eniro.js
-javascripts/init.js
-javascripts/localStorage.js
-javascripts/map.js
-javascripts/mashup.js
-javascripts/facebookOauth.js
-javascripts/map.js
+
+javascripts/minified.js
 socket.io/socket.io.js
 
 stylesheets/style.css

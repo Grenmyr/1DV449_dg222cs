@@ -40,4 +40,7 @@ för användare om nätet är nere under användning. ej implementerat cache man
 * skrev in en funtion i app.js för hämta all sparad företagsinfo.
 * publiserade igen.
 
-13/1 implementerade cache manifest.
+13/1
+* implementerade cache manifest.
+* minifierat http://minifyjavascript.com/
+

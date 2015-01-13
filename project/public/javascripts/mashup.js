@@ -17,6 +17,7 @@ var Mashup = function () {
     var _localStorage = new Localstorage();
     var ping = 0;
     var pong = 0;
+    var online = true;
 
 
     var connectionHeader = document.querySelector('#connection');
@@ -31,10 +32,12 @@ var Mashup = function () {
         if (ping > pong + 1) {
             connectionHeader.textContent = "Offline läge";
             offlineData.style.display = "none";
+            online = false;
         }
         else {
             connectionHeader.textContent = "Online läge";
             offlineData.style.display = "inline-block";
+            online = true;
         }
     }, 3000);
 
@@ -71,14 +74,16 @@ var Mashup = function () {
                             prepareData();
                         }
                         else {
-                            waitHeader.style.display = "inline-block";
+
                             //console.log("Data finns men gammal i localstorage, Söker ny via server")
                             socketEmit('eniroSearch', eniroSearch);
                         }
                     })
                 }
                 else {
-                    waitHeader.style.display = "inline-block";
+                    if(!online) {
+                        waitHeader.style.display = "inline-block";
+                    }
                     //console.log("ny sökningskategori sökte via server");
                     socketEmit('eniroSearch', eniroSearch);
                 }
@@ -100,6 +105,7 @@ var Mashup = function () {
     });
 
     _socketSetting.on('companySearch', function (companySearch) {
+        waitHeader.style.display = "none";
         if (companySearch['adverts'].length > 0) {
             _search = companySearch;
             _localStorage.setItem(lastSearch, _search);
