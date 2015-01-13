@@ -8,7 +8,7 @@ block content
     #companySearch
       h4 Vad söker du?
       h2#wait Sökning finns ej sparad lokalt, sökning kommer automatiskt ske när nät återkommer.
-      h3 Växla företag genom trycka på marker, eller använda navigering till höger och vänster.
+      h3#userNavGuide Växla företag genom trycka på marker, eller använda navigering till höger och vänster.
       select#companySelect
         each parameter, i in searchParameters
           option(value=i) #{parameter}

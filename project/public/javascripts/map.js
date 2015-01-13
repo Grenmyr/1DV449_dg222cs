@@ -40,7 +40,7 @@ var Map = function () {
 
     };
     this.setupNavigation = function () {
-        Map.prototype.userNavigationGuide.style.visibility = "visible";
+        Map.prototype.userNavigationGuide.style.display = "inline-block";
         leftArrow.style.display = "flex";
         rightArrow.style.display = "flex";
     };
@@ -164,4 +164,4 @@ var Map = function () {
 };
 
 Map.prototype.mapReference = null;
-Map.prototype.userNavigationGuide = document.getElementById('companySearch').firstChild.nextSibling;
+Map.prototype.userNavigationGuide = document.getElementById('userNavGuide');

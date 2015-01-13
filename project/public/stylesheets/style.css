@@ -35,7 +35,7 @@
 }
 
 #companySearch h3 {
-    visibility: hidden;
+    display: none;
 }
 
 #start {
