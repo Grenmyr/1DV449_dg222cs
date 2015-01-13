@@ -2,7 +2,7 @@
  * Created by dav on 2014-12-11.
  */
 
-window.online = false;
+window.onlineStatus = false;
 window.loadedMapOnce = false;
 var Mashup = function () {
     var _socketSetting;
@@ -31,13 +31,13 @@ var Mashup = function () {
         if (ping > pong +1) {
             connectionHeader.textContent = "Offline läge";
             offlineData.style.display = "none";
-            window.online = false;
+            window.onlineStatus = false;
 
         }
         else {
             connectionHeader.textContent = "Online läge";
             offlineData.style.display = "inline-block";
-            window.online = true;
+            window.onlineStatus = true;
             if(!window.loadedMapOnce){
                 _map.initializeMap();
                 window.loadedMapOnce = true;
@@ -60,7 +60,7 @@ var Mashup = function () {
             _map.setupNavigation();
             _map.waitForUserArrowPress(function (navigationResponse) {
                 _map.userNavigationGuide.remove();
-                if(window.online  || window.loadedMapOnce){
+                if(window.onlineStatus  || window.loadedMapOnce){
                     _map.focusOnSelectedCompany(navigationResponse);
                 }
                 _companyView.renderBasicView(navigationResponse);
@@ -81,14 +81,16 @@ var Mashup = function () {
                             prepareData();
                         }
                         else {
-
+                            if(!window.onlineStatus ) {
+                                waitHeader.style.display = "inline-block";
+                            }
                             //console.log("Data finns men gammal i localstorage, Söker ny via server")
                             socketEmit('eniroSearch', eniroSearch);
                         }
                     })
                 }
                 else {
-                    if(! window.online ) {
+                    if(! window.onlineStatus ) {
                         waitHeader.style.display = "inline-block";
                     }
                     //console.log("ny sökningskategori sökte via server");
@@ -112,6 +114,7 @@ var Mashup = function () {
     });
 
     _socketSetting.on('companySearch', function (companySearch) {
+
         waitHeader.style.display = "none";
         if (companySearch['adverts'].length > 0) {
             _search = companySearch;
@@ -134,7 +137,7 @@ var Mashup = function () {
         });
         _search['adverts'] = validCompanies;
         _map.setCompanies(_search);
-        if(window.online  || window.loadedMapOnce){
+        if(window.onlineStatus  || window.loadedMapOnce){
             _map.addMarkers();
         }
 
@@ -145,12 +148,12 @@ var Mashup = function () {
         }
       _map.markersEventListener(function (index) {
             _map.userNavigationGuide.remove();
-          if(window.online  || window.loadedMapOnce){
+          if(window.onlineStatus  || window.loadedMapOnce){
               _map.focusOnSelectedCompany(_search['adverts'][index]);
           }
             _companyView.renderBasicView(_search['adverts'][index]);
         });
-        if(window.online  || window.loadedMapOnce){
+        if(window.onlineStatus  || window.loadedMapOnce){
             _map.focusOnSelectedCompany(_search['adverts'][0]);
         }
         _companyView.renderBasicView(_search['adverts'][0]);

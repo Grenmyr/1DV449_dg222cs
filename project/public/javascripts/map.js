@@ -22,6 +22,8 @@ var Map = function () {
     this.setCompanies = function (companies) {
         _companies = companies;
         arrayIndex = 0;
+        rightArrow.style.display = "inline-block";
+        leftArrow.style.display = "inline-block";
     };
 
 
@@ -48,12 +50,12 @@ var Map = function () {
         leftArrow.addEventListener('click', function (e) {
             e.preventDefault();
             if (arrayIndex > 0) {
-                if (window.online || window.loadedMapOnce) {
+                if (window.onlineStatus || window.loadedMapOnce) {
 
                     markers[arrayIndex].setIcon(redIcon);
                 }
                 arrayIndex += -1;
-                if (window.online  || window.loadedMapOnce) {
+                if (window.onlineStatus  || window.loadedMapOnce) {
 
                     markers[arrayIndex].setIcon(greenIcon);
 
@@ -73,11 +75,11 @@ var Map = function () {
         rightArrow.addEventListener('click', function (e) {
             e.preventDefault();
             if (arrayIndex < _companies['adverts'].length - 1) {
-                if (window.online  || window.loadedMapOnce) {
+                if (window.onlineStatus  || window.loadedMapOnce) {
                     markers[arrayIndex].setIcon(redIcon);
                 }
                 arrayIndex += 1;
-                if (window.online  || window.loadedMapOnce) {
+                if (window.onlineStatus  || window.loadedMapOnce) {
                     markers[arrayIndex].setIcon(greenIcon);
 
 
