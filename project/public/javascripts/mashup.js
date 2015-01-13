@@ -17,7 +17,7 @@ var Mashup = function () {
     var _localStorage = new Localstorage();
     var ping = 0;
     var pong = 0;
-    var online = true;
+
 
     var connectionHeader = document.querySelector('#connection');
     var welcomeHeader = document.querySelector('#start');
@@ -45,57 +45,53 @@ var Mashup = function () {
     });
 
 
-
     _eniro.waitForUserClick(function (eniroSearch) {
-            eniroSearch.search_word = _eniro.searchParameters[eniroSearch.search_word];
-            lastSearch = eniroSearch.geo_area + '&' + eniroSearch.search_word;
+        eniroSearch.search_word = _eniro.searchParameters[eniroSearch.search_word];
+        lastSearch = eniroSearch.geo_area + '&' + eniroSearch.search_word;
 
-            if (firstLoad === true) {
-                welcomeHeader.remove();
-                _map.setupNavigation();
-                _map.waitForUserArrowPress(function (navigationResponse) {
-                    _map.userNavigationGuide.remove();
-                    _map.focusOnSelectedCompany(navigationResponse);
-                    _companyView.renderBasicView(navigationResponse);
-                });
-                firstLoad = false;
-            }
-
-
-            _localStorage.localStorageComparability(function (browserSupport) {
-                if (browserSupport) {
-                    if (localStorage[lastSearch]) {
-
-                        _localStorage.getItem(lastSearch, function (searchResult) {
-                            if (searchResult) {
-                                _search = searchResult;
-                                console.log("localstorage presenterade fräsh data");
-                                waitHeader.style.display = "none";
-                                console.log("online");
-                                prepareData();
-                            }
-                            else {
-                                waitHeader.style.display = "inline-block";
+        if (firstLoad === true) {
+            welcomeHeader.remove();
+            _map.setupNavigation();
+            _map.waitForUserArrowPress(function (navigationResponse) {
+                _map.userNavigationGuide.remove();
+                _map.focusOnSelectedCompany(navigationResponse);
+                _companyView.renderBasicView(navigationResponse);
+            });
+            firstLoad = false;
+        }
 
 
-                                console.log("Data finns men gammal i localstorage, Söker ny via server")
-                                socketEmit('eniroSearch', eniroSearch);
-                            }
-                        })
-                    }
-                    else {
-                        waitHeader.style.display = "inline-block";
-                        console.log("ny sökningskategori sökte via server");
-                        socketEmit('eniroSearch', eniroSearch);
-                    }
+        _localStorage.localStorageComparability(function (browserSupport) {
+            if (browserSupport) {
+                if (localStorage[lastSearch]) {
+
+                    _localStorage.getItem(lastSearch, function (searchResult) {
+                        if (searchResult) {
+                            _search = searchResult;
+                            console.log("localstorage presenterade fräsh data");
+                            waitHeader.style.display = "none";
+                            prepareData();
+                        }
+                        else {
+                            waitHeader.style.display = "inline-block";
+                            console.log("Data finns men gammal i localstorage, Söker ny via server")
+                            socketEmit('eniroSearch', eniroSearch);
+                        }
+                    })
                 }
                 else {
+                    waitHeader.style.display = "inline-block";
+                    console.log("ny sökningskategori sökte via server");
                     socketEmit('eniroSearch', eniroSearch);
                 }
-            });
+            }
+            else {
+                socketEmit('eniroSearch', eniroSearch);
+            }
         });
-    _eniro.offlineDataRequest(function(callback){
-        if(callback){
+    });
+    _eniro.offlineDataRequest(function (callback) {
+        if (callback) {
             socketEmit('offlineData', true);
             _socketSetting.on('offlineData', function (data) {
                 _localStorage.setManyItems(data);
@@ -106,7 +102,6 @@ var Mashup = function () {
     });
 
     _socketSetting.on('companySearch', function (companySearch) {
-        console.log(online);
         if (companySearch['adverts'].length > 0) {
             _search = companySearch;
             _localStorage.setItem(lastSearch, _search);
@@ -130,7 +125,7 @@ var Mashup = function () {
         _map.setCompanies(_search);
         _map.addMarkers();
         _companyView.results(lastSearch, _search['adverts'].length);
-        if(_search['adverts'].length === 0){
+        if (_search['adverts'].length === 0) {
             _companyView.clearCompanyViewDiv();
             return;
         }

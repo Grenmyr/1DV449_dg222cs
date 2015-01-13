@@ -31,6 +31,7 @@
     display: none;
     position: relative;
     z-index: 4;
+    color: red;
 }
 
 #companySearch h3 {
