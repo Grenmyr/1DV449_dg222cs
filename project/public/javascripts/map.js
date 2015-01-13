@@ -53,6 +53,13 @@ var Map = function () {
 
                 markers[arrayIndex].setIcon(greenIcon);
                 callback(_companies['adverts'][arrayIndex]);
+                if(arrayIndex === 0){
+                    leftArrow.style.display = "none";
+                }
+                else{
+                    leftArrow.style.display = "inline-block";
+                    rightArrow.style.display = "inline-block"
+                }
             }
         });
 
@@ -66,7 +73,16 @@ var Map = function () {
                 markers[arrayIndex].setIcon(greenIcon);
 
                 callback(_companies['adverts'][arrayIndex]);
+                if(arrayIndex === _companies['adverts'].length -1){
+                    rightArrow.style.display = "none";
+                    leftArrow.style.display = "inline-block";
+                }
+                else{
+                    rightArrow.style.display = "inline-block";
+                    leftArrow.style.display = "inline-block";
+                }
             }
+
         });
 
     };

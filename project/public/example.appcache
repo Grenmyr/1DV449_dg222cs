@@ -16,9 +16,11 @@ javascripts/facebookOauth.js
 javascripts/map.js
 socket.io/socket.io.js
 
+stylesheets/style.css
+
 
 NETWORK:
-socket.io/socket.io.js
+*
 
 
 

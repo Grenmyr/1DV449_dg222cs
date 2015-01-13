@@ -17,9 +17,12 @@ var Mashup = function () {
     var _localStorage = new Localstorage();
     var ping = 0;
     var pong = 0;
+    var online = true;
+
     var connectionHeader = document.querySelector('#connection');
     var welcomeHeader = document.querySelector('#start');
     var offlineData = document.querySelector('#offlineData');
+    var waitHeader = document.querySelector('#wait');
 
 
     setInterval(function () {
@@ -28,10 +31,12 @@ var Mashup = function () {
         if (ping > pong + 1) {
             connectionHeader.textContent = "Offline läge";
             offlineData.style.display = "none";
+            online = false;
         }
         else {
             connectionHeader.textContent = "Online läge";
             offlineData.style.display = "inline-block";
+            online = true;
         }
     }, 3000);
 
@@ -53,10 +58,9 @@ var Mashup = function () {
                     _map.focusOnSelectedCompany(navigationResponse);
                     _companyView.renderBasicView(navigationResponse);
                 });
-
-
                 firstLoad = false;
             }
+
 
             _localStorage.localStorageComparability(function (browserSupport) {
                 if (browserSupport) {
@@ -66,15 +70,21 @@ var Mashup = function () {
                             if (searchResult) {
                                 _search = searchResult;
                                 console.log("localstorage presenterade fräsh data");
+                                waitHeader.style.display = "none";
+                                console.log("online");
                                 prepareData();
                             }
                             else {
+                                waitHeader.style.display = "inline-block";
+
+
                                 console.log("Data finns men gammal i localstorage, Söker ny via server")
                                 socketEmit('eniroSearch', eniroSearch);
                             }
                         })
                     }
                     else {
+                        waitHeader.style.display = "inline-block";
                         console.log("ny sökningskategori sökte via server");
                         socketEmit('eniroSearch', eniroSearch);
                     }
@@ -89,13 +99,14 @@ var Mashup = function () {
             socketEmit('offlineData', true);
             _socketSetting.on('offlineData', function (data) {
                 _localStorage.setManyItems(data);
-                offlineData.remove();
+                offlineData.textContent = "Data Sparat Lokalt"
             });
         }
 
     });
 
     _socketSetting.on('companySearch', function (companySearch) {
+        console.log(online);
         if (companySearch['adverts'].length > 0) {
             _search = companySearch;
             _localStorage.setItem(lastSearch, _search);
@@ -124,6 +135,7 @@ var Mashup = function () {
             return;
         }
         _map.markersEventListener(function (index) {
+            _map.userNavigationGuide.remove();
             _map.focusOnSelectedCompany(_search['adverts'][index]);
             _companyView.renderBasicView(_search['adverts'][index]);
         });
@@ -133,6 +145,7 @@ var Mashup = function () {
     }
 
     function socketEmit(emitName, search) {
+
         _socketSetting.emit(emitName, search);
     }
 

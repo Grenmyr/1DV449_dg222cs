@@ -30,7 +30,6 @@ var CompanyView = function () {
     this.renderBasicView = function (company) {
 
         this.clearCompanyViewDiv();
-
         var header = document.createElement('h2');
         header.textContent = company['companyInfo']['companyName'];
         var basicDiv = cloneDiv.cloneNode(true);
@@ -39,6 +38,7 @@ var CompanyView = function () {
         var postArea = document.createElement('p');
         var postCode = document.createElement('p');
         var homepageLink = cloneA.cloneNode(true);
+        var phoneNumber = document.createElement('a');
         homepageLink.setAttribute('id', 'hemsida');
         var facebookLink = cloneA.cloneNode(true);
         facebookLink.setAttribute('id', 'facebook');
@@ -58,6 +58,13 @@ var CompanyView = function () {
             postArea.textContent = company['address']['postArea'];
             postCode.textContent = company['address']['postCode'];
         }
+
+        if(company['phoneNumbers'][0]['phoneNumber'] !== null){
+            phoneNumber.href = "tel:"+company['phoneNumbers'][0]['phoneNumber'];
+            phoneNumber.target = "_blank";
+            phoneNumber.textContent = "TLF: "+ company['phoneNumbers'][0]['phoneNumber'];
+        }
+
         addressDiv.appendChild(streetName);
         addressDiv.appendChild(postCode);
         addressDiv.appendChild(postArea);
@@ -66,7 +73,7 @@ var CompanyView = function () {
         companyViewDiv.appendChild(homepageLink);
         companyViewDiv.appendChild(facebookLink);
         companyViewDiv.appendChild(facebookLogin);
-
+        companyViewDiv.appendChild(phoneNumber);
         companyViewDiv.appendChild(addressDiv);
         basicDiv.appendChild(companyViewDiv);
         contentDiv.appendChild(basicDiv);
