@@ -6,8 +6,8 @@ window.online = false;
 window.loadedMapOnce = false;
 var Mashup = function () {
     var _socketSetting;
-    _socketSetting = io.connect('http://localhost:3000');
-    //_socketSetting = io.connect('188.166.30.34');
+    //_socketSetting = io.connect('http://localhost:3000');
+    _socketSetting = io.connect('188.166.30.34');
     var firstLoad = true;
     var lastSearch;
     var _search;
@@ -32,7 +32,7 @@ var Mashup = function () {
             connectionHeader.textContent = "Offline läge";
             offlineData.style.display = "none";
             window.online = false;
-            console.log("offline")
+
         }
         else {
             connectionHeader.textContent = "Online läge";
@@ -42,7 +42,7 @@ var Mashup = function () {
                 _map.initializeMap();
                 window.loadedMapOnce = true;
             }
-            console.log("online")
+
         }
     }, 3000);
 

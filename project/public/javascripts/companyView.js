@@ -70,9 +70,11 @@ var CompanyView = function () {
         addressDiv.appendChild(postArea);
 
         companyViewDiv.appendChild(header);
-        companyViewDiv.appendChild(homepageLink);
-        companyViewDiv.appendChild(facebookLink);
-        companyViewDiv.appendChild(facebookLogin);
+        if(window.online) {
+            companyViewDiv.appendChild(homepageLink);
+            companyViewDiv.appendChild(facebookLink);
+            companyViewDiv.appendChild(facebookLogin);
+        }
         companyViewDiv.appendChild(phoneNumber);
         companyViewDiv.appendChild(addressDiv);
         basicDiv.appendChild(companyViewDiv);
