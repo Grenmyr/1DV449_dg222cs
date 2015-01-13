@@ -31,12 +31,10 @@ var Mashup = function () {
         if (ping > pong + 1) {
             connectionHeader.textContent = "Offline läge";
             offlineData.style.display = "none";
-            online = false;
         }
         else {
             connectionHeader.textContent = "Online läge";
             offlineData.style.display = "inline-block";
-            online = true;
         }
     }, 3000);
 
@@ -68,20 +66,20 @@ var Mashup = function () {
                     _localStorage.getItem(lastSearch, function (searchResult) {
                         if (searchResult) {
                             _search = searchResult;
-                            console.log("localstorage presenterade fräsh data");
+                            //console.log("localstorage presenterade fräsh data");
                             waitHeader.style.display = "none";
                             prepareData();
                         }
                         else {
                             waitHeader.style.display = "inline-block";
-                            console.log("Data finns men gammal i localstorage, Söker ny via server")
+                            //console.log("Data finns men gammal i localstorage, Söker ny via server")
                             socketEmit('eniroSearch', eniroSearch);
                         }
                     })
                 }
                 else {
                     waitHeader.style.display = "inline-block";
-                    console.log("ny sökningskategori sökte via server");
+                    //console.log("ny sökningskategori sökte via server");
                     socketEmit('eniroSearch', eniroSearch);
                 }
             }

@@ -14,7 +14,7 @@ function statusChangeCallback(response) {
         // Logged into your app and Facebook.
 
         loginButton.style.display = "none";
-        testAPI();
+        OathMessage();
     } else if (response.status === 'not_authorized') {
         // The person is logged into Facebook, but not your app.
         document.getElementById('status').innerHTML = 'Please log ' +
@@ -86,10 +86,10 @@ window.fbAsyncInit = function () {
 
 // Here we run a very simple test of the Graph API after login is
 // successful.  See statusChangeCallback() for when this call is made.
-function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
+function OathMessage() {
+    //console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function (response) {
-        console.log('Successful login for: ' + response.name);
+        //console.log('Successful login for: ' + response.name);
         document.getElementById('status').textContent =
             'Välkommen ' + response.name + ' inloggad via facebook du har tillgång' +
             ' till all funktionalitet!';
