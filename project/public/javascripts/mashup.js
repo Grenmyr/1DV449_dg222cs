@@ -6,8 +6,8 @@ window.onlineStatus = false;
 window.loadedMapOnce = false;
 var Mashup = function () {
     var _socketSetting;
-    //_socketSetting = io.connect('http://localhost:3000');
-    _socketSetting = io.connect('188.166.30.34');
+    _socketSetting = io.connect('http://localhost:3000');
+    //_socketSetting = io.connect('188.166.30.34');
     var firstLoad = true;
     var lastSearch;
     var _search;

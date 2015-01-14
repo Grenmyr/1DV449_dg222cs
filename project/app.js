@@ -32,15 +32,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-// Make our db accessible to our router
-/*
- app.use(function (req, res, next) {
- req.db = db;
- next();
- });
- */
-
-
 app.use('/', routes);
 app.use('/users', users);
 
@@ -107,8 +98,6 @@ socketIo.sockets.on('connection', function (client) {
             client.emit('offlineData',offlineData)
 
         });
-       /* console.log("körs sista");
-        client.emit('offlineData',bool)*/
     })
 
 
@@ -121,20 +110,7 @@ requestOfflineData = function (callback){
             //console.log(entireDB);
             callback(entireDB) ;
         });
-
-
-
-   /* dbFind(function(offlineData){
-            callback(offlineData);
-        console.log(offlineData);
-    } );*/
 };
-
-/*function dbFind(callback) {
-
-    // Måste hämta alla companyTypes
-    console.log("tried to get data");
-}*/
 
 
 /*  Main function to control data flow, First check database if data client request is stored
@@ -143,7 +119,6 @@ requestOfflineData = function (callback){
     into database with fresh timestamp.
 */
 var oneWeek = 604800000;
-//var oneWeek = 30000;
 var requestEniro = function (search,callback) {
 
     find(search , function (data) {
@@ -211,7 +186,6 @@ function prepareData(data,search) {
 function insert(search, data) {
 
     removeDocument(search);
-    //db.open();
     var collection = db.get(search.search_word);
     collection.update({city : search.geo_area}, data, {upsert:true}, function (err) {
         if (err) {
@@ -221,20 +195,19 @@ function insert(search, data) {
         else {
             console.log("succes inserting");
         }
-        //db.close();
     });
 }
+
 function find(search, callback) {
-    //dropCollection(search);
     var collection = db.get(search.search_word);
     collection.find( { city : search.geo_area }, function (err, data) {
         if (err) {
             console.log("error when using Find");
         }
         callback(data);
-        //db.close();
     });
 }
+
 function findAll(callback) {
     var collection;
     companyTypes.forEach(function (companyType) {
@@ -243,26 +216,22 @@ function findAll(callback) {
             if (err) {
                 console.log("error i findAll");
             }
-            //console.log(data);
             if(data[0] !==undefined){
                 data[0].search_word = companyType;
             }
             callback(data);
         });
     });
-
-
-    //console.log(allData);
 }
-function dropCollection(search) {
-    var collection = db.get(search.search_word);
-    collection.drop();
-}
+
 function removeDocument(search) {
     console.log(
         "RemoveOldDocument "+search.geo_area +
         " och collection var " + search.search_word);
-
     var collection = db.get(search.search_word);
-    collection.remove({city : search.geo_area});
+    collection.remove({city : search.geo_area},function (err){
+        if(err){
+            console.log("error when removing document");
+        }
+    });
 }

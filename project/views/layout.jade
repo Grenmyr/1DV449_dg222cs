@@ -11,9 +11,6 @@ html
     #cacheHeader
       button#offlineData Hämta offline data
       h1#connection Online läge
-
-
-      //p Spara företag för kunna söka om nätet går ner.
     #status
     fb:login-button(scope='public_profile,email', onlogin='checkLoginState();')#fbButton
     block content
@@ -22,10 +19,10 @@ html
     script(src='/javascripts/facebookOauth.js')
     script(src='/javascripts/localStorage.js')
     script(src='/javascripts/companyView.js')
-    //script(src='/javascripts/map.js')
-    //script(src='/javascripts/eniro.js')
-    //script(src='/javascripts/mashup.js')
+    script(src='/javascripts/map.js')
+    script(src='/javascripts/eniro.js')
+    script(src='/javascripts/mashup.js')
     script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAP26S2BhyRH2Z8q2JLwYrUTofaDP18Qpc")
-    //script(src='/javascripts/init.js')
-    script(src='/javascripts/minified.js')
+    script(src='/javascripts/init.js')
+    //script(src='/javascripts/minified.js')
 
