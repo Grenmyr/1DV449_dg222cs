@@ -29,8 +29,8 @@
     1. persistent lagring: Mongodb, Monk och Request.
 
         Mongodb och monk var båda helt nya tekniker för mig. Monk är en modul som gör
-        användningen av mongodb enklare. Jag har strukturerat min persistenta lagring i collections som motsvarar
-        en klassiskt tabell. Där varje företagstyp har en tabell. 
+        användningen av mongodb enklare. Jag har strukturerat min persistenta lagring i collections som 
+        motsvarar en klassiskt tabell. Där varje företagstyp har en tabell. 
         
         I varje tabell exempelvis flyttfirma lagras sökningar
         för varje stad/samhälle som enirodb har minst ett företag sparade så skapar jag ett Json objeckt.
@@ -71,7 +71,8 @@
                     requestEniroData() retunerar objekt till app.js som via socket.io skickar till klient.
                     Användare får sökning presenterad på klient.
                     requestEniroData() anropar insert()
-                    insert() tar om gammal data bort den från mongodb och sparar sparar den nya validerade sökningen.
+                    insert() tar om gammal data bort den från mongodb och sparar sparar den nya validerade 
+                    sökningen.
 
                    Alt2:
                     response är undefined från eniro
