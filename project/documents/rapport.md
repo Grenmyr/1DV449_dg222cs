@@ -206,24 +206,25 @@
 ## Offline-first: Hur har du tänkt kring offline-first?
 
     Jag valde implementera en egen ping/pong anrop via websockets till server. Så har jag koll på om
-    användare är offline eller inte. Den är en counter i en intervallfunktion som räknar upp ochskickar intergern 
-    till server.
-    Server retunerar pong, som är senaste skickad siffra. Om de ej stämmer överrens vet min klient att server
-    ej finns och då kan se jag att nätet/server är nere.
+    användare är offline eller inte. Den är en counter i en intervallfunktion som räknar upp och
+    skickar intergern till server.
+    Server retunerar pong, som är senaste skickad siffra. Om de ej stämmer överrens vet min klient att
+    server ej finns och då kan se jag att nätet/server är nere.
 
     Mitt mål har hela tiden att få applikationen att fungera till 100% offline first.
     Det gör den, i google chrome. Om användare laddar sidan en gång, och hämtar offline data.
     Så fungerar applikationen med google maps inkluderat till 100% även om man startar om den utan nät.
-    Gör man sökningar på data som är sparat i localstorage så visar den det, om man gör en sökning som ej finns
-    sparad meddelas användaren att det ej finns och den väntar på serverresponse. Om nät kommer, så görs 
-    sökningen automatiskt, om användare istället vill söka på annat tills nätet kommer så går det.
+    Gör man sökningar på data som är sparat i localstorage så visar den det, om man gör en sökning som
+    ej finns sparad meddelas användaren att det ej finns och den väntar på serverresponse. Om nät kommer,
+    så görs sökningen automatiskt, om användare istället vill söka på annat tills nätet kommer så går det.
 
     Jag är mycket nöjd med funktionaliteten i google chrome.
 
-    I andra webbläsare fungerar den inte att starta upp utan nät, men eftersom websockets är fantastiskt så går 
-    den att använda utan stabil internet uppkoppling sålänge man inte startar om applikationen (ctrl f5 eller enter).
-    Jag har inte kommit på om det är google maps eller wensockets som ej fungerar att köra från cachemanifest i 
-    andra webbläsare. Men något fungerar inte när man ska starta appen ifrån offline.
+    I andra webbläsare fungerar den inte att starta upp utan nät, men eftersom websockets är fantastiskt så
+    går den att använda utan stabil internet uppkoppling sålänge man inte startar om applikationen
+    (ctrl f5 eller enter).Jag har inte kommit på om det är google maps eller wensockets som ej fungerar
+    att köra från cachemanifest i andra webbläsare. Men något fungerar inte när man ska starta appen ifrån
+    offline.
 
     Men om man har nät när applikationen startar, så kan nätet gå upp och ner hur mycket som helst, applikationen
     kommer i första hand
@@ -237,11 +238,11 @@
     1. Negava refklektioner:
 
          * Jag måste fixa explorer buggen antar jag, trots att de är eftblivna och inte stöder .remove()
-         * Google maps funkar ej starta i offline läge i firefox och safari dock funkar  appen perfekt för övrigt.
+         * Google maps funkar ej starta i offline läge i firefox och safari dock funkar  appen bra.
          * Eniro ger mig bara max 100 response per sökning av företagstyp.
 
     2. Positiva reflektioner
-         * Jag är stolt jag fått den 100% offline i 2 webbläsare och i övriga mycket bra offline funktionalitet.
+         * Appen är 100% offline first i 2 webbläsare och i övriga mycket bra offline funktionalitet.
 
 ## Risker för applikationen
 
@@ -254,7 +255,7 @@
     5. Om många användare kan server behöva skalas upp.
     6. Kostnader om för många sökningar på google maps (25 000/dag)
 
-    Allt detta är relevanta risker med min applikation som man får ta i hänseende i given uppkommen situation.
+    Allt detta är relevanta risker med min applikation som man får ta i hänseende i given situation.
 
     Jag anser inte ha några moraliska eller etiska risker med min applikation just nu.
     Då det endast handlar om företagsdata.
@@ -264,8 +265,8 @@
 
     1. Nya tekniker: Allt i node.js som är min backend. Exempelvis websocket,mongodb, express mm.
     Jade template engine var också helt nytt.
-    2. Design: funkar bra på alla enheter jag har skrivit all css själv, det enda som inte är 100% i små enheter
-    är knappstorlek.
+    2. Design: funkar bra på alla enheter jag har skrivit all css själv, det enda som inte är 100% i små
+    enheter är knappstorlek.
     3. Min egna ping/pong funktion som nyttjar websocket linan för kolla online status var tredje sekund. 
     Och all funktionalitet som är implementerad utefter status är.
     3. har du inte läst rapporten? går det höja mer?
