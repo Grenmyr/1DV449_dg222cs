@@ -29,8 +29,8 @@
     1. persistent lagring: Mongodb, Monk och Request.
 
         Mongodb och monk var båda helt nya tekniker för mig. Monk är en modul som gör
-        användningen av mongodb enklare. Jag har strukturerat min persistenta lagring i collections som 
-        motsvarar en klassiskt tabell. Där varje företagstyp har en tabell. 
+        användningen av mongodb enklare. Jag har strukturerat min persistenta lagring i collections
+        som motsvarar en klassiskt tabell. Där varje företagstyp har en tabell.
         
         I varje tabell exempelvis flyttfirma lagras sökningar
         för varje stad/samhälle som enirodb har minst ett företag sparade så skapar jag ett Json objekt.
@@ -38,7 +38,7 @@
 
         Funktionalitet: Det finns 3 funktioner som arbetar mot databasen, find() findAll() insert()
 
-        find() returnerar objekt sparade i databas som motsvara sökning på client ex: flyttfirma i kalmar.
+        find() returnerar objekt sparade i databas som motsvara sökning på client ex:flyttfirma, kalmar.
         findAll() retunerar alla objekt.
         insert() används för spara nya sökningar till databas.
 
@@ -67,12 +67,12 @@
                    Alt1:
                     response retuneras från eniro API.
                     requestEniroData() anropar prepareData()
-                    prepareData kör json parse på datan och lägger till attribut "timestamp" samt "city".
-                    requestEniroData() retunerar objekt till app.js som via socket.io skickar till klient.
+                    prepareData kör json parse på datan och lägger till attribut "timestamp" & "city".
+                    requestEniroData() retunerar objekt till app.js som socket.io skickar till klient.
                     Användare får sökning presenterad på klient.
                     requestEniroData() anropar insert()
-                    insert() tar om gammal data bort den från mongodb och sparar sparar den nya validerade 
-                    sökningen.
+                    insert() tar om gammal data bort den från mongodb och sparar sparar den nya
+                     validerade sökningen.
 
                    Alt2:
                     response är undefined från eniro
@@ -80,7 +80,8 @@
 
     2. kommunikation till klient: socket.io , Express och Jade.
 
-        Express serverar med hjälp av Jade generering av statiska filer som index.html, bilder, scriptfiler.
+        Express serverar med hjälp av Jade generering av statiska filer som index.html,
+        bilder, scriptfiler.
 
         Socket.io  sköter all form av dynamisk kommunikation med klient.
 
@@ -98,15 +99,16 @@
         Serveras genom socket.io.js och map.js
 
     3.  Uppbygnad:
-        Native javascript sköter all logik och flöde genom applikationen. Navet på klienten är Mashup.js.
-        Mashup.js har tillgång till allt.
+        Native javascript sköter all logik och flöde genom applikationen. Navet på klienten är
+        Mashup.js. Mashup.js har tillgång till allt.
         Den har associationer till allt förutom till facebookOath.js och
         socket.io.js som den endast har beroende till.
 
         Mashup styr traffiken utifrån olika cases.
         Om fräsh data finns i localstorage så hämtas data från localstorage.js
 
-        om data ej finns lokalt eller gammal timestamp (1 vecka) så hämtas data från server via socket.io.js
+        om data ej finns lokalt eller gammal timestamp (1 vecka) så hämtas data från server via
+        socket.io.js
 
         om klient vill ladda ner offlineData sköts det via socket.io.js som sedan sparas med hjälp av 
         localstorage.js
@@ -115,7 +117,8 @@
 
         om användare vill logga in sköts det via facebookOauth.js
 
-        om en användare gör en enirosökning på klienten registreras det via eniro.js en callback till mashup.js
+        om en användare gör en enirosökning på klienten registreras det via eniro.js en callback
+        till mashup.js
 
         Gemensamt nästan allt flöde är att det sker via mashup.js som agerar liknande en controller.
 
@@ -129,8 +132,8 @@
 
         Cache manifest sparar statiska filer som bilder och scriptfiler från server.
 
-        localstorage sparar alla sökningar som klient gjort via server till localstorage, den läser även in
-        timestamp som finns på datan från server och sparar i localstorage med samma timestamp.
+        localstorage sparar alla sökningar som klient gjort via server till localstorage, den läser även
+        in timestamp som finns på datan från server och sparar i localstorage med samma timestamp.
         Därför kommer samma sökning endast gå via server en gång sålänge timestamp är fräsh.
 
         om användare väljer hämta offline data så anropas server och hämtar alla sökningar i alla städer
