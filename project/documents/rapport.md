@@ -171,7 +171,7 @@
         Men skriptet körs aldrig.
         Inte på server och inte på klient. Det kommer endast skrivas ut på klient med .textcontent.
 
-        minified.js innehåller all scriptkod på klient, förutom socket.io.js den är obfuskerad.
+        minified.js innehåller all scriptkod på klient den är obfuskerad., förutom socket.io.js 
 
         Inloggning till Oauth 2.0 sker via klient mot facebook.
 
@@ -214,7 +214,7 @@
     ej finns sparad meddelas användaren att det ej finns och den väntar på serverresponse. Om nät kommer,
     så görs sökningen automatiskt, om användare istället vill söka på annat tills nätet kommer så går det.
 
-    Jag är mycket nöjd med funktionaliteten i google chrome.
+    Jag är mycket nöjd med funktionaliteten i google chrome och opera.
 
     I andra webbläsare fungerar den inte att starta upp utan nät, men eftersom websockets är fantastiskt så
     går den att använda utan stabil internet uppkoppling sålänge man inte startar om applikationen
@@ -226,7 +226,8 @@
     applikationen kommer i första hand hämta data från localstorage och om det ej finns där så kommer den
     via webbsockets hämta från server såfort nätet kommmer tillbaka.
 
-    Sammanfattninsvis en mycket stabil app på tåget eller i bilen i firefox. I google chrome är den grym.
+    Sammanfattninsvis en mycket stabil app på tåget eller i bilen i alla webbläsare utom explorer.
+    I google chrome och opera är den grym varsomhelst närsomhelst.
 
 ## Reflektion
 
@@ -280,7 +281,7 @@
     2. Design: funkar bra på alla enheter jag har skrivit all css själv, det enda som inte är 100% i små
     enheter är knappstorlek.
     3. Min egna ping/pong funktion som nyttjar websocket linan för kolla online status var tredje sekund. 
-    Och all funktionalitet som är implementerad utefter status är.
+    Och all funktionalitet som är implementerad utefter online/offline statusen är.
     3. har du inte läst rapporten? går det höja mer?
 
 ###  David Grenmyr
