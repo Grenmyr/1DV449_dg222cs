@@ -1,13 +1,12 @@
 # Projektrapport dg222cs
-    Min ide med Flytthjälpen var att skapa en applikation nichad mot användare som behöver finna information
-    vid flytt till ny ort.
+    Min ide med Flytthjälpen var att skapa en applikation nichad mot användare som behöver finna
+    information vid flytt till ny ort.
     Genom att kombinera google maps och eniro kan jag printa ut företag på en karta och presentera viktig
     information för min målgrupp.
-    Eftersom företagen presenteras via kartan så får användaren en bild av var den finns i förhållande till
-    deras nya omgivning. Tanken med
-    applikationen är att inkludera mer företagstyper. Var finns närmsta matbutik? var kan jag klippa mig,
-    var finns dagis för mina barn och
-    information kring det är min vision med sidan. Kort o sagt en flytthjälp.
+    Eftersom företag presenteras via kartan så får användaren en bild av var den finns i förhållande till
+    deras nya omgivning. Tanken med applikationen är att inkludera mer företagstyper. Var finns närmsta
+    matbutik? var kan jag klippa mig, var finns dagis för mina barn och information kring det är min
+    vision med sidan. Kort o sagt en flytthjälp.
 
 #### Linkande applikation
 [Liknande apllikation](http://www.hitta.se/kartan)
@@ -191,7 +190,6 @@
         google maps cachar tiles själv.
 
     3. Kompabilitet
-
        Chrome : 100%
        Opera : 100%
        firefox : kan ej starta offline från cache manifest men fungerar offline om startad med nät.
@@ -199,8 +197,8 @@
        Explorer : fungerar inte alls, eftersom explorer inte stöder .remove() på dom element.
 
        Plattor & mobiler: Allt funkar, dock lite små knappar,
-       hade kanske behövt en style för småskärmar där jag förstorat knappar och input fält.
-
+       hade kanske behövt en style för småskärmar där jag förstorat knappar och input fält.     
+[explorer .remove() vägrar](http://red-team-design.com/removing-an-element-with-plain-javascript-remove-method/)
 ## Offline-first: Hur har du tänkt kring offline-first?
 
     Jag valde implementera en egen ping/pong anrop via websockets till server. Så har jag koll på om
