@@ -198,7 +198,7 @@
 
        Plattor & mobiler: Allt funkar, dock lite små knappar,
        hade kanske behövt en style för småskärmar där jag förstorat knappar och input fält.     
-[explorer .remove() vägrar](http://red-team-design.com/removing-an-element-with-plain-javascript-remove-method/)
+[.remove() support webbläsare](http://red-team-design.com/removing-an-element-with-plain-javascript-remove-method/)
 ## Offline-first: Hur har du tänkt kring offline-first?
 
     Jag valde implementera en egen ping/pong anrop via websockets till server. Så har jag koll på om
@@ -233,11 +233,28 @@
     1. Negava refklektioner:
 
          * Jag måste fixa explorer buggen antar jag, trots att de är eftblivna och inte stöder .remove()
-         * Google maps funkar ej starta i offline läge i firefox och safari dock funkar  appen bra.
+         som alla andra webbläsare gör, men jag hinner inte nu. Det får komma i 1.01.
+         * Google maps funkar ej starta i offline läge i firefox och safari dock funkar appen bra.
          * Eniro ger mig bara max 100 response per sökning av företagstyp.
+         * Cache manifest, tröt att arbeta med och svårt att komma igång med. Är säkert väldigt bra när
+         man bemästrar det. 
 
     2. Positiva reflektioner
          * Appen är 100% offline first i 2 webbläsare och i övriga mycket bra offline funktionalitet.
+         Jag hade kunna fegat ur och inte implementerat offline first förnågon webbläsare, men jag valde 
+         precis innan deadline implementera funktionalitet för dom 2 samt en fix för övriga webböäsare
+         som gör att de i allafall funkar om de får starta med nät.
+         
+         * Websockets är helt fantastiskt att arbeta med, dess asykrona anrop som automagiskt gör "request"
+         när nät återkommer är fantastiskt att arbeta med. Som traditionella Ajaxrequest med pollling fast
+         bättre, allt i en funktion på klienten så sköter socket.io resten under huven.
+         
+         * Arbeta med node.js Det har varit väldigt kul och lärorikt, jag har verkligen lärt mig massa som 
+         jag inte hade en aning om innan. Det kan vara lite rörigt, men det är som ett smörgåsbord. Vad du 
+         vill ha, kör NPM install "vad du vill ha" och så har du verktygen. Jag ångrar verkligen inte att 
+         jag tog risken och lära mig detta istället för safa med javascript och php.
+        
+         
 
 ## Risker för applikationen
 
