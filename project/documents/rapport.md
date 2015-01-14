@@ -1,14 +1,4 @@
-Den skriftliga projektrapporten du lämnar in ska innehålla följande:
 
-    Inledning där du kort beskriver vad du gjort och bakgrunden till din applikation. Finns det liknande applikationer redan?
-    Inkludera en schematisk bild över applikationens beståndsdelar så att läsaren har enklare att förstå applikationens dataflöde.
-    Serversida: Beskriv hur din applikation fungerar på serversidan. Beskriv funktionaliteten och hur den är uppbyggd. Vald teknik/programmeringsspråk/ramverk? Hur fungerar cachningen? Hur sköter du felhanteringen m.m.
-    Klientsida: Hur fungerar din applikation på klientsidan. Beskriv på liknande sätt som serversidan.
-    Säkerhet och prestandaoptimering - Hur har du funderat kring säkerhet och prestanda och vilken teori har du kopplat detta emot.
-    Offline-first: Hur har du tänkt kring offline-first?
-    Egen reflektion kring projektet: Här tar du upp hur projektet har gått. Vilka eventuella problem har du stött på? Finns det funktioner som du velat implementera men inte hunnit? Hur skulle du vilja jobba vidare med din applikation?
-    Risker med din applikation: Reflektera över vilka risker det finns med din applikation; rent tekniskt, säkerhet, etiskt m.m.
-    Skriv också om de eventuella delar du anser vara betygshöjande med din applikation. Motivera varför du anser dessa vara betygshöjande.
 
 # Projektrapport dg222cs
 
@@ -145,6 +135,8 @@ Den skriftliga projektrapporten du lämnar in ska innehålla följande:
         Om nät går ner skrivs det offline mode i header till höger på sida,
         Om nät går ner så döljs knapp för hämta offline data,
         välkommen header presenteras första laddning,
+        om användare ej har internet visas ej hemsidor/facebooklänkar under företagsfönster,
+        tel nummer i föregsfönster klipps automatiskt ut till eventuell mobil för ringa,
         google maps visar om tile ej kan laddas en blank tile.
 
 
@@ -182,6 +174,17 @@ Den skriftliga projektrapporten du lämnar in ska innehålla följande:
 
         google maps cachar tiles själv.
 
+    3. Kompabilitet
+
+       Chrome : 100%
+       Opera : 100%
+       firefox : kan ej starta offline från cache manifest men fungerar offline om startad med nät.
+       safari : kan ej starta offline från cache manifest men fungerar offline om startad med nät.
+       Explorer : fungerar inte alls, eftersom explorer inte stöder .remove() på dom element.
+
+       Plattor & mobiler: Allt funkar, dock lite små knappar,
+       hade kanske behövt en style för småskärmar där jag förstorat knappar och input fält.
+
 ## Offline-first: Hur har du tänkt kring offline-first?
 
     Jag valde implementera en egen ping/pong anrop via websockets till server. Så har jag koll på om
@@ -210,23 +213,39 @@ Den skriftliga projektrapporten du lämnar in ska innehålla följande:
 
 ## Reflektion
 
-* Har ej använt google maps offline data
-* IE bug
-100 träffar eniro
+    1. Negava refklektioner:
+
+         * Jag måste fixa explorer buggen antar jag, trots att de är eftblivna och inte stöder .remove()
+         * Google maps funkar ej starta i offline läge i firefox och safari dock funkar  appen perfekt för övrigt.
+         * Eniro ger mig bara max 100 response per sökning av företagstyp.
+
+    2. Positiva reflektioner
+         * Jag är stolt jag fått den 100% offline i 2 webbläsare och i övriga mycket bra offline funktionalitet.
+
 ## Risker för applikationen
 
 [google maps limit](https://developers.google.com/maps/documentation/javascript/usage)
 
     1. Api data kan ändra format eller stänga data.
     2. Externa tjänster som facebookOauth kan ändra funktionalitet.
-    3. kompabilitetsförändringar i utvecklingsverktyg.
+    3. Kompabilitetsförändringar i utvecklingsverktyg/språk.
     4. Bättre konkurrenter
     5. Om många användare kan server behöva skalas upp.
     6. Kostnader om för många sökningar på google maps (25 000/dag)
 
+    Allt detta är relevanta risker med min applikation som man får ta i hänseende i given uppkommen situation.
+
+    Jag anser inte ha några moraliska eller etiska risker med min applikation just nu.
+    Då det endast handlar om företagsdata.
+
+
 ## Betygshöjande
 
-    1. har du inte läst rapporten? går det höja mer?
+    1. Nya tekniker: Allt i node.js som är min backend. Exempelvis websocket,mongodb, express, jade mm.
+    2. Design: funkar bra på alla enheter jag har skrivit all css själv, det enda som inte är 100% i små enheter är knappstorlek.
+    3. har du inte läst rapporten? går det höja mer?
+
+###  David Grenmyr
 
 
 
