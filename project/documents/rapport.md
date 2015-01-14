@@ -2,10 +2,14 @@
 
 # Projektrapport dg222cs
 
-    Min ide med Flytthjälpen var att skapa en applikation nichad mot användare som behöver finna information vid flytt till ny ort.
-    Genom att kombinera google maps och eniro kan jag printa ut företag på en karta och presentera viktig information för min målgrupp.
-    Eftersom företagen presenteras via kartan så får användaren en bild av var den finns i förhållande till deras nya omgivning. Tanken med
-    applikationen är att inkludera mer företagstyper. Var finns närmsta matbutik? var kan jag klippa mig, var finns dagis för mina barn och
+    Min ide med Flytthjälpen var att skapa en applikation nichad mot användare som behöver finna information 
+    vid flytt till ny ort.
+    Genom att kombinera google maps och eniro kan jag printa ut företag på en karta och presentera viktig 
+    information för min målgrupp.
+    Eftersom företagen presenteras via kartan så får användaren en bild av var den finns i förhållande till
+    deras nya omgivning. Tanken med
+    applikationen är att inkludera mer företagstyper. Var finns närmsta matbutik? var kan jag klippa mig,
+    var finns dagis för mina barn och
     information kring det är min vision med sidan. Kort o sagt en flytthjälp.
 
 #### Linkande applikation
@@ -26,7 +30,9 @@
 
         Mongodb och monk var båda helt nya tekniker för mig. Monk är en modul som gör
         användningen av mongodb enklare. Jag har strukturerat min persistenta lagring i collections som motsvarar
-        en klassiskt tabell. Där varje företagstyp har en tabell. I varje tabell exempelvis flyttfirma lagras sökningar
+        en klassiskt tabell. Där varje företagstyp har en tabell. 
+        
+        I varje tabell exempelvis flyttfirma lagras sökningar
         för varje stad/samhälle som enirodb har minst ett företag sparade så skapar jag ett Json objeckt.
         Ett Json objekt motsvararen rad i en klassisk databas.
 
@@ -65,7 +71,7 @@
                     requestEniroData() retunerar objekt till app.js som via socket.io skickar till klient.
                     Användare får sökning presenterad på klient.
                     requestEniroData() anropar insert()
-                    insert() tar om gammal data bort den från mongodb och sparar sparar den nya validerade sökningen i mongodb.
+                    insert() tar om gammal data bort den från mongodb och sparar sparar den nya validerade sökningen.
 
                    Alt2:
                     response är undefined från eniro
@@ -93,7 +99,8 @@
     3.  Uppbygnad:
         Native javascript sköter all logik och flöde genom applikationen. Navet på klienten är Mashup.js.
         Mashup.js har tillgång till allt.
-        Den har associationer till allt förutom till facebookOath.js och socket.io.js som den endast har beroende till.
+        Den har associationer till allt förutom till facebookOath.js och
+        socket.io.js som den endast har beroende till.
 
         Mashup styr traffiken utifrån olika cases.
         Om fräsh data finns i localstorage så hämtas data från localstorage.js
@@ -110,21 +117,23 @@
 
         Gemensamt nästan allt flöde är att det sker via mashup.js som agerar liknande en controller.
 
-        Jag har försökt ge en bra namngivning av mina script och flytta ut så mycket funktionalitet ur mashup.js som möjligt.
-        Hade jag haft lite mer tid så hade jag gjort ett 2 script till som heter offline.js som hade skött styrning av offline status.
-        Just nu ligger detta inbyggt i mashup.js
-        Och andra skriptet hade fåt heta message.js och skött presentering av hjälp/felmeddelanden den funktionaliteten ligger i mashup.js mestadels.
+        Jag har försökt ge en bra namngivning av mina script och flytta ut funktionalitet ur mashup.js.
+        Hade jag haft lite mer tid så hade jag gjort ett 2 script till som heter offline.js. 
+        Den hade skött styrning av offline status som just nu ligger detta inbyggt i mashup.js
+        Och andra skriptet hade fåt heta message.js och skött presentering av hjälp/felmeddelanden den  
+        funktionaliteten ligger i mashup.js mestadels.
 
     4. Cachning:
 
         Cache manifest sparar statiska filer som bilder och scriptfiler från server.
 
-        localstorage sparar alla sökningar som klient gjort via server till localstorage, den läser även in timestamp som
-        finns på datan från server och sparar i localstorage med samma timestamp. Därför kommer samma sökning endast gå via server
-        en gång sålänge timestamp är fräsh.
+        localstorage sparar alla sökningar som klient gjort via server till localstorage, den läser även in
+        timestamp som finns på datan från server och sparar i localstorage med samma timestamp.
+        Därför kommer samma sökning endast gå via server en gång sålänge timestamp är fräsh.
 
-        om användare väljer hämta offline data så anropas server och hämtar alla sökningar i alla städer och företagstyper med
-        giltig timestamp. Detta sparas i localstorage. Då kommer server ej anropas alls om användare söker på det andra sökt inom senaste veckan.
+        om användare väljer hämta offline data så anropas server och hämtar alla sökningar i alla städer
+        och företagstyper med giltig timestamp. Detta sparas i localstorage. 
+        Då kommer server ej anropas alls om användare söker på det andra sökt inom senaste veckan.
 
     5. Felhantering/Användarhjälp:
 
@@ -146,15 +155,18 @@
 
     1. Säkerhet:
 
-        Mongodb kräver json format på all data, det är ingen validering i sig, men eftersom json.parse() endast konverterar
-        till json objekt och ej kör eventuell skadlig kod så är det säkert. Dessutom kastar Json.parse() undantag om datan ej är giltig.
+        Mongodb kräver json format på all data, det är ingen validering i sig, men eftersom json.parse() endast
+        konverterar
+        till json objekt och ej kör eventuell skadlig kod så är det säkert. Dessutom kastar Json.parse() undantag om
+        datan ej är giltig.
 
         All data från server till client sköts via .textcontent vilket gör att ingen farligt script körs på klient.
 
-        Jag har testat att söka med script taggar med alert() i via textfält, men server går ej ner. Det är eftersom mongodb gör om sökningar till
-        BSON objekt.
+        Jag har testat att söka med script taggar med alert() i via textfält, men server går ej ner. Det är eftersom
+        mongodb gör om sökningar till BSON objekt.
 
-        Allt detta förhindrar inte att jag skulle kunna få en response från mitt api med script i. Men skriptet körs aldrig.
+        Allt detta förhindrar inte att jag skulle kunna få en response från mitt api med script i. 
+        Men skriptet körs aldrig.
         Inte på server och inte på klient. Det kommer endast skrivas ut på klient med .textcontent.
 
         minified.js innehåller all scriptkod på klient, förutom socket.io.js den är obfuskerad.
@@ -188,15 +200,17 @@
 ## Offline-first: Hur har du tänkt kring offline-first?
 
     Jag valde implementera en egen ping/pong anrop via websockets till server. Så har jag koll på om
-    användare är offline eller inte. Den är en counter i en intervallfunktion som räknar upp co hskickar intergern till server.
-    Server retunerar pong, som är senaste skickad siffra. Om de ej stämmer överrens vet min klient att server ej finns och då kan
-    jag att nätet/server är nere.
+    användare är offline eller inte. Den är en counter i en intervallfunktion som räknar upp ochskickar intergern till
+    server.
+    Server retunerar pong, som är senaste skickad siffra. Om de ej stämmer överrens vet min klient att server ej finns
+    och då kan se jag att nätet/server är nere.
 
     Mitt mål har hela tiden att få applikationen att fungera till 100% offline first.
     Det gör den, i google chrome. Om användare laddar sidan en gång, och hämtar offline data.
-    Så fungerar applikationen med google maps inkluderat till 100% även om man startar om den utan nät. Gör man sökningar
-    på data som är sparat i localstorage så visar den det, om man gör en sökning som ej finns sparad meddelas användaren att
-    det ej finns och den väntar på serverresponse. Om nät kommer, så görs sökningen automatiskt, om användare istället vill söka
+    Så fungerar applikationen med google maps inkluderat till 100% även om man startar om den utan nät.
+    Gör man sökningar på data som är sparat i localstorage så visar den det, om man gör en sökning som ej finns sparad
+    meddelas användaren att det ej finns och den väntar på serverresponse. Om nät kommer, så görs sökningen
+    automatiskt, om användare istället vill söka
     på annat tills nätet kommer så går det.
 
     Jag är mycket nöjd med funktionaliteten i google chrome.
@@ -206,8 +220,10 @@
     Jag har inte kommit på om det är google maps eller wensockets som ej fungerar att köra från cachemanifest i andra
     webbläsare. Men något fungerar inte när man ska starta appen ifrån offline.
 
-    Men om man har nät när applikationen startar, så kan nätet gå upp och ner hur mycket som helst, applikationen kommer i första hand
-    hämta data från localstorage och om det ej finns där så kommer den via webbsockets hämta från server såfort nätet kommmer tillbaka.
+    Men om man har nät när applikationen startar, så kan nätet gå upp och ner hur mycket som helst, applikationen
+    kommer i första hand
+    hämta data från localstorage och om det ej finns där så kommer den via webbsockets hämta från server såfort nätet
+    kommmer tillbaka.
 
     Sammanfattninsvis en mycket stabil app på tåget eller i bilen i firefox. I google chrome är den grym.
 
@@ -243,9 +259,10 @@
 
     1. Nya tekniker: Allt i node.js som är min backend. Exempelvis websocket,mongodb, express mm.
     Jade template engine var också helt nytt.
-    2. Design: funkar bra på alla enheter jag har skrivit all css själv, det enda som inte är 100% i små enheter är knappstorlek.
-    3. Min egna ping/pong funktion som nyttjar websocket linan för kolla online status var tredje sekund. Och all funktionalitet
-    som är implementerad utefter status är.
+    2. Design: funkar bra på alla enheter jag har skrivit all css själv, det enda som inte är 100% i små enheter är
+    knappstorlek.
+    3. Min egna ping/pong funktion som nyttjar websocket linan för kolla online status var tredje sekund. Och all
+    funktionalitet som är implementerad utefter status är.
     3. har du inte läst rapporten? går det höja mer?
 
 ###  David Grenmyr
