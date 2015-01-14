@@ -159,8 +159,8 @@
 
         Mongodb kräver json format på all data, det är ingen validering i sig, men eftersom json.parse() endast
         konverterar
-        till json objekt och ej kör eventuell skadlig kod så är det säkert. Dessutom kastar Json.parse() undantag om
-        datan ej är giltig.
+        till json objekt och ej kör eventuell skadlig kod så är det säkert. Dessutom kastar Json.parse() undantag
+        om datan ej är giltig.
 
         All data från server till client sköts via .textcontent vilket gör att ingen farligt script körs på klient.
 
@@ -175,7 +175,8 @@
 
         Inloggning till Oauth 2.0 sker via klient mot facebook.
 
-        Jag har ingen känslig data, jag visar endast publika facebooklänkar när användare är inloggad på facebook.
+        Jag har ingen känslig data, jag visar endast publika facebooklänkar när användare är inloggad 
+        på facebook.
         Därför har jag inget skydd mot CSRF vid mitt input fält då det ej behövs.
 
     2. Prestandaoptimering
@@ -202,30 +203,29 @@
 ## Offline-first: Hur har du tänkt kring offline-first?
 
     Jag valde implementera en egen ping/pong anrop via websockets till server. Så har jag koll på om
-    användare är offline eller inte. Den är en counter i en intervallfunktion som räknar upp ochskickar intergern till
-    server.
-    Server retunerar pong, som är senaste skickad siffra. Om de ej stämmer överrens vet min klient att server ej finns
-    och då kan se jag att nätet/server är nere.
+    användare är offline eller inte. Den är en counter i en intervallfunktion som räknar upp ochskickar intergern 
+    till server.
+    Server retunerar pong, som är senaste skickad siffra. Om de ej stämmer överrens vet min klient att server
+    ej finns och då kan se jag att nätet/server är nere.
 
     Mitt mål har hela tiden att få applikationen att fungera till 100% offline first.
     Det gör den, i google chrome. Om användare laddar sidan en gång, och hämtar offline data.
     Så fungerar applikationen med google maps inkluderat till 100% även om man startar om den utan nät.
-    Gör man sökningar på data som är sparat i localstorage så visar den det, om man gör en sökning som ej finns sparad
-    meddelas användaren att det ej finns och den väntar på serverresponse. Om nät kommer, så görs sökningen
-    automatiskt, om användare istället vill söka
-    på annat tills nätet kommer så går det.
+    Gör man sökningar på data som är sparat i localstorage så visar den det, om man gör en sökning som ej finns
+    sparad meddelas användaren att det ej finns och den väntar på serverresponse. Om nät kommer, så görs 
+    sökningen automatiskt, om användare istället vill söka på annat tills nätet kommer så går det.
 
     Jag är mycket nöjd med funktionaliteten i google chrome.
 
-    I andra webbläsare fungerar den inte att starta upp utan nät, men eftersom websockets är fantastiskt så går den
-    att använda utan stabil internet uppkoppling sålänge man inte startar om applikationen (ctrl f5 eller enter).
-    Jag har inte kommit på om det är google maps eller wensockets som ej fungerar att köra från cachemanifest i andra
-    webbläsare. Men något fungerar inte när man ska starta appen ifrån offline.
+    I andra webbläsare fungerar den inte att starta upp utan nät, men eftersom websockets är fantastiskt så går 
+    den att använda utan stabil internet uppkoppling sålänge man inte startar om applikationen (ctrl f5 eller enter).
+    Jag har inte kommit på om det är google maps eller wensockets som ej fungerar att köra från cachemanifest i 
+    andra webbläsare. Men något fungerar inte när man ska starta appen ifrån offline.
 
     Men om man har nät när applikationen startar, så kan nätet gå upp och ner hur mycket som helst, applikationen
     kommer i första hand
-    hämta data från localstorage och om det ej finns där så kommer den via webbsockets hämta från server såfort nätet
-    kommmer tillbaka.
+    hämta data från localstorage och om det ej finns där så kommer den via webbsockets hämta från server såfort
+    nätet kommmer tillbaka.
 
     Sammanfattninsvis en mycket stabil app på tåget eller i bilen i firefox. I google chrome är den grym.
 
@@ -261,10 +261,10 @@
 
     1. Nya tekniker: Allt i node.js som är min backend. Exempelvis websocket,mongodb, express mm.
     Jade template engine var också helt nytt.
-    2. Design: funkar bra på alla enheter jag har skrivit all css själv, det enda som inte är 100% i små enheter är
-    knappstorlek.
-    3. Min egna ping/pong funktion som nyttjar websocket linan för kolla online status var tredje sekund. Och all
-    funktionalitet som är implementerad utefter status är.
+    2. Design: funkar bra på alla enheter jag har skrivit all css själv, det enda som inte är 100% i små enheter
+    är knappstorlek.
+    3. Min egna ping/pong funktion som nyttjar websocket linan för kolla online status var tredje sekund. 
+    Och all funktionalitet som är implementerad utefter status är.
     3. har du inte läst rapporten? går det höja mer?
 
 ###  David Grenmyr
