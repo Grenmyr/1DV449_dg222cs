@@ -1,10 +1,7 @@
-
-
 # Projektrapport dg222cs
-
-    Min ide med Flytthjälpen var att skapa en applikation nichad mot användare som behöver finna information 
+    Min ide med Flytthjälpen var att skapa en applikation nichad mot användare som behöver finna information
     vid flytt till ny ort.
-    Genom att kombinera google maps och eniro kan jag printa ut företag på en karta och presentera viktig 
+    Genom att kombinera google maps och eniro kan jag printa ut företag på en karta och presentera viktig
     information för min målgrupp.
     Eftersom företagen presenteras via kartan så får användaren en bild av var den finns i förhållande till
     deras nya omgivning. Tanken med
