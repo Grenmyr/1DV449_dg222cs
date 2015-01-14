@@ -160,15 +160,15 @@
 
     1. Säkerhet:
 
-        Mongodb kräver json format på all data, det är ingen validering i sig, men eftersom json.parse() endast
-        konverterar
-        till json objekt och ej kör eventuell skadlig kod så är det säkert. Dessutom kastar Json.parse() undantag
-        om datan ej är giltig.
+        Mongodb kräver json format på all data, det är ingen validering i sig, men eftersom json.parse()
+        endast konverterar till json objekt och ej kör eventuell skadlig kod så är det säkert.
+        Dessutom kastar Json.parse() undantag om datan ej är giltig.
 
-        All data från server till client sköts via .textcontent vilket gör att ingen farligt script körs på klient.
+        All data från server till client sköts via .textcontent vilket gör att ingen farligt script körs
+        på klient.
 
-        Jag har testat att söka med script taggar med alert() i via textfält, men server går ej ner. Det är eftersom
-        mongodb gör om sökningar till BSON objekt.
+        Jag har testat att söka med script taggar med alert() i via textfält, men server går ej ner.
+        Det är eftersom mongodb gör om sökningar till BSON objekt.
 
         Allt detta förhindrar inte att jag skulle kunna få en response från mitt api med script i. 
         Men skriptet körs aldrig.
@@ -178,8 +178,8 @@
 
         Inloggning till Oauth 2.0 sker via klient mot facebook.
 
-        Jag har ingen känslig data, jag visar endast publika facebooklänkar när användare är inloggad 
-        på facebook.
+        Jag har ingen känslig data, jag visar endast publika facebooklänkar när användare är
+        inloggad på facebook.
         Därför har jag inget skydd mot CSRF vid mitt input fält då det ej behövs.
 
     2. Prestandaoptimering
@@ -226,10 +226,9 @@
     att köra från cachemanifest i andra webbläsare. Men något fungerar inte när man ska starta appen ifrån
     offline.
 
-    Men om man har nät när applikationen startar, så kan nätet gå upp och ner hur mycket som helst, applikationen
-    kommer i första hand
-    hämta data från localstorage och om det ej finns där så kommer den via webbsockets hämta från server såfort
-    nätet kommmer tillbaka.
+    Men om man har nät när applikationen startar, så kan nätet gå upp och ner hur mycket som helst,
+    applikationen kommer i första hand hämta data från localstorage och om det ej finns där så kommer den
+    via webbsockets hämta från server såfort nätet kommmer tillbaka.
 
     Sammanfattninsvis en mycket stabil app på tåget eller i bilen i firefox. I google chrome är den grym.
 
