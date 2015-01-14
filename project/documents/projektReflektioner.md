@@ -48,5 +48,6 @@ för användare om nätet är nere under användning. ej implementerat cache man
 14/1
 * Städat kod app.js
 * skrivit rapport
+* sista publisering
 * demofilm klar.
 
