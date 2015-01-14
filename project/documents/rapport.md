@@ -33,7 +33,7 @@
         motsvarar en klassiskt tabell. Där varje företagstyp har en tabell. 
         
         I varje tabell exempelvis flyttfirma lagras sökningar
-        för varje stad/samhälle som enirodb har minst ett företag sparade så skapar jag ett Json objeckt.
+        för varje stad/samhälle som enirodb har minst ett företag sparade så skapar jag ett Json objekt.
         Ett Json objekt motsvararen rad i en klassisk databas.
 
         Funktionalitet: Det finns 3 funktioner som arbetar mot databasen, find() findAll() insert()
@@ -108,7 +108,8 @@
 
         om data ej finns lokalt eller gammal timestamp (1 vecka) så hämtas data från server via socket.io.js
 
-        om klient vill ladda ner offlineData sköts det via socket.io.js som sedan sparas med hjälp av localstorage.js
+        om klient vill ladda ner offlineData sköts det via socket.io.js som sedan sparas med hjälp av 
+        localstorage.js
 
         om företagsinfo ska visas sköts det via companyView.js
 
