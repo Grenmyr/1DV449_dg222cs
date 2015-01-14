@@ -142,7 +142,7 @@
         Mashup.js presenterar lite meddelanden utifrån olika scenarie exempelvis:
         Sökning antal träffar och ort eller om ingen träff så visas det med text,
         Om offlinedata hämtats ändras text på knapp,
-        Navigeringshjälp första gången en användare kommer till sidan som tas bort när användare använder den,
+        Navigeringshjälp första gången en användare kommer till sidan som tas bort när den används,
         Om nät går ner skrivs det offline mode i header till höger på sida,
         Om nät går ner så döljs knapp för hämta offline data,
         välkommen header presenteras första laddning,
