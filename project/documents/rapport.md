@@ -47,36 +47,36 @@
         Cachning:
             Use Case 1: data finns sparad med timestamp
             Användare gör sökning :
-                Användare söker på Malmö och flyttfirma
-                Socket.io gör emit('eniroSearch') till app.js
-                app.js anropar find() och söker mot databasen.
-                företagstyp med den orten finns sparad och giltig timestamp (1 vecka)
-                find() retunerar objekt till app.js som via socket.io skickar till klient.
-                Användare får sökning presenterad på klient.
+            Användare söker på Malmö och flyttfirma
+            Socket.io gör emit('eniroSearch') till app.js
+            app.js anropar find() och söker mot databasen.
+            företagstyp med den orten finns sparad och giltig timestamp (1 vecka)
+            find() retunerar objekt till app.js som via socket.io skickar till klient.
+            Användare får sökning presenterad på klient.
 
              Use Case 2 data finns ej sparad eller gammal timestamp:
-              Användare gör sökning :
-                Användare söker på Malmö och flyttfirma
-                Socket.io gör emit('eniroSearch') till app.js
-                app.js anropar find() och söker mot databasen.
-                data finns ej sparad eller gammal timestamp
-                find() retunerar undefined till app.js
-                app.js anropar requestEniroData() och skickar med klients sökning.
-                requestEniroData() anropar eniro API med sökningen.
+            Användare gör sökning :
+            Användare söker på Malmö och flyttfirma
+            Socket.io gör emit('eniroSearch') till app.js
+            app.js anropar find() och söker mot databasen.
+            data finns ej sparad eller gammal timestamp
+            find() retunerar undefined till app.js
+            app.js anropar requestEniroData() och skickar med klients sökning.
+            requestEniroData() anropar eniro API med sökningen.
 
-                   Alt1:
-                    response retuneras från eniro API.
-                    requestEniroData() anropar prepareData()
-                    prepareData kör json parse på datan och lägger till attribut "timestamp" & "city".
-                    requestEniroData() retunerar objekt till app.js som socket.io skickar till klient.
-                    Användare får sökning presenterad på klient.
-                    requestEniroData() anropar insert()
-                    insert() tar om gammal data bort den från mongodb och sparar sparar den nya
-                     validerade sökningen.
+           Alt1:
+            response retuneras från eniro API.
+            requestEniroData() anropar prepareData()
+            prepareData kör json parse på datan och lägger till attribut "timestamp" & "city".
+            requestEniroData() retunerar objekt till app.js som socket.io skickar till klient.
+            Användare får sökning presenterad på klient.
+            requestEniroData() anropar insert()
+            insert() tar om gammal data bort den från mongodb och sparar sparar den nya
+            validerade sökningen.
 
-                   Alt2:
-                    response är undefined från eniro
-                    Inget händer.
+           Alt2:
+            response är undefined från eniro
+            Inget händer.
 
     2. kommunikation till klient: socket.io , Express och Jade.
 
