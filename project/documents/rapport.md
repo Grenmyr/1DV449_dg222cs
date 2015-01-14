@@ -242,7 +242,7 @@
 ## Betygshöjande
 
     1. Nya tekniker: Allt i node.js som är min backend. Exempelvis websocket,mongodb, express mm.
-       Jade template engine var också helt nytt.
+    Jade template engine var också helt nytt.
     2. Design: funkar bra på alla enheter jag har skrivit all css själv, det enda som inte är 100% i små enheter är knappstorlek.
     3. Min egna ping/pong funktion som nyttjar websocket linan för kolla online status var tredje sekund. Och all funktionalitet
     som är implementerad utefter status är.
