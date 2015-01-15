@@ -19,7 +19,7 @@ var Eniro = function () {
 
 };
 
-
+// Handle inputfield from user used from mashup.js its only called on once to avoid memory leaks.
 Eniro.prototype.waitForUserClick = function (callback) {
     var select = document.querySelector('#companySelect');
     var input = document.querySelector('#inputfield');
@@ -42,4 +42,6 @@ Eniro.prototype.waitForUserClick = function (callback) {
     });
 
 };
+/* searchparameters only 2 now, can easily be added more companytypes. its a string dependecy both to index.jade
+ and app.js*/
 Eniro.prototype.searchParameters = ["flyttfirma", "städfirma"];

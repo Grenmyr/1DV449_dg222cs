@@ -11,22 +11,26 @@ var CompanyView = function () {
     var header = document.createElement('h2');
     var divToModify = document.querySelector('#companySearch');
 
-
+    // message if emty searches.
     this.noResults = function () {
         header.textContent = 'Din sökning gav inga träffar, behåller senaste sökning.';
         divToModify.appendChild(header);
     };
+    // message if search results
     this.results = function (lastSearch, results) {
         lastSearch = lastSearch.split('&');
         header.textContent = results + ' resultat från sökningen ' + lastSearch[1] + ' : ' + lastSearch[0];
         divToModify.appendChild(header);
     };
-    this.clearCompanyViewDiv = function (){
+    // used to clear prvious company window from data.
+    this.clearCompanyViewDiv = function () {
         while (companyViewDiv.hasChildNodes()) {
             companyViewDiv.removeChild(companyViewDiv.lastChild);
         }
     };
+    /* big massive function to generate all dom inside companyView window.
 
+     */
     this.renderBasicView = function (company) {
 
         this.clearCompanyViewDiv();
@@ -59,10 +63,10 @@ var CompanyView = function () {
             postCode.textContent = company['address']['postCode'];
         }
 
-        if(company['phoneNumbers'][0]['phoneNumber'] !== null){
-            phoneNumber.href = "tel:"+company['phoneNumbers'][0]['phoneNumber'];
+        if (company['phoneNumbers'][0]['phoneNumber'] !== null) {
+            phoneNumber.href = "tel:" + company['phoneNumbers'][0]['phoneNumber'];
             phoneNumber.target = "_blank";
-            phoneNumber.textContent = "TLF: "+ company['phoneNumbers'][0]['phoneNumber'];
+            phoneNumber.textContent = "TLF: " + company['phoneNumbers'][0]['phoneNumber'];
         }
 
         addressDiv.appendChild(streetName);
@@ -70,7 +74,9 @@ var CompanyView = function () {
         addressDiv.appendChild(postArea);
 
         companyViewDiv.appendChild(header);
-        if(window.onlineStatus) {
+        // ask my bool on window object if client got connection to server, if he is not online
+        // then i choose not to present the online material.
+        if (window.onlineStatus) {
             companyViewDiv.appendChild(homepageLink);
             companyViewDiv.appendChild(facebookLink);
             companyViewDiv.appendChild(facebookLogin);
@@ -81,6 +87,11 @@ var CompanyView = function () {
         contentDiv.appendChild(basicDiv);
     };
 
+    /* function with event listener that check facebookOauth if user is logged in, if he is he can open it,
+     if not he is asked to log in before.
+
+
+     */
     function facebookOpen(node, externalLink, loginCheck) {
         if (externalLink !== null) {
 

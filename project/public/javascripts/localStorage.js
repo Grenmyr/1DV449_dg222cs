@@ -2,44 +2,42 @@
  * Created by dav on 2015-01-08.
  */
 var Localstorage = function () {
+    // rules for timestamp on client, one week
     var oneWeek = 604800000;
+    // check compability with localstorage
     this.localStorageComparability = function (callback) {
-        if(typeof(Storage) !== "undefined") {
-            callback (true);
+        if (typeof(Storage) !== "undefined") {
+            callback(true);
         } else {
             callback(false);
         }
     };
-
-    this.getItem = function (searchParameter,callback){
+    // retrieve one search
+    this.getItem = function (searchParameter, callback) {
         var time = new Date().getTime();
-        //console.log(searchParameter);
         var searchResult = JSON.parse(localStorage.getItem(searchParameter));
-        //console.log(searchResult['timestamp']);
-        //console.log(time);
-        if(searchResult['timestamp'] > time -oneWeek){
-          callback(searchResult);
+        if (searchResult['timestamp'] > time - oneWeek) {
+            callback(searchResult);
         }
-        else{
-           callback(false);
+        else {
+            callback(false);
         }
     };
+    // save once search
     this.setItem = function (searchParameter, object) {
         //console.log(searchParameter);
         var stringifyObject = JSON.stringify(object);
-        localStorage.setItem(searchParameter,stringifyObject);
+        localStorage.setItem(searchParameter, stringifyObject);
     };
-
-    this.setManyItems = function (cities){
+    // used when client download offline data from server to save all companysearches with valid timestamp.
+    this.setManyItems = function (cities) {
         var stringifyObject;
-        var searchWord = "&" +cities[0].search_word;
+        var searchWord = "&" + cities[0].search_word;
         var time = new Date().getTime();
-        cities.forEach(function(object){
-            if(object.timestamp > time - oneWeek){
-                //console.log(object);
-                //console.log(object.city+searchWord);
-                stringifyObject =  JSON.stringify(object);
-                localStorage.setItem(object.city+searchWord,stringifyObject);
+        cities.forEach(function (object) {
+            if (object.timestamp > time - oneWeek) {
+                stringifyObject = JSON.stringify(object);
+                localStorage.setItem(object.city + searchWord, stringifyObject);
             }
         })
     }

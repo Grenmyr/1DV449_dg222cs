@@ -1,7 +1,16 @@
 /**
  * Created by dav on 2014-12-11.
  */
+/* This 2 variables on window object is used from multiple javascripts to check connectivity.
+ the first one is set by my ping/pong emit to server to true or false depending to connectivity.
 
+ the second one is a fix, because offline first work 100% in chrome and opera, i had to do a workaround
+ to make application no crash since other browsers cannot cache google maps.
+
+ So for other browsers, if google maps fail to load, then i know it is full offline status
+ (app started from offline) and then i disable function of google maps.
+
+ */
 window.onlineStatus = false;
 window.loadedMapOnce = false;
 var Mashup = function () {
@@ -24,11 +33,11 @@ var Mashup = function () {
     var offlineData = document.querySelector('#offlineData');
     var waitHeader = document.querySelector('#wait');
 
-
+    // Function socketEmit(ping) and SocketEmit(pong) to check status of server.
     setInterval(function () {
         ping++;
         socketEmit('ping', ping);
-        if (ping > pong +1) {
+        if (ping > pong + 1) {
             connectionHeader.textContent = "Offline läge";
             offlineData.style.display = "none";
             window.onlineStatus = false;
@@ -38,7 +47,7 @@ var Mashup = function () {
             connectionHeader.textContent = "Online läge";
             offlineData.style.display = "inline-block";
             window.onlineStatus = true;
-            if(!window.loadedMapOnce){
+            if (!window.loadedMapOnce) {
                 _map.initializeMap();
                 window.loadedMapOnce = true;
             }
@@ -50,7 +59,7 @@ var Mashup = function () {
         pong = resp;
     });
 
-
+    // load eventlisteners, and handle eniro search on client.
     _eniro.waitForUserClick(function (eniroSearch) {
         eniroSearch.search_word = _eniro.searchParameters[eniroSearch.search_word];
         lastSearch = eniroSearch.geo_area + '&' + eniroSearch.search_word;
@@ -60,10 +69,12 @@ var Mashup = function () {
             welcomeHeader.parentNode.removeChild(welcomeHeader);
             _map.setupNavigation();
             _map.waitForUserArrowPress(function (navigationResponse) {
-                if(_map.userNavigationGuide.parentNode !== null) {
+                // ugly fix for internet explorer that cannot use .remove()
+                if (_map.userNavigationGuide.parentNode !== null) {
                     _map.userNavigationGuide.parentNode.removeChild(_map.userNavigationGuide);
                 }
-                if(window.onlineStatus  || window.loadedMapOnce){
+
+                if (window.onlineStatus || window.loadedMapOnce) {
                     _map.focusOnSelectedCompany(navigationResponse);
                 }
                 _companyView.renderBasicView(navigationResponse);
@@ -71,7 +82,7 @@ var Mashup = function () {
             firstLoad = false;
         }
 
-
+        // function to  retrieve data from localstorage if data found, i call prepareData() and it present it without ask server.
         _localStorage.localStorageComparability(function (browserSupport) {
             if (browserSupport) {
                 if (localStorage[lastSearch]) {
@@ -79,21 +90,19 @@ var Mashup = function () {
                     _localStorage.getItem(lastSearch, function (searchResult) {
                         if (searchResult) {
                             _search = searchResult;
-                            //console.log("localstorage presenterade fräsh data");
                             waitHeader.style.display = "none";
                             prepareData();
                         }
                         else {
-                            if(!window.onlineStatus ) {
+                            if (!window.onlineStatus) {
                                 waitHeader.style.display = "block";
                             }
-                            //console.log("Data finns men gammal i localstorage, Söker ny via server")
                             socketEmit('eniroSearch', eniroSearch);
                         }
                     })
                 }
                 else {
-                    if(! window.onlineStatus ) {
+                    if (!window.onlineStatus) {
                         waitHeader.style.display = "block";
                     }
                     //console.log("ny sökningskategori sökte via server");
@@ -105,6 +114,7 @@ var Mashup = function () {
             }
         });
     });
+    // Emit that download all data to client and call on localstorage to save it.
     _eniro.offlineDataRequest(function (callback) {
         if (callback) {
             socketEmit('offlineData', true);
@@ -116,6 +126,7 @@ var Mashup = function () {
 
     });
 
+    // function to search server for data, if match save it, else present no results.
     _socketSetting.on('companySearch', function (companySearch) {
 
         waitHeader.style.display = "none";
@@ -129,8 +140,9 @@ var Mashup = function () {
         }
     });
 
+    // function shared by localstorage and data from server to present for client.
     function prepareData() {
-
+        // filter data and save only those with long lat on
         var validCompanies = [];
         _search['adverts'].forEach(function (company) {
             if (company['homepage'] !== null &&
@@ -140,30 +152,38 @@ var Mashup = function () {
         });
         _search['adverts'] = validCompanies;
         _map.setCompanies(_search);
-        if(window.onlineStatus  || window.loadedMapOnce){
+
+        // offline fix if online, for firefox, explorer, safari that way client can atleast use app if internet
+        //disapears chrome/opera can use maps even if starting from offline.
+        if (window.onlineStatus || window.loadedMapOnce) {
             _map.addMarkers();
         }
-
+        // clear previous search if a new alid search is made.
         _companyView.results(lastSearch, _search['adverts'].length);
         if (_search['adverts'].length === 0) {
             _companyView.clearCompanyViewDiv();
             return;
         }
-      _map.markersEventListener(function (index) {
-          if(_map.userNavigationGuide.parentNode !== null) {
-              _map.userNavigationGuide.parentNode.removeChild(_map.userNavigationGuide);
-          }
-          if(window.onlineStatus  || window.loadedMapOnce){
-              _map.focusOnSelectedCompany(_search['adverts'][index]);
-          }
+        // clear previous search markers if a new valid is made
+        _map.markersEventListener(function (index) {
+            // ugly fix for internet explorer that cannot use .remove()
+            if (_map.userNavigationGuide.parentNode !== null) {
+                _map.userNavigationGuide.parentNode.removeChild(_map.userNavigationGuide);
+            }
+            // see row 156
+            if (window.onlineStatus || window.loadedMapOnce) {
+                _map.focusOnSelectedCompany(_search['adverts'][index]);
+            }
             _companyView.renderBasicView(_search['adverts'][index]);
         });
-        if(window.onlineStatus  || window.loadedMapOnce){
+        // see row 156
+        if (window.onlineStatus || window.loadedMapOnce) {
             _map.focusOnSelectedCompany(_search['adverts'][0]);
         }
         _companyView.renderBasicView(_search['adverts'][0]);
     }
 
+    // using this function for all emit to server.
     function socketEmit(emitName, search) {
 
         _socketSetting.emit(emitName, search);

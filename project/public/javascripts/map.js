@@ -19,6 +19,7 @@ var Map = function () {
         disableDefaultUI: true
 
     };
+    // arrows on side reset and also reset search when a new valid search is done.
     this.setCompanies = function (companies) {
         _companies = companies;
         arrayIndex = 0;
@@ -26,7 +27,7 @@ var Map = function () {
         leftArrow.style.display = "inline-block";
     };
 
-
+    // run only once.
     this.initializeMap = function () {
 
         function loaded() {
@@ -45,17 +46,20 @@ var Map = function () {
         rightArrow.style.display = "flex";
     };
 
+    // function to give better navigation one can change company with side. also changing style on markers
+    // depending on what marker user is on.
     this.waitForUserArrowPress = function (callback) {
 
         leftArrow.addEventListener('click', function (e) {
             e.preventDefault();
             if (arrayIndex > 0) {
+                // fix for firefox,explorer and safari so it work
                 if (window.onlineStatus || window.loadedMapOnce) {
 
                     markers[arrayIndex].setIcon(redIcon);
                 }
                 arrayIndex += -1;
-                if (window.onlineStatus  || window.loadedMapOnce) {
+                if (window.onlineStatus || window.loadedMapOnce) {
 
                     markers[arrayIndex].setIcon(greenIcon);
 
@@ -75,11 +79,11 @@ var Map = function () {
         rightArrow.addEventListener('click', function (e) {
             e.preventDefault();
             if (arrayIndex < _companies['adverts'].length - 1) {
-                if (window.onlineStatus  || window.loadedMapOnce) {
+                if (window.onlineStatus || window.loadedMapOnce) {
                     markers[arrayIndex].setIcon(redIcon);
                 }
                 arrayIndex += 1;
-                if (window.onlineStatus  || window.loadedMapOnce) {
+                if (window.onlineStatus || window.loadedMapOnce) {
                     markers[arrayIndex].setIcon(greenIcon);
 
 
@@ -98,7 +102,7 @@ var Map = function () {
         });
 
     };
-
+    // called from mashup.js when user selected a company, it focus map on that location.
     Map.prototype.focusOnSelectedCompany = function (company) {
         var markerPosition = new google.maps.LatLng(
             company['location']['coordinates'][0]['latitude'],
@@ -108,7 +112,7 @@ var Map = function () {
 
         markers[arrayIndex].setIcon(greenIcon);
     };
-
+    // generate fresh markers from mashup.js when new valid search is made and remove old.
     this.addMarkers = function () {
 
         markers.forEach(function (marker) {
@@ -124,6 +128,7 @@ var Map = function () {
         });
     };
 
+    // put attributes on each marker.
     function createMarker(company, icon, callback) {
         var latitude = company['location']['coordinates'][0]['latitude'];
         var longitude = company['location']['coordinates'][0]['longitude'];
@@ -152,7 +157,7 @@ var Map = function () {
         });
 
     };
-
+    // css for my google map
     this.style = function () {
         mapOptions.styles =
             [{"stylers": [{"hue": "#ff1a00"}, {"invert_lightness": true}, {"saturation": -100}, {"lightness": 33}, {"gamma": 0.5}]}, {
@@ -162,6 +167,6 @@ var Map = function () {
             }]
     }
 };
-
+// make it on prototype for all that owns Map.(mashup.js)
 Map.prototype.mapReference = null;
 Map.prototype.userNavigationGuide = document.getElementById('userNavGuide');
