@@ -189,12 +189,12 @@
 
         google maps cachar tiles själv.
 
-    3. Kompabilitet
+    3. Kompabilitet offline
        Chrome : 100%
        Opera : 100%
        firefox : kan ej starta offline från cache manifest men fungerar offline om startad med nät.
        safari : kan ej starta offline från cache manifest men fungerar offline om startad med nät.
-       Explorer : fungerar inte alls, eftersom explorer inte stöder .remove() på dom element.
+       Explorer : kan ej starta offline från cache manifest men fungerar offline om startad med nät.
 
        Plattor & mobiler: Allt funkar, dock lite små knappar,
        hade kanske behövt en style för småskärmar där jag förstorat knappar och input fält.     
@@ -226,15 +226,16 @@
     applikationen kommer i första hand hämta data från localstorage och om det ej finns där så kommer den
     via webbsockets hämta från server såfort nätet kommmer tillbaka.
 
-    Sammanfattninsvis en mycket stabil app på tåget eller i bilen i alla webbläsare utom explorer.
+    Sammanfattninsvis en mycket stabil app på tåget eller i bilen i alla webbläsare.
     I google chrome och opera är den grym varsomhelst närsomhelst.
 
 ## Reflektion
 
     1. Negava refklektioner:
 
-         * Jag måste fixa explorer buggen antar jag, trots att de är eftblivna och inte stöder .remove()
-         som alla andra webbläsare gör, men jag hinner inte nu. Det får komma i 1.01.
+         * Jag fick lägga ner massa tid och fulkod för fixa applikationen för explorer. Den stödje inte .remove()
+         Den säger det, men den gör det inte. Så fick göra fulhacks och använda .removechild. Detta var min sista
+         fix och gör koden fulare, men nu funkar appen i explorer också.
          * Google maps funkar ej starta i offline läge i firefox och safari dock funkar appen bra.
          * Eniro ger mig bara max 100 response per sökning av företagstyp.
          * Cache manifest, tröt att arbeta med och svårt att komma igång med. Är säkert väldigt bra när
