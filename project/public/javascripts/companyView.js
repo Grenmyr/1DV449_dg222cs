@@ -99,7 +99,8 @@ var CompanyView = function () {
             });
         }
         else {
-            node.remove();
+            companyViewDiv.appendChild(node);
+            node.parentNode.removeChild(node);
         }
 
     }

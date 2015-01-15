@@ -56,10 +56,13 @@ var Mashup = function () {
         lastSearch = eniroSearch.geo_area + '&' + eniroSearch.search_word;
 
         if (firstLoad === true) {
-            welcomeHeader.remove();
+
+            welcomeHeader.parentNode.removeChild(welcomeHeader);
             _map.setupNavigation();
             _map.waitForUserArrowPress(function (navigationResponse) {
-                _map.userNavigationGuide.remove();
+                if(_map.userNavigationGuide.parentNode !== null) {
+                    _map.userNavigationGuide.parentNode.removeChild(_map.userNavigationGuide);
+                }
                 if(window.onlineStatus  || window.loadedMapOnce){
                     _map.focusOnSelectedCompany(navigationResponse);
                 }
@@ -147,7 +150,9 @@ var Mashup = function () {
             return;
         }
       _map.markersEventListener(function (index) {
-            _map.userNavigationGuide.remove();
+          if(_map.userNavigationGuide.parentNode !== null) {
+              _map.userNavigationGuide.parentNode.removeChild(_map.userNavigationGuide);
+          }
           if(window.onlineStatus  || window.loadedMapOnce){
               _map.focusOnSelectedCompany(_search['adverts'][index]);
           }
