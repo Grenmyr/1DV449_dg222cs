@@ -80,6 +80,8 @@ var socketIo = require('socket.io').listen(server);
 // WebSocket communication with clients.
 socketIo.sockets.on('connection', function (client) {
     console.log("connected");
+
+    // search mongo or eniro api for data and emit searches back to client.
     client.on('eniroSearch', function (search) {
         console.log("server emit eniroSearch");
 
@@ -87,10 +89,13 @@ socketIo.sockets.on('connection', function (client) {
             client.emit('companySearch',companySearch);
         })
     });
+
+    // emit pong heartbeat back to client.
     client.on('ping',function(int){
             client.emit('pong',int);
     });
 
+    // retrie all stored data in mongodb and emit to client.
     client.on('offlineData',function(bool){
         findAll(function(offlineData){
             //console.log(offlineData);
@@ -103,6 +108,7 @@ socketIo.sockets.on('connection', function (client) {
 
 
 });
+// string dependancy to index.jade and eniro.js add on those 3 locations to implement more company types.
 var companyTypes = ['flyttfirma','städfirma'];
 requestOfflineData = function (callback){
     //console.log(companyTypes);
@@ -182,7 +188,7 @@ function prepareData(data,search) {
     return parse;
 }
 
-// Functions handling CRD with mongodb using Monk.
+// Function to insert a fresh search in mongodb
 function insert(search, data) {
 
     removeDocument(search);
@@ -197,7 +203,7 @@ function insert(search, data) {
         }
     });
 }
-
+// function to retrieve 1 search from mongodb
 function find(search, callback) {
     var collection = db.get(search.search_word);
     collection.find( { city : search.geo_area }, function (err, data) {
@@ -207,7 +213,7 @@ function find(search, callback) {
         callback(data);
     });
 }
-
+// function to download all searches from mongodb
 function findAll(callback) {
     var collection;
     companyTypes.forEach(function (companyType) {
@@ -223,7 +229,7 @@ function findAll(callback) {
         });
     });
 }
-
+// function to remove 1 document(sql row) from mongodb
 function removeDocument(search) {
     console.log(
         "RemoveOldDocument "+search.geo_area +
