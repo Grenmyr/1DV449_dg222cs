@@ -178,6 +178,11 @@
         Jag har ingen känslig data, jag visar endast publika facebooklänkar när användare är
         inloggad på facebook.
         Därför har jag inget skydd mot CSRF vid mitt input fält då det ej behövs.
+        
+        Jag har inget skydd mot spam, om en användare skickar nya sökparametrar hela tiden. Så görs
+        en ny sökning i server varje gång. Dock söks samma sak 2 gånger kommer localstorage 
+        presentera data och avlasta server.
+        
 
     2. Prestandaoptimering
 
